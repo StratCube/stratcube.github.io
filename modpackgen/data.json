@@ -1,0 +1,32 @@
+{
+  "bases": [
+    {
+      "id": "tech_base",
+      "name": "Tech",
+      "icon": "⚙️",
+      "default_mods": ["modern-industrialization", "applied-energistics-2", "indium"],
+      "description": "Foundation for automation and machinery."
+    },
+    {
+      "id": "rpg_base",
+      "name": "RPG",
+      "icon": "⚔️",
+      "default_mods": ["mclib", "geckolib", "travelers-backpack"],
+      "description": "Base for leveling systems and dungeons."
+    },
+    {
+      "id": "magic_base",
+      "name": "Magic",
+      "icon": "✨",
+      "default_mods": ["botania", "ars-nouveau", "patchouli"],
+      "description": "Mystical arts and spellcasting focus."
+    },
+    {
+      "id": "kitchen_sink",
+      "name": "Kitchen Sink",
+      "icon": "🍱",
+      "default_mods": ["sodium", "lithium", "ferrite-core"],
+      "description": "A bit of everything. Optimized for performance."
+    }
+  ]
+}
