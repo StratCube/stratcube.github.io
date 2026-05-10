@@ -1,39 +1,56 @@
-/**
- * ModpackGen - Terminal Logic
- */
-
 const CONFIG = {
     MODRINTH_API: 'https://api.modrinth.com/v2',
-    USER_AGENT: 'ModpackGen/1.0 (contact@yourdomain.com)',
+    USER_AGENT: 'ModpackGen/1.0 (contact@yourdomain.com)', // Modrinth requires a user-agent to prevent blocks
     LOCAL_STORAGE_KEY: 'modpack_gen_state'
 };
 
 let state = {
-    version: '1.20.1',
+    version: '1.20.1', 
     loader: 'fabric',
     selectedBase: null,
-    selectedMods: [] // Array of Mod Objects
+    selectedMods:[] 
 };
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
-    initVersionPicker();
     setupEventListeners();
+    await fetchVersions(); // Now dynamically fetches all Minecraft versions!
     await loadBases();
     loadFromLocalStorage();
 });
 
-// 1. Setup Version Picker (1.8 to 1.21.x)
-function initVersionPicker() {
+// 1. Dynamically Fetch Game Versions from Modrinth
+async function fetchVersions() {
     const picker = document.getElementById('version-picker');
-    const versions = ['1.21.1', '1.21', '1.20.4', '1.20.1', '1.19.2', '1.18.2', '1.16.5', '1.12.2', '1.8.9'];
-    versions.forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = v;
-        picker.appendChild(opt);
-    });
-    picker.value = state.version;
+    picker.innerHTML = '<option>Loading versions...</option>';
+    
+    try {
+        const response = await fetch(`${CONFIG.MODRINTH_API}/tag/game_version`);
+        const versionsData = await response.json();
+        
+        picker.innerHTML = '';
+        
+        // Filter out snapshots, only show stable releases
+        const releases = versionsData.filter(v => v.version_type === 'release');
+        
+        releases.forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = v.version;
+            opt.textContent = v.version;
+            picker.appendChild(opt);
+        });
+        
+        // Check if saved state version exists, otherwise default to latest
+        if (releases.some(v => v.version === state.version)) {
+            picker.value = state.version;
+        } else if (releases.length > 0) {
+            state.version = releases[0].version;
+            picker.value = state.version;
+        }
+    } catch (err) {
+        console.error("Failed to fetch versions:", err);
+        picker.innerHTML = '<option value="1.20.1">1.20.1 (Offline Fallback)</option>';
+    }
 }
 
 // 2. Load Bases from data.json
@@ -43,6 +60,7 @@ async function loadBases() {
         const data = await response.json();
         const container = document.getElementById('base-container');
 
+        container.innerHTML = ''; // Clear container
         data.bases.forEach(base => {
             const el = document.createElement('div');
             el.className = 'card';
@@ -55,23 +73,40 @@ async function loadBases() {
         });
     } catch (err) {
         console.error("Error loading bases:", err);
+        document.getElementById('base-container').innerHTML = '<p style="color: red;">Failed to load data.json</p>';
     }
 }
 
 // 3. Modrinth API Integration
 async function searchMods(query) {
-    if (!query) return;
     const resultsContainer = document.getElementById('search-results');
+    
+    if (!query.trim()) {
+        resultsContainer.innerHTML = '<p class="placeholder-text">Enter keywords to find mods</p>';
+        return;
+    }
+    
     resultsContainer.innerHTML = '<p class="purple">Searching Data-Streams...</p>';
 
     try {
-        const url = `${CONFIG.MODRINTH_API}/search?query=${query}&facets=[["versions:${state.version}"],["categories:${state.loader}"]]`;
+        // Proper URL-encoding for the facets array
+        const facets = `[["versions:${state.version}"],["categories:${state.loader}"]]`;
+        const url = `${CONFIG.MODRINTH_API}/search?query=${encodeURIComponent(query)}&facets=${encodeURIComponent(facets)}`;
+        
         const response = await fetch(url, {
             headers: { 'User-Agent': CONFIG.USER_AGENT }
         });
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
 
         resultsContainer.innerHTML = '';
+        
+        if (data.hits.length === 0) {
+            resultsContainer.innerHTML = `<p class="placeholder-text">No mods found for ${state.loader} ${state.version}.</p>`;
+            return;
+        }
+
         data.hits.forEach(mod => {
             const el = document.createElement('div');
             el.className = 'card';
@@ -83,7 +118,8 @@ async function searchMods(query) {
             resultsContainer.appendChild(el);
         });
     } catch (err) {
-        resultsContainer.innerHTML = '<p class="error">API Error: Timeout</p>';
+        console.error("Search API Error:", err);
+        resultsContainer.innerHTML = '<p style="color: red;">API Error: Could not fetch mods.</p>';
     }
 }
 
@@ -103,16 +139,21 @@ function selectBase(base) {
         addMod({ id: slug, title: slug, slug: slug });
     });
     saveToLocalStorage();
-    alert(`Base ${base.name} applied. System updated.`);
+    alert(`Base "${base.name}" applied. Data-streams updated.`);
 }
 
 function renderSelectedMods() {
     const list = document.getElementById('selected-mods');
+    if (state.selectedMods.length === 0) {
+        list.innerHTML = '<p class="placeholder-text">No mods selected yet.</p>';
+        return;
+    }
+    
     list.innerHTML = state.selectedMods.map(mod => `
         <div class="card" style="border-color: var(--purple)">
-            <div style="display:flex; justify-content:space-between">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span>${mod.title}</span>
-                <span onclick="removeMod('${mod.id}')" style="color:var(--purple); cursor:pointer">X</span>
+                <span onclick="removeMod('${mod.id}')" style="color:var(--purple); cursor:pointer; font-weight:bold; padding:0 5px;">X</span>
             </div>
         </div>
     `).join('');
@@ -137,33 +178,47 @@ function exportConfig() {
 
 function importConfig(e) {
     const file = e.target.files[0];
+    if (!file) return;
+    
     const reader = new FileReader();
     reader.onload = (event) => {
-        state = JSON.parse(event.target.result);
-        renderSelectedMods();
-        document.getElementById('version-picker').value = state.version;
-        // Sync UI loader buttons
-        document.querySelectorAll('.loader-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.loader === state.loader);
-        });
-        alert("Configuration Override Successful.");
+        try {
+            state = JSON.parse(event.target.result);
+            renderSelectedMods();
+            
+            // Sync UI inputs
+            const picker = document.getElementById('version-picker');
+            if (picker.querySelector(`option[value="${state.version}"]`)) {
+                picker.value = state.version;
+            }
+            
+            document.querySelectorAll('.loader-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.loader === state.loader);
+            });
+            
+            alert("Configuration Override Successful.");
+            saveToLocalStorage();
+        } catch (err) {
+            alert("Invalid JSON configuration file.");
+        }
     };
     reader.readAsText(file);
 }
 
 // Helpers
 function setupEventListeners() {
-    // Search with debounce
+    // Search with debounce to prevent spamming the API
     let timeout;
     document.getElementById('mod-search').addEventListener('input', (e) => {
         clearTimeout(timeout);
-        timeout = setTimeout(() => searchMods(e.target.value), 500);
+        timeout = setTimeout(() => searchMods(e.target.value), 600);
     });
 
-    // Version/Loader pickers
+    // Version/Loader pickers update state and trigger a new search
     document.getElementById('version-picker').addEventListener('change', (e) => {
         state.version = e.target.value;
         saveToLocalStorage();
+        searchMods(document.getElementById('mod-search').value); 
     });
 
     document.getElementById('loader-picker').addEventListener('click', (e) => {
@@ -172,6 +227,7 @@ function setupEventListeners() {
             document.querySelectorAll('.loader-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
             saveToLocalStorage();
+            searchMods(document.getElementById('mod-search').value);
         }
     });
 
@@ -186,7 +242,11 @@ function saveToLocalStorage() {
 function loadFromLocalStorage() {
     const saved = localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY);
     if (saved) {
-        state = JSON.parse(saved);
-        renderSelectedMods();
+        try {
+            state = JSON.parse(saved);
+            renderSelectedMods();
+        } catch (e) {
+            console.error("Failed to parse local storage", e);
+        }
     }
 }
