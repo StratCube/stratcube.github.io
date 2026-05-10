@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModpackGen // Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="glow-overlay"></div>
 
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="cyan">Modpack</span><span class="purple">Gen</span>
+                <span class="blink">_</span>
+            </div>
+            <nav class="controls">
+                <button id="export-btn" class="nav-btn">Export Config</button>
+                <label for="import-input" class="nav-btn">Import JSON</label>
+                <input type="file" id="import-input" hidden accept=".json">
+            </nav>
+        </header>
+
+        <main class="dashboard">
+            <!-- SETUP SECTION -->
+            <section class="panel setup-grid">
+                <div class="input-group">
+                    <label>Version</label>
+                    <select id="version-picker"></select>
+                </div>
+                <div class="input-group">
+                    <label>Loader</label>
+                    <div class="loader-btns" id="loader-picker">
+                        <button class="loader-btn active" data-loader="fabric">Fabric</button>
+                        <button class="loader-btn" data-loader="forge">Forge</button>
+                        <button class="loader-btn" data-loader="neoforge">NeoForge</button>
+                        <button class="loader-btn" data-loader="quilt">Quilt</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BASE PICKER -->
+            <section class="panel">
+                <h2 class="section-title">Select Base Foundation</h2>
+                <div class="base-grid" id="base-container">
+                    <!-- Injected by JS -->
+                </div>
+            </section>
+
+            <!-- MOD SEARCH -->
+            <section class="panel">
+                <h2 class="section-title">Search Modrinth</h2>
+                <div class="search-bar">
+                    <input type="text" id="mod-search" placeholder="Search mods (e.g. Sodium, JEI)...">
+                </div>
+                <div class="search-results" id="search-results">
+                    <p class="placeholder-text">Enter keywords to find mods</p>
+                </div>
+            </section>
+
+            <!-- SELECTED MODS -->
+            <section class="panel">
+                <h2 class="section-title">Selected Components</h2>
+                <div class="mod-list" id="selected-mods">
+                    <!-- Injected by JS -->
+                </div>
+            </section>
+
+            <!-- FUTURE PLACEHOLDER -->
+            <section class="panel ai-placeholder">
+                <div class="ai-content">
+                    <h3>AI Quest Generator</h3>
+                    <p>WebLLM Integration Coming Soon: Generate quest lines based on your selected mods.</p>
+                    <div class="progress-bar-loading"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <span>v1.0.4-stable</span>
+            <span>Connected to Modrinth API v2</span>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
