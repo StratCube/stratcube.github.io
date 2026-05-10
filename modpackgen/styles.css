@@ -1,0 +1,189 @@
+:root {
+    --bg: #0d0d0d;
+    --panel-bg: rgba(18, 18, 18, 0.8);
+    --cyan: #00f2ff;
+    --purple: #bc00ff;
+    --border: rgba(0, 242, 255, 0.2);
+    --border-hover: rgba(188, 0, 255, 0.5);
+    --text: #e0e0e0;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Syne', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Background Effects */
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+    z-index: -1;
+}
+
+.glow-overlay {
+    position: fixed;
+    top: -10%; left: 50%; transform: translateX(-50%);
+    width: 80vw; height: 60vh;
+    background: radial-gradient(circle, rgba(188, 0, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: var(--display);
+    font-size: 2rem;
+    letter-spacing: -1px;
+}
+
+.cyan { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+.purple { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+
+.blink { animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* UI Components */
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s;
+}
+
+.panel:hover { border-color: var(--border-hover); }
+
+.section-title {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+}
+
+.setup-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--purple);
+}
+
+select, input[type="text"] {
+    width: 100%;
+    background: #000;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem;
+    font-family: var(--mono);
+    outline: none;
+}
+
+.loader-btns { display: flex; gap: 0.5rem; }
+.loader-btn, .nav-btn {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: var(--mono);
+    text-align: center;
+}
+
+.loader-btn.active {
+    background: var(--cyan);
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+/* Mod Cards */
+.base-grid, .search-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.card:hover {
+    background: rgba(0, 242, 255, 0.05);
+    border-color: var(--cyan);
+}
+
+.card h4 { color: var(--cyan); margin-bottom: 0.5rem; }
+.card p { font-size: 0.75rem; color: #888; }
+
+/* AI Placeholder */
+.ai-placeholder {
+    border: 1px dashed var(--purple);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-loading {
+    height: 2px;
+    background: var(--purple);
+    width: 30%;
+    margin: 1rem auto 0;
+    animation: loading 2s infinite ease-in-out;
+}
+
+@keyframes loading {
+    0% { transform: translateX(-150%); }
+    100% { transform: translateX(150%); }
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #444;
+    margin-top: 4rem;
+}
+
+@media (max-width: 768px) {
+    .setup-grid { grid-template-columns: 1fr; }
+}
