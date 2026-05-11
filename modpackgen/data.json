@@ -2,7 +2,7 @@
   "addons": [
     {
       "name": "Performance (Essential)",
-      "mods": ["sodium", "lithium", "starlight", "ferrite-core", "krypton"]
+      "mods": ["sodium", "embeddium", "lithium", "starlight", "ferrite-core", "krypton"]
     },
     {
       "name": "Performance (Extra)",
