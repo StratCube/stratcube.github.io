@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modpack Architect</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- HEADER -->
+        <header class="main-header">
+            <div class="brand">
+                <i data-lucide="layout-grid"></i>
+                <h1>Modpack Architect</h1>
+            </div>
+            <div class="header-actions">
+                <button id="export-btn" class="primary-btn">
+                    <i data-lucide="download"></i> Export .mrpack
+                </button>
+            </div>
+        </header>
 
+        <main class="editor-grid">
+            <!-- COLUMN 1: CONFIGURATION -->
+            <aside class="panel config-panel">
+                <section>
+                    <h2><i data-lucide="settings"></i> Base Config</h2>
+                    <div class="input-group">
+                        <label>Pack Name</label>
+                        <input type="text" id="pack-name" placeholder="My Awesome Pack" value="My Awesome Pack">
+                    </div>
+                    <div class="input-group">
+                        <label>Game Version</label>
+                        <select id="game-version"></select>
+                    </div>
+                    <div class="input-group">
+                        <label>Mod Loader</label>
+                        <select id="mod-loader">
+                            <option value="fabric">Fabric</option>
+                            <option value="forge">Forge</option>
+                            <option value="neoforge">NeoForge</option>
+                            <option value="quilt">Quilt</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section>
+                    <h2><i data-lucide="layers"></i> Addons / Presets</h2>
+                    <p class="hint">Quick-add common tools</p>
+                    <div class="preset-grid">
+                        <button class="preset-btn" data-slug="sodium">Sodium</button>
+                        <button class="preset-btn" data-slug="iris">Iris</button>
+                        <button class="preset-btn" data-slug="lithium">Lithium</button>
+                        <button class="preset-btn" data-slug="rei">REI</button>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- COLUMN 2: SEARCH -->
+            <section class="panel search-panel">
+                <div class="search-bar">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="mod-search" placeholder="Search Modrinth for mods...">
+                </div>
+                <div id="search-results" class="results-list">
+                    <div class="empty-state">Search for something to begin</div>
+                </div>
+            </section>
+
+            <!-- COLUMN 3: WORKSPACE -->
+            <section class="panel workspace-panel">
+                <div class="workspace-header">
+                    <h2><i data-lucide="briefcase"></i> Selected Mods</h2>
+                    <span id="mod-count-tag" class="badge">0 Mods</span>
+                </div>
+                
+                <div id="manifest-list" class="workspace-content">
+                    <!-- Categorized mods appear here -->
+                    <div class="category" data-cat="essential">
+                        <h3>Essential Utilities</h3>
+                        <div class="mod-items"></div>
+                    </div>
+                    <div class="category" data-cat="content">
+                        <h3>Content & Gameplay</h3>
+                        <div class="mod-items"></div>
+                    </div>
+                    <div class="category" data-cat="uncategorized">
+                        <h3>General</h3>
+                        <div class="mod-items"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toaster -->
+    <div id="toaster"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
