@@ -1,5 +1,5 @@
 {
-  "bases": [
+  "bases":[
     {
       "id": "tech_base",
       "name": "Tech",
@@ -13,20 +13,26 @@
       "icon": "⚔️",
       "default_mods": ["mclib", "geckolib", "travelers-backpack"],
       "description": "Base for leveling systems and dungeons."
+    }
+  ],
+  "addons":[
+    {
+      "id": "perf_addon",
+      "name": "Max Performance",
+      "icon": "⚡",
+      "default_mods": ["sodium", "lithium", "ferrite-core", "entityculling"]
     },
     {
-      "id": "magic_base",
-      "name": "Magic",
+      "id": "visual_addon",
+      "name": "Visuals & Shaders",
       "icon": "✨",
-      "default_mods": ["botania", "ars-nouveau", "patchouli"],
-      "description": "Mystical arts and spellcasting focus."
+      "default_mods": ["iris", "continuity", "lambdynamiclights"]
     },
     {
-      "id": "kitchen_sink",
-      "name": "Kitchen Sink",
-      "icon": "🍱",
-      "default_mods": ["sodium", "lithium", "ferrite-core"],
-      "description": "A bit of everything. Optimized for performance."
+      "id": "qol_addon",
+      "name": "Quality of Life",
+      "icon": "🛠️",
+      "default_mods":["jei", "appleskin", "mouse-tweaks", "jade"]
     }
   ]
 }
