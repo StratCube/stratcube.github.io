@@ -1,13 +1,11 @@
 lucide.createIcons();
 
 const state = {
-    selectedMods: [], // {id, slug, name, categories[]}
+    selectedMods: [], 
+    processing: new Set(), // Tracks IDs/Slugs currently being fetched to prevent duplicates
     searchTimeout: null
 };
 
-/**
- * INITIALIZATION
- */
 async function init() {
     try {
         const res = await fetch('https://api.modrinth.com/v2/tag/game_version');
@@ -31,7 +29,7 @@ async function init() {
             list.appendChild(btn);
         });
         
-        search(); // Initial load
+        search(); 
     } catch (e) {
         console.error("Init Error:", e);
     }
@@ -42,17 +40,18 @@ async function init() {
  */
 
 async function getProjectVersions(projectId) {
-    const loader = document.getElementById('mod-loader').value;
+    const loader = document.getElementById('mod-loader').value.toLowerCase();
     const version = document.getElementById('game-version').value;
-    const res = await fetch(`https://api.modrinth.com/v2/project/${projectId}/version?loaders=["${loader}"]&game_versions=["${version}"]`);
+    const facets = JSON.stringify([
+        [`categories:${loader}`],
+        [`versions:${version}`]
+    ]);
+    const res = await fetch(`https://api.modrinth.com/v2/project/${projectId}/version?facets=${encodeURIComponent(facets)}`);
     return await res.json();
 }
 
 async function validateAllMods() {
-    const loader = document.getElementById('mod-loader').value;
-    const version = document.getElementById('game-version').value;
     document.getElementById('mod-count-tag').textContent = "...";
-
     const validMods = [];
     for (const mod of state.selectedMods) {
         const versions = await getProjectVersions(mod.id);
@@ -63,24 +62,33 @@ async function validateAllMods() {
     search();
 }
 
-async function addWithDependencies(projectId) {
-    if (state.selectedMods.find(m => m.id === projectId)) return;
-
-    const loader = document.getElementById('mod-loader').value;
-    const version = document.getElementById('game-version').value;
+async function addWithDependencies(idOrSlug) {
+    // 1. Immediate duplicate check (against existing selection)
+    if (state.selectedMods.some(m => m.id === idOrSlug || m.slug === idOrSlug)) return;
     
+    // 2. Race condition check (against mods currently being fetched)
+    if (state.processing.has(idOrSlug)) return;
+    state.processing.add(idOrSlug);
+
     try {
-        // 1. Get Project info
-        const pRes = await fetch(`https://api.modrinth.com/v2/project/${projectId}`);
+        const pRes = await fetch(`https://api.modrinth.com/v2/project/${idOrSlug}`);
+        if (!pRes.ok) throw new Error("Project not found");
         const project = await pRes.json();
 
-        // 2. Get the specific version to find dependencies
-        const vData = await getProjectVersions(projectId);
-        if (vData.length === 0) return; // Incompatible
+        // 3. Re-check using the real project ID now that we have it
+        if (state.selectedMods.some(m => m.id === project.id)) {
+            state.processing.delete(idOrSlug);
+            return;
+        }
+
+        const vData = await getProjectVersions(project.id);
+        if (vData.length === 0) {
+            state.processing.delete(idOrSlug);
+            return; 
+        }
 
         const currentVersion = vData[0];
 
-        // 3. Add this mod
         state.selectedMods.push({
             id: project.id,
             slug: project.slug,
@@ -88,17 +96,22 @@ async function addWithDependencies(projectId) {
             categories: project.categories
         });
 
-        // 4. Resolve Dependencies recursively
-        for (const dep of currentVersion.dependencies) {
-            if (dep.dependency_type === "required") {
-                // Dependency can be project_id or version_id. Modrinth API usually uses project_id here.
-                const depId = dep.project_id || dep.version_id;
-                if (depId) await addWithDependencies(depId);
+        // Resolve dependencies
+        if (currentVersion.dependencies) {
+            for (const dep of currentVersion.dependencies) {
+                if (dep.dependency_type === "required") {
+                    const depId = dep.project_id || dep.version_id;
+                    if (depId) await addWithDependencies(depId);
+                }
             }
         }
+        
         renderWorkspace();
+        search(); // Refresh search icons
     } catch (e) {
-        console.error("Dep Resolution Error:", e);
+        console.error("Error adding mod:", idOrSlug, e);
+    } finally {
+        state.processing.delete(idOrSlug);
     }
 }
 
@@ -114,13 +127,17 @@ async function addAddon(slugs) {
 
 async function search() {
     const query = document.getElementById('mod-search').value.trim();
-    const loader = document.getElementById('mod-loader').value;
+    const loader = document.getElementById('mod-loader').value.toLowerCase();
     const version = document.getElementById('game-version').value;
     const container = document.getElementById('search-results');
 
-    container.style.opacity = "0.4";
+    const facets = JSON.stringify([
+        [`categories:${loader}`],
+        [`versions:${version}`],
+        ["project_type:mod"]
+    ]);
 
-    let url = `https://api.modrinth.com/v2/search?facets=[["categories:${loader}"],["versions:${version}"],["project_type:mod"]]`;
+    let url = `https://api.modrinth.com/v2/search?facets=${encodeURIComponent(facets)}`;
     if (query) {
         url += `&query=${encodeURIComponent(query)}`;
     } else {
@@ -129,9 +146,14 @@ async function search() {
 
     try {
         const res = await fetch(url);
+        if (!res.ok) throw new Error("API Error");
         const data = await res.json();
+        
         container.innerHTML = '';
-        container.style.opacity = "1";
+        if (data.hits.length === 0) {
+            container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--dim)">No compatible results.</div>`;
+            return;
+        }
 
         data.hits.forEach(hit => {
             const isAdded = state.selectedMods.find(m => m.id === hit.project_id);
@@ -169,6 +191,12 @@ function renderWorkspace() {
     const container = document.getElementById('manifest-content');
     container.innerHTML = '';
     
+    if (state.selectedMods.length === 0) {
+        container.innerHTML = `<div style="padding:2rem; text-align:center; color:var(--dim); font-size:0.8rem">Empty</div>`;
+        document.getElementById('mod-count-tag').textContent = "0";
+        return;
+    }
+
     const groups = {};
     state.selectedMods.forEach(mod => {
         const primaryCat = mod.categories[0] || 'general';
@@ -210,7 +238,7 @@ document.getElementById('export-btn').onclick = async () => {
     if (state.selectedMods.length === 0) return;
     const btn = document.getElementById('export-btn');
     btn.disabled = true;
-    btn.innerHTML = `<i data-lucide="loader"></i> <span>Processing...</span>`;
+    btn.innerHTML = `<i data-lucide="loader"></i> <span>Exporting...</span>`;
     lucide.createIcons();
 
     try {
