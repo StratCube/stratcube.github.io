@@ -8,11 +8,11 @@ const state = {
 
 async function init() {
     try {
-        // 1. Populate Game Version Dropdown (Filtering for actual Minecraft versions)
         const res = await fetch('https://api.modrinth.com/v2/tag/game_version');
         const data = await res.json();
         const select = document.getElementById('game-version');
         
+        // Filter for release versions like 1.20.1
         data.filter(v => v.version_type === 'release' && v.version.includes('.'))
             .slice(0, 30)
             .forEach(v => {
@@ -22,7 +22,6 @@ async function init() {
             });
         select.value = "1.20.1";
 
-        // 2. Load Addons from data.json
         const addonRes = await fetch('data.json');
         const addonData = await addonRes.json();
         const list = document.getElementById('addon-list');
@@ -44,12 +43,11 @@ async function init() {
  * COMPATIBILITY & DEPENDENCIES
  */
 
-// Corrected: Uses loaders and game_versions parameters for the version endpoint
 async function getProjectVersions(projectId) {
     const loader = document.getElementById('mod-loader').value.toLowerCase();
     const version = document.getElementById('game-version').value;
     
-    // The version endpoint expects arrays as strings: ["fabric"]
+    // This is the strict check: it only returns versions that match BOTH loader and game version
     const url = `https://api.modrinth.com/v2/project/${projectId}/version?loaders=["${loader}"]&game_versions=["${version}"]`;
     const res = await fetch(url);
     return await res.json();
@@ -68,14 +66,14 @@ async function validateAllMods() {
     }
     state.selectedMods = validMods;
     renderWorkspace();
-    search(); // Refresh search to show correct compatibility
+    search(); 
 }
 
 async function addWithDependencies(idOrSlug) {
-    // 1. Duplicate check (ID or Slug)
+    // 1. Prevent duplicates (check ID and Slug)
     if (state.selectedMods.some(m => m.id === idOrSlug || m.slug === idOrSlug)) return;
     
-    // 2. Race condition check
+    // 2. Prevent race conditions (multiple clicks)
     if (state.processing.has(idOrSlug)) return;
     state.processing.add(idOrSlug);
 
@@ -84,10 +82,10 @@ async function addWithDependencies(idOrSlug) {
         if (!pRes.ok) throw new Error("Project not found");
         const project = await pRes.json();
 
-        // 3. Re-check using real ID
+        // Re-check with the actual ID from Modrinth
         if (state.selectedMods.some(m => m.id === project.id)) return;
 
-        // 4. Strict Version Check
+        // 3. Strict Version Check
         const vData = await getProjectVersions(project.id);
         if (vData.length === 0) {
             console.warn(`${project.title} is not compatible with current settings.`);
@@ -103,7 +101,7 @@ async function addWithDependencies(idOrSlug) {
             categories: project.categories
         });
 
-        // 5. Resolve Required Dependencies
+        // 4. Resolve Required Dependencies
         if (currentVersion.dependencies) {
             for (const dep of currentVersion.dependencies) {
                 if (dep.dependency_type === "required") {
@@ -123,7 +121,6 @@ async function addWithDependencies(idOrSlug) {
 }
 
 async function addAddon(slugs) {
-    // Sequential add to ensure dependency tree stays clean
     for (const slug of slugs) {
         await addWithDependencies(slug);
     }
@@ -139,7 +136,6 @@ async function search() {
     const version = document.getElementById('game-version').value;
     const container = document.getElementById('search-results');
 
-    // Strict facets for search endpoint
     const facets = JSON.stringify([
         [`categories:${loader}`],
         [`versions:${version}`],
@@ -155,12 +151,11 @@ async function search() {
 
     try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error("API Error");
         const data = await res.json();
         
         container.innerHTML = '';
         if (data.hits.length === 0) {
-            container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--dim)">No compatible results for ${loader} ${version}.</div>`;
+            container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--dim)">No compatible results.</div>`;
             return;
         }
 
@@ -247,7 +242,6 @@ document.getElementById('export-btn').onclick = async () => {
     if (state.selectedMods.length === 0) return;
     const btn = document.getElementById('export-btn');
     btn.disabled = true;
-    const originalText = btn.innerHTML;
     btn.innerHTML = `<i data-lucide="loader"></i> <span>Exporting...</span>`;
     lucide.createIcons();
 
@@ -288,10 +282,9 @@ document.getElementById('export-btn').onclick = async () => {
         a.click();
     } catch (e) {
         alert("Export failed!");
-        console.error(e);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = originalText;
+        btn.innerHTML = `<i data-lucide="download"></i> <span>Export .mrpack</span>`;
         lucide.createIcons();
     }
 };
