@@ -19,42 +19,70 @@
             </div>
             <nav class="controls">
                 <button id="export-btn" class="nav-btn">Export Config</button>
-                <label for="import-input" class="nav-btn">Import JSON</label>
+                <label for="import-input" class="nav-btn">Import Config</label>
                 <input type="file" id="import-input" hidden accept=".json">
             </nav>
         </header>
 
         <main class="dashboard">
-            <!-- SETUP SECTION -->
-            <section class="panel setup-grid">
-                <div class="input-group">
-                    <label>Version</label>
-                    <select id="version-picker"></select>
-                </div>
-                <div class="input-group">
-                    <label>Loader</label>
-                    <div class="loader-btns" id="loader-picker">
-                        <button class="loader-btn active" data-loader="fabric">Fabric</button>
-                        <button class="loader-btn" data-loader="forge">Forge</button>
-                        <button class="loader-btn" data-loader="neoforge">NeoForge</button>
-                        <button class="loader-btn" data-loader="quilt">Quilt</button>
+            <!-- TOP SECTION: 2 COLUMNS -->
+            <section class="top-dashboard">
+                <!-- Left: Version & Loader -->
+                <div class="panel config-box">
+                    <h2 class="section-title">Environment Setup</h2>
+                    <div class="input-group">
+                        <label>Target Version</label>
+                        <select id="version-picker"></select>
+                    </div>
+                    <div class="input-group">
+                        <label>Mod Loader</label>
+                        <div class="loader-btns" id="loader-picker">
+                            <button class="loader-btn active" data-loader="fabric">Fabric</button>
+                            <button class="loader-btn" data-loader="forge">Forge</button>
+                            <button class="loader-btn" data-loader="neoforge">NeoForge</button>
+                            <button class="loader-btn" data-loader="quilt">Quilt</button>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- BASE PICKER -->
-            <section class="panel">
-                <h2 class="section-title">Select Base Foundation</h2>
-                <div class="base-grid" id="base-container">
-                    <!-- Injected by JS -->
+                <!-- Right: Base & Addons -->
+                <div class="panel config-box">
+                    <h2 class="section-title">Foundation & Addons</h2>
+                    <div class="input-group">
+                        <label>Base Foundation (Select One)</label>
+                        <div class="custom-dropdown" id="base-dropdown">
+                            <div class="dropdown-header" id="base-dropdown-text">
+                                <span>No Base Selected</span>
+                                <span>▼</span>
+                            </div>
+                            <div class="dropdown-list" id="base-list">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-top: 0.5rem;">
+                        <label>Pack Addons (Select Multiple)</label>
+                        <div class="addon-grid" id="addon-container">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- MOD SEARCH -->
             <section class="panel">
                 <h2 class="section-title">Search Modrinth</h2>
-                <div class="search-bar">
+                <div class="search-bar-wrap">
                     <input type="text" id="mod-search" placeholder="Search mods (e.g. Sodium, JEI)...">
+                    <select id="search-category">
+                        <option value="">All Categories</option>
+                        <option value="optimization">Optimization</option>
+                        <option value="technology">Technology</option>
+                        <option value="magic">Magic</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="utility">Utility</option>
+                        <option value="worldgen">World Gen</option>
+                    </select>
                 </div>
                 <div class="search-results" id="search-results">
                     <p class="placeholder-text">Enter keywords to find mods</p>
@@ -64,9 +92,7 @@
             <!-- SELECTED MODS -->
             <section class="panel">
                 <h2 class="section-title">Selected Components</h2>
-                <!-- DYNAMIC TAB CONTAINER -->
                 <div id="category-tabs" class="tabs"></div>
-                
                 <div class="mod-list" id="selected-mods">
                     <p class="placeholder-text">No mods selected yet.</p>
                 </div>
@@ -83,7 +109,7 @@
         </main>
 
         <footer>
-            <span>v1.0.5-terminal</span>
+            <span>v1.0.6-terminal</span>
             <span>Connected to Modrinth API v2</span>
         </footer>
     </div>
