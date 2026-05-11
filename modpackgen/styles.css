@@ -1,0 +1,164 @@
+:root {
+    --bg-dark: #0f1115;
+    --panel-bg: #16191e;
+    --border-color: #2d323a;
+    --text-main: #e2e8f0;
+    --text-dim: #94a3b8;
+    --accent: #6EE75A;
+    --accent-hover: #5cd649;
+    --danger: #ff4466;
+    --input-bg: #1e2229;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+.main-header {
+    height: 60px;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+}
+
+.brand { display: flex; align-items: center; gap: 0.75rem; color: var(--accent); }
+.brand h1 { font-size: 1.2rem; color: var(--text-main); }
+
+/* Layout Grid */
+.editor-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 280px 1fr 400px;
+    gap: 0;
+    overflow: hidden;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Forms */
+.config-panel { padding: 1.5rem; gap: 2rem; }
+.input-group { margin-bottom: 1.2rem; }
+.input-group label { display: block; font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text-dim); }
+input, select {
+    width: 100%;
+    padding: 0.6rem;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: white;
+    outline: none;
+}
+input:focus { border-color: var(--accent); }
+
+/* Presets */
+.preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.preset-btn {
+    padding: 0.5rem;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+.preset-btn:hover { border-color: var(--accent); }
+
+/* Search Results */
+.search-panel { background: var(--bg-dark); }
+.search-bar {
+    padding: 1rem;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.search-bar input { border: none; background: transparent; font-size: 1rem; }
+
+.results-list { flex: 1; overflow-y: auto; padding: 1rem; }
+.search-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+}
+.search-item img { width: 48px; height: 48px; border-radius: 4px; }
+.search-info { flex: 1; }
+.search-info h4 { margin-bottom: 0.2rem; }
+.search-info p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.2; }
+
+/* Workspace/Manifest */
+.workspace-panel { border-right: none; border-left: 1px solid var(--border-color); }
+.workspace-header { padding: 1rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.workspace-content { flex: 1; overflow-y: auto; padding: 1rem; }
+
+.category { margin-bottom: 1.5rem; }
+.category h3 { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.25rem; }
+
+.mod-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: var(--input-bg);
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+}
+.remove-btn { color: var(--danger); cursor: pointer; background: none; border: none; }
+
+/* Buttons */
+.primary-btn {
+    background: var(--accent);
+    color: black;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.primary-btn:hover { background: var(--accent-hover); }
+
+.add-btn { background: var(--accent); border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+.badge { background: var(--input-bg); padding: 0.2rem 0.6rem; border-radius: 10px; font-size: 0.7rem; font-family: monospace; }
+.hint { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; }
