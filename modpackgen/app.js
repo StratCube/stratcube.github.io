@@ -12,7 +12,7 @@ let state = {
     selectedMods:[] 
 };
 
-let currentTab = 'All'; // Keeps track of the active category tab
+let currentTab = 'All';
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadFromLocalStorage();
 });
 
-// 1. Fetch Game Versions
 async function fetchVersions() {
     const picker = document.getElementById('version-picker');
     picker.innerHTML = '<option>Loading versions...</option>';
@@ -50,7 +49,6 @@ async function fetchVersions() {
     }
 }
 
-// 2. Load Bases from data.json
 async function loadBases() {
     try {
         const response = await fetch('data.json');
@@ -73,17 +71,14 @@ async function loadBases() {
     }
 }
 
-// 3. API Mod Compatibility Checker
-// Checks Modrinth to see if a mod actually supports the chosen version & loader
 async function getValidModData(slug, version, loader) {
     try {
         const verRes = await fetch(`${CONFIG.MODRINTH_API}/project/${slug}/version?game_versions=["${version}"]&loaders=["${loader}"]`, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
         if (!verRes.ok) return null;
         
         const versions = await verRes.json();
-        if (versions.length === 0) return null; // Incompatible!
+        if (versions.length === 0) return null;
         
-        // Fetch full project data to get title, ID, and thematic categories
         const projRes = await fetch(`${CONFIG.MODRINTH_API}/project/${slug}`, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
         if (!projRes.ok) return null;
         
@@ -95,34 +90,27 @@ async function getValidModData(slug, version, loader) {
             categories: project.categories.filter(c => !CONFIG.IGNORE_CATEGORIES.includes(c))
         };
     } catch (e) {
-        console.error(`Validation error for ${slug}:`, e);
         return null;
     }
 }
 
-// 4. Modrinth UI Search Integration
 async function searchMods(query) {
     const resultsContainer = document.getElementById('search-results');
-    
     if (!query.trim()) {
         resultsContainer.innerHTML = '<p class="placeholder-text">Enter keywords to find mods</p>';
         return;
     }
-    
     resultsContainer.innerHTML = '<p class="green blink">Searching Data-Streams...</p>';
 
     try {
         const facets = `[["versions:${state.version}"],["categories:${state.loader}"]]`;
         const url = `${CONFIG.MODRINTH_API}/search?query=${encodeURIComponent(query)}&facets=${encodeURIComponent(facets)}`;
-        
         const response = await fetch(url, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
         const data = await response.json();
         resultsContainer.innerHTML = '';
         
         if (data.hits.length === 0) {
-            resultsContainer.innerHTML = `<p class="placeholder-text">No mods found for ${state.loader} ${state.version}.</p>`;
+            resultsContainer.innerHTML = `<p class="placeholder-text">No mods found.</p>`;
             return;
         }
 
@@ -142,11 +130,10 @@ async function searchMods(query) {
             resultsContainer.appendChild(el);
         });
     } catch (err) {
-        resultsContainer.innerHTML = '<p style="color: red;">API Error: Could not fetch mods.</p>';
+        resultsContainer.innerHTML = '<p style="color: red;">API Error.</p>';
     }
 }
 
-// 5. State Management & Filtering
 function addMod(mod) {
     if (!state.selectedMods.find(m => m.id === mod.id)) {
         state.selectedMods.push(mod);
@@ -155,76 +142,37 @@ function addMod(mod) {
     }
 }
 
-// Validates a base before applying
 async function selectBase(base) {
     state.selectedBase = base.id;
-    
-    let addedCount = 0;
-    let skippedMods =[];
-
-    // Notify user validation is running
     const list = document.getElementById('selected-mods');
     list.innerHTML = '<p class="green blink">Validating Base Mods via API...</p>';
 
     for (const slug of base.default_mods) {
         const modData = await getValidModData(slug, state.version, state.loader);
-        if (modData) {
-            // Check if already in list
-            if (!state.selectedMods.find(m => m.id === modData.id)) {
-                state.selectedMods.push(modData);
-                addedCount++;
-            }
-        } else {
-            skippedMods.push(slug);
+        if (modData && !state.selectedMods.find(m => m.id === modData.id)) {
+            state.selectedMods.push(modData);
         }
     }
-    
     saveToLocalStorage();
     renderSelectedMods();
-    
-    let msg = `Base "${base.name}" applied.\nAdded ${addedCount} valid mods.`;
-    if (skippedMods.length > 0) {
-        msg += `\nSkipped incompatible mods: ${skippedMods.join(', ')}`;
-    }
-    alert(msg);
 }
 
-// Re-checks all currently selected mods against new version/loader params
 async function revalidateMods() {
     if (state.selectedMods.length === 0) return;
-    
     const list = document.getElementById('selected-mods');
     list.innerHTML = '<p class="green blink">Re-evaluating mod compatibilities...</p>';
 
-    // Use Promise.all to fetch them concurrently for speed
     const validationPromises = state.selectedMods.map(async (mod) => {
         const modData = await getValidModData(mod.slug, state.version, state.loader);
-        return { oldMod: mod, newModData: modData };
+        return modData;
     });
 
     const results = await Promise.all(validationPromises);
-    
-    let validMods = [];
-    let removedMods =[];
-    
-    for (const res of results) {
-        if (res.newModData) {
-            validMods.push(res.newModData);
-        } else {
-            removedMods.push(res.oldMod.title);
-        }
-    }
-
-    state.selectedMods = validMods;
+    state.selectedMods = results.filter(m => m !== null);
     saveToLocalStorage();
     renderSelectedMods();
-
-    if (removedMods.length > 0) {
-        alert(`The following mods were removed as they are incompatible with ${state.loader} ${state.version}:\n\n- ${removedMods.join('\n- ')}`);
-    }
 }
 
-// 6. Dynamic Rendering & Tabs
 window.setTab = (tab) => {
     currentTab = tab;
     renderSelectedMods();
@@ -240,30 +188,23 @@ function renderSelectedMods() {
         return;
     }
     
-    // Extract unique categories for tabs
     const allCategories = new Set();
     state.selectedMods.forEach(mod => {
         if (mod.categories) mod.categories.forEach(c => allCategories.add(c));
     });
 
-    // Fallback if currentTab is no longer valid
-    if (currentTab !== 'All' && !allCategories.has(currentTab)) {
-        currentTab = 'All';
-    }
+    if (currentTab !== 'All' && !allCategories.has(currentTab)) currentTab = 'All';
 
-    // Render Tabs
     const tabsHTML =['All', ...Array.from(allCategories)].map(cat => {
         const isActive = cat === currentTab ? 'active' : '';
         return `<button class="tab-btn ${isActive}" onclick="setTab('${cat}')">${cat}</button>`;
     }).join('');
     tabsContainer.innerHTML = tabsHTML;
 
-    // Filter Mods by Tab
     const visibleMods = currentTab === 'All' 
         ? state.selectedMods 
         : state.selectedMods.filter(m => m.categories && m.categories.includes(currentTab));
     
-    // Render Mod Cards
     list.innerHTML = visibleMods.map(mod => `
         <div class="card" style="border-color: var(--green-dim)">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -285,7 +226,6 @@ window.removeMod = (id) => {
     saveToLocalStorage();
 };
 
-// 7. Config Export/Import
 function exportConfig() {
     const configData = JSON.stringify(state, null, 2);
     const blob = new Blob([configData], { type: 'application/json' });
@@ -299,35 +239,22 @@ function exportConfig() {
 function importConfig(e) {
     const file = e.target.files[0];
     if (!file) return;
-    
     const reader = new FileReader();
     reader.onload = async (event) => {
         try {
             state = JSON.parse(event.target.result);
-            currentTab = 'All'; // Reset tab on import
-            
-            // Sync UI inputs
+            currentTab = 'All';
             const picker = document.getElementById('version-picker');
-            if (picker.querySelector(`option[value="${state.version}"]`)) {
-                picker.value = state.version;
-            }
-            
+            if (picker.querySelector(`option[value="${state.version}"]`)) picker.value = state.version;
             document.querySelectorAll('.loader-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.loader === state.loader);
             });
-            
-            // Force re-validation of imported mods to ensure API data & categories are correct
             await revalidateMods();
-            
-            alert("Configuration Override Successful.");
-        } catch (err) {
-            alert("Invalid JSON configuration file.");
-        }
+        } catch (err) {}
     };
     reader.readAsText(file);
 }
 
-// Helpers
 function setupEventListeners() {
     let timeout;
     document.getElementById('mod-search').addEventListener('input', (e) => {
@@ -367,12 +294,9 @@ function loadFromLocalStorage() {
         try {
             state = JSON.parse(saved);
             renderSelectedMods();
-            // Sync initial UI elements
             document.querySelectorAll('.loader-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.loader === state.loader);
             });
-        } catch (e) {
-            console.error("Failed to parse local storage", e);
-        }
+        } catch (e) {}
     }
 }
