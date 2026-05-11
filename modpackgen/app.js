@@ -2,22 +2,27 @@ lucide.createIcons();
 
 const state = {
     selectedMods: [], 
-    processing: new Set(), // Tracks IDs/Slugs currently being fetched to prevent duplicates
+    processing: new Set(), 
     searchTimeout: null
 };
 
 async function init() {
     try {
+        // 1. Populate Game Version Dropdown (Filtering for actual Minecraft versions)
         const res = await fetch('https://api.modrinth.com/v2/tag/game_version');
         const data = await res.json();
         const select = document.getElementById('game-version');
-        data.filter(v => v.version_type === 'release').slice(0, 25).forEach(v => {
-            const opt = document.createElement('option');
-            opt.value = v.version; opt.textContent = v.version;
-            select.appendChild(opt);
-        });
+        
+        data.filter(v => v.version_type === 'release' && v.version.includes('.'))
+            .slice(0, 30)
+            .forEach(v => {
+                const opt = document.createElement('option');
+                opt.value = v.version; opt.textContent = v.version;
+                select.appendChild(opt);
+            });
         select.value = "1.20.1";
 
+        // 2. Load Addons from data.json
         const addonRes = await fetch('data.json');
         const addonData = await addonRes.json();
         const list = document.getElementById('addon-list');
@@ -39,34 +44,38 @@ async function init() {
  * COMPATIBILITY & DEPENDENCIES
  */
 
+// Corrected: Uses loaders and game_versions parameters for the version endpoint
 async function getProjectVersions(projectId) {
     const loader = document.getElementById('mod-loader').value.toLowerCase();
     const version = document.getElementById('game-version').value;
-    const facets = JSON.stringify([
-        [`categories:${loader}`],
-        [`versions:${version}`]
-    ]);
-    const res = await fetch(`https://api.modrinth.com/v2/project/${projectId}/version?facets=${encodeURIComponent(facets)}`);
+    
+    // The version endpoint expects arrays as strings: ["fabric"]
+    const url = `https://api.modrinth.com/v2/project/${projectId}/version?loaders=["${loader}"]&game_versions=["${version}"]`;
+    const res = await fetch(url);
     return await res.json();
 }
 
 async function validateAllMods() {
-    document.getElementById('mod-count-tag').textContent = "...";
+    const badge = document.getElementById('mod-count-tag');
+    badge.textContent = "...";
+    
     const validMods = [];
     for (const mod of state.selectedMods) {
         const versions = await getProjectVersions(mod.id);
-        if (versions.length > 0) validMods.push(mod);
+        if (versions.length > 0) {
+            validMods.push(mod);
+        }
     }
     state.selectedMods = validMods;
     renderWorkspace();
-    search();
+    search(); // Refresh search to show correct compatibility
 }
 
 async function addWithDependencies(idOrSlug) {
-    // 1. Immediate duplicate check (against existing selection)
+    // 1. Duplicate check (ID or Slug)
     if (state.selectedMods.some(m => m.id === idOrSlug || m.slug === idOrSlug)) return;
     
-    // 2. Race condition check (against mods currently being fetched)
+    // 2. Race condition check
     if (state.processing.has(idOrSlug)) return;
     state.processing.add(idOrSlug);
 
@@ -75,15 +84,13 @@ async function addWithDependencies(idOrSlug) {
         if (!pRes.ok) throw new Error("Project not found");
         const project = await pRes.json();
 
-        // 3. Re-check using the real project ID now that we have it
-        if (state.selectedMods.some(m => m.id === project.id)) {
-            state.processing.delete(idOrSlug);
-            return;
-        }
+        // 3. Re-check using real ID
+        if (state.selectedMods.some(m => m.id === project.id)) return;
 
+        // 4. Strict Version Check
         const vData = await getProjectVersions(project.id);
         if (vData.length === 0) {
-            state.processing.delete(idOrSlug);
+            console.warn(`${project.title} is not compatible with current settings.`);
             return; 
         }
 
@@ -96,7 +103,7 @@ async function addWithDependencies(idOrSlug) {
             categories: project.categories
         });
 
-        // Resolve dependencies
+        // 5. Resolve Required Dependencies
         if (currentVersion.dependencies) {
             for (const dep of currentVersion.dependencies) {
                 if (dep.dependency_type === "required") {
@@ -107,7 +114,7 @@ async function addWithDependencies(idOrSlug) {
         }
         
         renderWorkspace();
-        search(); // Refresh search icons
+        search();
     } catch (e) {
         console.error("Error adding mod:", idOrSlug, e);
     } finally {
@@ -116,6 +123,7 @@ async function addWithDependencies(idOrSlug) {
 }
 
 async function addAddon(slugs) {
+    // Sequential add to ensure dependency tree stays clean
     for (const slug of slugs) {
         await addWithDependencies(slug);
     }
@@ -131,6 +139,7 @@ async function search() {
     const version = document.getElementById('game-version').value;
     const container = document.getElementById('search-results');
 
+    // Strict facets for search endpoint
     const facets = JSON.stringify([
         [`categories:${loader}`],
         [`versions:${version}`],
@@ -151,7 +160,7 @@ async function search() {
         
         container.innerHTML = '';
         if (data.hits.length === 0) {
-            container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--dim)">No compatible results.</div>`;
+            container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--dim)">No compatible results for ${loader} ${version}.</div>`;
             return;
         }
 
@@ -238,12 +247,13 @@ document.getElementById('export-btn').onclick = async () => {
     if (state.selectedMods.length === 0) return;
     const btn = document.getElementById('export-btn');
     btn.disabled = true;
+    const originalText = btn.innerHTML;
     btn.innerHTML = `<i data-lucide="loader"></i> <span>Exporting...</span>`;
     lucide.createIcons();
 
     try {
         const zip = new JSZip();
-        const loader = document.getElementById('mod-loader').value;
+        const loader = document.getElementById('mod-loader').value.toLowerCase();
         const gameVer = document.getElementById('game-version').value;
         const packName = document.getElementById('pack-name').value || "Modpack";
 
@@ -278,9 +288,10 @@ document.getElementById('export-btn').onclick = async () => {
         a.click();
     } catch (e) {
         alert("Export failed!");
+        console.error(e);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<i data-lucide="download"></i> <span>Export .mrpack</span>`;
+        btn.innerHTML = originalText;
         lucide.createIcons();
     }
 };
