@@ -1,10 +1,10 @@
 :root {
     --bg: #0d0d0d;
-    --panel-bg: rgba(18, 18, 18, 0.8);
-    --cyan: #00f2ff;
-    --purple: #bc00ff;
-    --border: rgba(0, 242, 255, 0.2);
-    --border-hover: rgba(188, 0, 255, 0.5);
+    --panel-bg: rgba(10, 15, 10, 0.85);
+    --green: #4af626;      /* Bright Terminal Green */
+    --green-dim: #2b8a15;  /* Dimmer accent green */
+    --border: rgba(74, 246, 38, 0.3);
+    --border-hover: rgba(74, 246, 38, 0.8);
     --text: #e0e0e0;
     --mono: 'JetBrains Mono', monospace;
     --display: 'Syne', sans-serif;
@@ -36,7 +36,7 @@ body {
     position: fixed;
     top: -10%; left: 50%; transform: translateX(-50%);
     width: 80vw; height: 60vh;
-    background: radial-gradient(circle, rgba(188, 0, 255, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(74, 246, 38, 0.05) 0%, transparent 70%);
     pointer-events: none;
     z-index: -1;
 }
@@ -63,8 +63,8 @@ header {
     letter-spacing: -1px;
 }
 
-.cyan { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
-.purple { color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+.green { color: var(--green); text-shadow: 0 0 10px var(--green); }
+.dim-green { color: var(--green-dim); }
 
 .blink { animation: blink 1s infinite; }
 @keyframes blink { 50% { opacity: 0; } }
@@ -86,8 +86,9 @@ header {
     font-family: var(--display);
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
-    color: var(--cyan);
+    color: var(--green);
     text-transform: uppercase;
+    text-shadow: 0 0 5px rgba(74, 246, 38, 0.4);
 }
 
 .setup-grid {
@@ -100,7 +101,7 @@ header {
     display: block;
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
-    color: var(--purple);
+    color: var(--green-dim);
 }
 
 select, input[type="text"] {
@@ -111,6 +112,11 @@ select, input[type="text"] {
     padding: 0.8rem;
     font-family: var(--mono);
     outline: none;
+    transition: 0.2s;
+}
+select:focus, input[type="text"]:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 10px rgba(74, 246, 38, 0.2);
 }
 
 .loader-btns { display: flex; gap: 0.5rem; }
@@ -126,11 +132,15 @@ select, input[type="text"] {
     text-align: center;
 }
 
+.loader-btn:hover, .nav-btn:hover {
+    background: rgba(74, 246, 38, 0.1);
+}
+
 .loader-btn.active {
-    background: var(--cyan);
+    background: var(--green);
     color: #000;
     font-weight: bold;
-    box-shadow: 0 0 15px var(--cyan);
+    box-shadow: 0 0 15px rgba(74, 246, 38, 0.5);
 }
 
 /* Mod Cards */
@@ -139,25 +149,60 @@ select, input[type="text"] {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
 }
+.search-results {
+    margin-top: 1.5rem; /* FIXED SPACING ISSUE */
+}
 
 .card {
     border: 1px solid var(--border);
     padding: 1rem;
     cursor: pointer;
     transition: 0.2s;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .card:hover {
-    background: rgba(0, 242, 255, 0.05);
-    border-color: var(--cyan);
+    background: rgba(74, 246, 38, 0.05);
+    border-color: var(--green);
+    box-shadow: 0 0 10px rgba(74, 246, 38, 0.1);
 }
 
-.card h4 { color: var(--cyan); margin-bottom: 0.5rem; }
+.card h4 { color: var(--green); margin-bottom: 0.5rem; }
 .card p { font-size: 0.75rem; color: #888; }
+.placeholder-text { color: #666; font-size: 0.9rem; font-style: italic; }
+
+/* Dynamic Tabs */
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+}
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--green-dim);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: color 0.2s;
+    white-space: nowrap;
+    padding-bottom: 4px;
+}
+.tab-btn:hover { color: var(--green); }
+.tab-btn.active {
+    color: var(--green);
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(74, 246, 38, 0.5);
+    border-bottom: 2px solid var(--green);
+}
 
 /* AI Placeholder */
 .ai-placeholder {
-    border: 1px dashed var(--purple);
+    border: 1px dashed var(--green-dim);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -165,7 +210,7 @@ select, input[type="text"] {
 
 .progress-bar-loading {
     height: 2px;
-    background: var(--purple);
+    background: var(--green);
     width: 30%;
     margin: 1rem auto 0;
     animation: loading 2s infinite ease-in-out;
