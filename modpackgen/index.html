@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Modpack Architect</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -36,12 +36,10 @@
                         </select>
                     </div>
 
-                    <div class="panel-header" style="margin-top:20px; padding-left:0">
+                    <div class="panel-header" style="margin-top:20px; padding-left:0; border-bottom: none;">
                         <i data-lucide="package-plus"></i> ADDONS
                     </div>
-                    <div id="addon-list" class="addon-stack">
-                        <!-- Populated by JS -->
-                    </div>
+                    <div id="addon-list" class="addon-stack"></div>
                 </div>
             </aside>
 
@@ -51,9 +49,7 @@
                     <i data-lucide="search"></i>
                     <input type="text" id="mod-search" placeholder="Search Modrinth mods...">
                 </div>
-                <div id="search-results" class="panel-content scrollable results-list">
-                    <!-- Search items go here -->
-                </div>
+                <div id="search-results" class="panel-content scrollable results-list"></div>
             </section>
 
             <!-- COLUMN 3: SELECTED MODS -->
@@ -62,9 +58,7 @@
                     <span><i data-lucide="list-checks"></i> SELECTION</span>
                     <span id="mod-count-tag" class="badge">0</span>
                 </div>
-                <div id="manifest-content" class="panel-content scrollable">
-                    <!-- Categories go here -->
-                </div>
+                <div id="manifest-content" class="panel-content scrollable"></div>
             </section>
         </main>
 
