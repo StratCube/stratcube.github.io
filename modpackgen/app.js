@@ -1,7 +1,8 @@
 const CONFIG = {
     MODRINTH_API: 'https://api.modrinth.com/v2',
-    USER_AGENT: 'ModpackGen/1.0 (contact@yourdomain.com)', // Modrinth requires a user-agent to prevent blocks
-    LOCAL_STORAGE_KEY: 'modpack_gen_state'
+    USER_AGENT: 'ModpackGen/1.0 (contact@yourdomain.com)',
+    LOCAL_STORAGE_KEY: 'modpack_gen_state',
+    IGNORE_CATEGORIES:['fabric', 'forge', 'quilt', 'neoforge', 'modpack', 'resourcepack']
 };
 
 let state = {
@@ -11,28 +12,26 @@ let state = {
     selectedMods:[] 
 };
 
+let currentTab = 'All'; // Keeps track of the active category tab
+
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
     setupEventListeners();
-    await fetchVersions(); // Now dynamically fetches all Minecraft versions!
+    await fetchVersions();
     await loadBases();
     loadFromLocalStorage();
 });
 
-// 1. Dynamically Fetch Game Versions from Modrinth
+// 1. Fetch Game Versions
 async function fetchVersions() {
     const picker = document.getElementById('version-picker');
     picker.innerHTML = '<option>Loading versions...</option>';
-    
     try {
         const response = await fetch(`${CONFIG.MODRINTH_API}/tag/game_version`);
         const versionsData = await response.json();
         
         picker.innerHTML = '';
-        
-        // Filter out snapshots, only show stable releases
         const releases = versionsData.filter(v => v.version_type === 'release');
-        
         releases.forEach(v => {
             const opt = document.createElement('option');
             opt.value = v.version;
@@ -40,7 +39,6 @@ async function fetchVersions() {
             picker.appendChild(opt);
         });
         
-        // Check if saved state version exists, otherwise default to latest
         if (releases.some(v => v.version === state.version)) {
             picker.value = state.version;
         } else if (releases.length > 0) {
@@ -48,7 +46,6 @@ async function fetchVersions() {
             picker.value = state.version;
         }
     } catch (err) {
-        console.error("Failed to fetch versions:", err);
         picker.innerHTML = '<option value="1.20.1">1.20.1 (Offline Fallback)</option>';
     }
 }
@@ -60,7 +57,7 @@ async function loadBases() {
         const data = await response.json();
         const container = document.getElementById('base-container');
 
-        container.innerHTML = ''; // Clear container
+        container.innerHTML = '';
         data.bases.forEach(base => {
             const el = document.createElement('div');
             el.className = 'card';
@@ -72,12 +69,38 @@ async function loadBases() {
             container.appendChild(el);
         });
     } catch (err) {
-        console.error("Error loading bases:", err);
         document.getElementById('base-container').innerHTML = '<p style="color: red;">Failed to load data.json</p>';
     }
 }
 
-// 3. Modrinth API Integration
+// 3. API Mod Compatibility Checker
+// Checks Modrinth to see if a mod actually supports the chosen version & loader
+async function getValidModData(slug, version, loader) {
+    try {
+        const verRes = await fetch(`${CONFIG.MODRINTH_API}/project/${slug}/version?game_versions=["${version}"]&loaders=["${loader}"]`, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
+        if (!verRes.ok) return null;
+        
+        const versions = await verRes.json();
+        if (versions.length === 0) return null; // Incompatible!
+        
+        // Fetch full project data to get title, ID, and thematic categories
+        const projRes = await fetch(`${CONFIG.MODRINTH_API}/project/${slug}`, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
+        if (!projRes.ok) return null;
+        
+        const project = await projRes.json();
+        return {
+            id: project.id,
+            slug: project.slug,
+            title: project.title,
+            categories: project.categories.filter(c => !CONFIG.IGNORE_CATEGORIES.includes(c))
+        };
+    } catch (e) {
+        console.error(`Validation error for ${slug}:`, e);
+        return null;
+    }
+}
+
+// 4. Modrinth UI Search Integration
 async function searchMods(query) {
     const resultsContainer = document.getElementById('search-results');
     
@@ -86,20 +109,16 @@ async function searchMods(query) {
         return;
     }
     
-    resultsContainer.innerHTML = '<p class="purple">Searching Data-Streams...</p>';
+    resultsContainer.innerHTML = '<p class="green blink">Searching Data-Streams...</p>';
 
     try {
-        // Proper URL-encoding for the facets array
         const facets = `[["versions:${state.version}"],["categories:${state.loader}"]]`;
         const url = `${CONFIG.MODRINTH_API}/search?query=${encodeURIComponent(query)}&facets=${encodeURIComponent(facets)}`;
         
-        const response = await fetch(url, {
-            headers: { 'User-Agent': CONFIG.USER_AGENT }
-        });
-        
+        const response = await fetch(url, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
         const data = await response.json();
-
         resultsContainer.innerHTML = '';
         
         if (data.hits.length === 0) {
@@ -114,16 +133,20 @@ async function searchMods(query) {
                 <h4>${mod.title}</h4>
                 <p>${mod.description.substring(0, 60)}...</p>
             `;
-            el.onclick = () => addMod({ id: mod.project_id, title: mod.title, slug: mod.slug });
+            el.onclick = () => addMod({ 
+                id: mod.project_id, 
+                title: mod.title, 
+                slug: mod.slug,
+                categories: mod.categories ? mod.categories.filter(c => !CONFIG.IGNORE_CATEGORIES.includes(c)) :[]
+            });
             resultsContainer.appendChild(el);
         });
     } catch (err) {
-        console.error("Search API Error:", err);
         resultsContainer.innerHTML = '<p style="color: red;">API Error: Could not fetch mods.</p>';
     }
 }
 
-// 4. State Management
+// 5. State Management & Filtering
 function addMod(mod) {
     if (!state.selectedMods.find(m => m.id === mod.id)) {
         state.selectedMods.push(mod);
@@ -132,28 +155,125 @@ function addMod(mod) {
     }
 }
 
-function selectBase(base) {
+// Validates a base before applying
+async function selectBase(base) {
     state.selectedBase = base.id;
-    // Add default mods from base
-    base.default_mods.forEach(slug => {
-        addMod({ id: slug, title: slug, slug: slug });
-    });
+    
+    let addedCount = 0;
+    let skippedMods =[];
+
+    // Notify user validation is running
+    const list = document.getElementById('selected-mods');
+    list.innerHTML = '<p class="green blink">Validating Base Mods via API...</p>';
+
+    for (const slug of base.default_mods) {
+        const modData = await getValidModData(slug, state.version, state.loader);
+        if (modData) {
+            // Check if already in list
+            if (!state.selectedMods.find(m => m.id === modData.id)) {
+                state.selectedMods.push(modData);
+                addedCount++;
+            }
+        } else {
+            skippedMods.push(slug);
+        }
+    }
+    
     saveToLocalStorage();
-    alert(`Base "${base.name}" applied. Data-streams updated.`);
+    renderSelectedMods();
+    
+    let msg = `Base "${base.name}" applied.\nAdded ${addedCount} valid mods.`;
+    if (skippedMods.length > 0) {
+        msg += `\nSkipped incompatible mods: ${skippedMods.join(', ')}`;
+    }
+    alert(msg);
 }
+
+// Re-checks all currently selected mods against new version/loader params
+async function revalidateMods() {
+    if (state.selectedMods.length === 0) return;
+    
+    const list = document.getElementById('selected-mods');
+    list.innerHTML = '<p class="green blink">Re-evaluating mod compatibilities...</p>';
+
+    // Use Promise.all to fetch them concurrently for speed
+    const validationPromises = state.selectedMods.map(async (mod) => {
+        const modData = await getValidModData(mod.slug, state.version, state.loader);
+        return { oldMod: mod, newModData: modData };
+    });
+
+    const results = await Promise.all(validationPromises);
+    
+    let validMods = [];
+    let removedMods =[];
+    
+    for (const res of results) {
+        if (res.newModData) {
+            validMods.push(res.newModData);
+        } else {
+            removedMods.push(res.oldMod.title);
+        }
+    }
+
+    state.selectedMods = validMods;
+    saveToLocalStorage();
+    renderSelectedMods();
+
+    if (removedMods.length > 0) {
+        alert(`The following mods were removed as they are incompatible with ${state.loader} ${state.version}:\n\n- ${removedMods.join('\n- ')}`);
+    }
+}
+
+// 6. Dynamic Rendering & Tabs
+window.setTab = (tab) => {
+    currentTab = tab;
+    renderSelectedMods();
+};
 
 function renderSelectedMods() {
     const list = document.getElementById('selected-mods');
+    const tabsContainer = document.getElementById('category-tabs');
+    
     if (state.selectedMods.length === 0) {
         list.innerHTML = '<p class="placeholder-text">No mods selected yet.</p>';
+        tabsContainer.innerHTML = '';
         return;
     }
     
-    list.innerHTML = state.selectedMods.map(mod => `
-        <div class="card" style="border-color: var(--purple)">
+    // Extract unique categories for tabs
+    const allCategories = new Set();
+    state.selectedMods.forEach(mod => {
+        if (mod.categories) mod.categories.forEach(c => allCategories.add(c));
+    });
+
+    // Fallback if currentTab is no longer valid
+    if (currentTab !== 'All' && !allCategories.has(currentTab)) {
+        currentTab = 'All';
+    }
+
+    // Render Tabs
+    const tabsHTML =['All', ...Array.from(allCategories)].map(cat => {
+        const isActive = cat === currentTab ? 'active' : '';
+        return `<button class="tab-btn ${isActive}" onclick="setTab('${cat}')">${cat}</button>`;
+    }).join('');
+    tabsContainer.innerHTML = tabsHTML;
+
+    // Filter Mods by Tab
+    const visibleMods = currentTab === 'All' 
+        ? state.selectedMods 
+        : state.selectedMods.filter(m => m.categories && m.categories.includes(currentTab));
+    
+    // Render Mod Cards
+    list.innerHTML = visibleMods.map(mod => `
+        <div class="card" style="border-color: var(--green-dim)">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span>${mod.title}</span>
-                <span onclick="removeMod('${mod.id}')" style="color:var(--purple); cursor:pointer; font-weight:bold; padding:0 5px;">X</span>
+                <div>
+                    <span style="font-weight:bold; color:var(--text);">${mod.title}</span>
+                    <div style="font-size:0.65rem; color:var(--green-dim); margin-top:6px; text-transform:capitalize;">
+                        ${(mod.categories ||[]).join(' • ')}
+                    </div>
+                </div>
+                <span onclick="removeMod('${mod.id}')" style="color:var(--green); cursor:pointer; font-weight:bold; padding:0 5px; font-size:1.2rem;">×</span>
             </div>
         </div>
     `).join('');
@@ -165,7 +285,7 @@ window.removeMod = (id) => {
     saveToLocalStorage();
 };
 
-// 5. Config Export/Import
+// 7. Config Export/Import
 function exportConfig() {
     const configData = JSON.stringify(state, null, 2);
     const blob = new Blob([configData], { type: 'application/json' });
@@ -181,10 +301,10 @@ function importConfig(e) {
     if (!file) return;
     
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
         try {
             state = JSON.parse(event.target.result);
-            renderSelectedMods();
+            currentTab = 'All'; // Reset tab on import
             
             // Sync UI inputs
             const picker = document.getElementById('version-picker');
@@ -196,8 +316,10 @@ function importConfig(e) {
                 btn.classList.toggle('active', btn.dataset.loader === state.loader);
             });
             
+            // Force re-validation of imported mods to ensure API data & categories are correct
+            await revalidateMods();
+            
             alert("Configuration Override Successful.");
-            saveToLocalStorage();
         } catch (err) {
             alert("Invalid JSON configuration file.");
         }
@@ -207,26 +329,26 @@ function importConfig(e) {
 
 // Helpers
 function setupEventListeners() {
-    // Search with debounce to prevent spamming the API
     let timeout;
     document.getElementById('mod-search').addEventListener('input', (e) => {
         clearTimeout(timeout);
         timeout = setTimeout(() => searchMods(e.target.value), 600);
     });
 
-    // Version/Loader pickers update state and trigger a new search
-    document.getElementById('version-picker').addEventListener('change', (e) => {
+    document.getElementById('version-picker').addEventListener('change', async (e) => {
         state.version = e.target.value;
         saveToLocalStorage();
+        await revalidateMods();
         searchMods(document.getElementById('mod-search').value); 
     });
 
-    document.getElementById('loader-picker').addEventListener('click', (e) => {
+    document.getElementById('loader-picker').addEventListener('click', async (e) => {
         if (e.target.classList.contains('loader-btn')) {
             state.loader = e.target.dataset.loader;
             document.querySelectorAll('.loader-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
             saveToLocalStorage();
+            await revalidateMods();
             searchMods(document.getElementById('mod-search').value);
         }
     });
@@ -245,6 +367,10 @@ function loadFromLocalStorage() {
         try {
             state = JSON.parse(saved);
             renderSelectedMods();
+            // Sync initial UI elements
+            document.querySelectorAll('.loader-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.loader === state.loader);
+            });
         } catch (e) {
             console.error("Failed to parse local storage", e);
         }
