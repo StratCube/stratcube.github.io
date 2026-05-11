@@ -8,14 +8,15 @@ const CONFIG = {
 let state = {
     version: '1.20.1', 
     loader: 'fabric',
-    selectedBase: null,
-    selectedAddons:[], // Array of addon IDs
-    selectedMods:[] // Objects: {id, title, slug, categories, source: 'manual'|'base'|'addon_ID'}
+    selectedBase: "",
+    selectedAddons:[], 
+    // Now stores: {id, title, slug, categories, source, availableVersions:[], selectedVersionId: ''}
+    selectedMods:[] 
 };
 
-let globalData = { bases: [], addons:[] }; // Stores data.json
+let globalData = { bases: [], addons:[] };
 let currentTab = 'All';
-let currentSearchResults =[]; // Stores the last search to update UI instantly
+let currentSearchResults =[]; // Cache to quickly lookup data without string escaping issues
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
@@ -51,29 +52,25 @@ async function loadJSONData() {
     try {
         const response = await fetch('data.json');
         globalData = await response.json();
-        renderBaseDropdown();
+        renderBasePicker();
         renderAddons();
     } catch (err) {
         console.error('Failed to load data.json', err);
     }
 }
 
-// --- UI COMPONENTS: DROPDOWN & ADDONS ---
-function renderBaseDropdown() {
-    const list = document.getElementById('base-list');
-    list.innerHTML = `<div class="dropdown-item ${!state.selectedBase ? 'active' : ''}" onclick="selectBase(null)">None</div>`;
+// --- UI COMPONENTS ---
+function renderBasePicker() {
+    const picker = document.getElementById('base-picker');
+    picker.innerHTML = '<option value="">No Base Selected</option>';
     
     globalData.bases.forEach(base => {
-        const isActive = state.selectedBase === base.id ? 'active' : '';
-        list.innerHTML += `<div class="dropdown-item ${isActive}" onclick="selectBase('${base.id}')">${base.icon} ${base.name}</div>`;
+        const opt = document.createElement('option');
+        opt.value = base.id;
+        opt.textContent = `${base.icon} ${base.name}`;
+        if (state.selectedBase === base.id) opt.selected = true;
+        picker.appendChild(opt);
     });
-    updateBaseDropdownText();
-}
-
-function updateBaseDropdownText() {
-    const textEl = document.getElementById('base-dropdown-text');
-    const base = globalData.bases.find(b => b.id === state.selectedBase);
-    textEl.innerHTML = base ? `<span>${base.icon} ${base.name}</span><span>▼</span>` : `<span>No Base Selected</span><span>▼</span>`;
 }
 
 function renderAddons() {
@@ -85,14 +82,22 @@ function renderAddons() {
     });
 }
 
-// --- CORE LOGIC: API VALIDATION ---
+// --- CORE API: FETCH MOD & ALL COMPATIBLE VERSIONS ---
 async function getValidModData(slug, version, loader) {
     try {
+        // Get versions compatible with current game_version & loader
         const verRes = await fetch(`${CONFIG.MODRINTH_API}/project/${slug}/version?game_versions=["${version}"]&loaders=["${loader}"]`, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
         if (!verRes.ok) return null;
-        const versions = await verRes.json();
-        if (versions.length === 0) return null;
+        const versionsList = await verRes.json();
+        if (versionsList.length === 0) return null;
         
+        // Map available versions (API usually sorts newest to oldest)
+        const availableVersions = versionsList.map(v => ({
+            id: v.id,
+            number: v.version_number
+        }));
+        
+        // Get generic project metadata
         const projRes = await fetch(`${CONFIG.MODRINTH_API}/project/${slug}`, { headers: { 'User-Agent': CONFIG.USER_AGENT } });
         if (!projRes.ok) return null;
         const project = await projRes.json();
@@ -101,23 +106,22 @@ async function getValidModData(slug, version, loader) {
             id: project.id,
             slug: project.slug,
             title: project.title,
-            categories: project.categories.filter(c => !CONFIG.IGNORE_CATEGORIES.includes(c))
+            categories: project.categories.filter(c => !CONFIG.IGNORE_CATEGORIES.includes(c)),
+            availableVersions: availableVersions,
+            selectedVersionId: availableVersions[0].id // Default to the latest valid version
         };
     } catch (e) { return null; }
 }
 
 // --- CORE LOGIC: BASE & ADDON SELECTION ---
 async function selectBase(baseId) {
-    document.getElementById('base-dropdown').classList.remove('open');
-    
-    // Remove old base mods
+    // Clear old base mods
     state.selectedMods = state.selectedMods.filter(m => m.source !== 'base');
     state.selectedBase = baseId;
-    renderBaseDropdown();
     
     if (baseId) {
         const base = globalData.bases.find(b => b.id === baseId);
-        document.getElementById('selected-mods').innerHTML = '<p class="green blink">Validating Base Mods via API...</p>';
+        document.getElementById('selected-mods').innerHTML = '<p class="green blink">Fetching Base Versions via API...</p>';
         for (const slug of base.default_mods) {
             const modData = await getValidModData(slug, state.version, state.loader);
             if (modData && !state.selectedMods.find(m => m.id === modData.id)) {
@@ -129,17 +133,16 @@ async function selectBase(baseId) {
     
     saveToLocalStorage();
     renderSelectedMods();
-    renderSearchResultsHTML(); // Update search UI highlight
+    renderSearchResultsHTML(); 
 }
 
 async function toggleAddon(addonId) {
     const isAdding = !state.selectedAddons.includes(addonId);
-    
     if (isAdding) {
         state.selectedAddons.push(addonId);
         renderAddons();
         const addon = globalData.addons.find(a => a.id === addonId);
-        document.getElementById('selected-mods').innerHTML = '<p class="green blink">Validating Addon Mods via API...</p>';
+        document.getElementById('selected-mods').innerHTML = '<p class="green blink">Fetching Addon Versions via API...</p>';
         
         for (const slug of addon.default_mods) {
             const modData = await getValidModData(slug, state.version, state.loader);
@@ -149,7 +152,6 @@ async function toggleAddon(addonId) {
             }
         }
     } else {
-        // Remove addon
         state.selectedAddons = state.selectedAddons.filter(id => id !== addonId);
         state.selectedMods = state.selectedMods.filter(m => m.source !== `addon_${addonId}`);
         renderAddons();
@@ -191,7 +193,6 @@ async function performSearch() {
     }
 }
 
-// Dynamically draws search results and checks if they are currently "selected"
 function renderSearchResultsHTML() {
     const container = document.getElementById('search-results');
     if (!currentSearchResults || currentSearchResults.length === 0) {
@@ -199,12 +200,13 @@ function renderSearchResultsHTML() {
         return;
     }
 
+    // Generate HTML using ONLY the project_id to avoid quote escaping issues
     container.innerHTML = currentSearchResults.map(mod => {
         const isSelected = state.selectedMods.some(m => m.id === mod.project_id);
         const activeClass = isSelected ? 'selected' : '';
         
         return `
-            <div class="card ${activeClass}" onclick="toggleSearchMod('${mod.project_id}', '${mod.slug}', '${mod.title.replace(/'/g, "\\'")}', '${(mod.categories ||[]).join(',')}')">
+            <div class="card ${activeClass}" onclick="toggleSearchMod('${mod.project_id}')">
                 <h4>${mod.title}</h4>
                 <p>${mod.description.substring(0, 60)}...</p>
             </div>
@@ -212,29 +214,58 @@ function renderSearchResultsHTML() {
     }).join('');
 }
 
-window.toggleSearchMod = (id, slug, title, categoriesStr) => {
-    const exists = state.selectedMods.find(m => m.id === id);
-    if (exists) {
+// Fixed toggling to safely use API hit data + fetch versions
+window.toggleSearchMod = async (projectId) => {
+    const existsIndex = state.selectedMods.findIndex(m => m.id === projectId);
+    
+    if (existsIndex > -1) {
         // Remove it
-        state.selectedMods = state.selectedMods.filter(m => m.id !== id);
+        state.selectedMods.splice(existsIndex, 1);
+        saveToLocalStorage();
+        renderSelectedMods();
+        renderSearchResultsHTML();
     } else {
-        // Add it
-        const categories = categoriesStr ? categoriesStr.split(',').filter(c => !CONFIG.IGNORE_CATEGORIES.includes(c)) :[];
-        state.selectedMods.push({ id, slug, title, categories, source: 'manual' });
+        // Add it by fetching its versions
+        const hit = currentSearchResults.find(h => h.project_id === projectId);
+        if (!hit) return; // Should not happen
+
+        document.getElementById('search-results').innerHTML = '<p class="green blink">Fetching file versions...</p>';
+        
+        const modData = await getValidModData(hit.slug, state.version, state.loader);
+        if (modData) {
+            modData.source = 'manual';
+            state.selectedMods.push(modData);
+        }
+        
+        saveToLocalStorage();
+        renderSelectedMods();
+        renderSearchResultsHTML(); // Restores search view
     }
-    saveToLocalStorage();
-    renderSelectedMods();
-    renderSearchResultsHTML(); // Update the green highlight instantly
 };
 
-// --- CORE LOGIC: REVALIDATION ON VERSION/LOADER SWAP ---
+// Update specific mod version via dropdown
+window.updateModVersion = (modId, newVersionId) => {
+    const mod = state.selectedMods.find(m => m.id === modId);
+    if (mod) {
+        mod.selectedVersionId = newVersionId;
+        saveToLocalStorage();
+    }
+};
+
+// --- CORE LOGIC: REVALIDATION ---
 async function revalidateMods() {
     if (state.selectedMods.length === 0) return;
-    document.getElementById('selected-mods').innerHTML = '<p class="green blink">Re-evaluating compatibilities...</p>';
+    document.getElementById('selected-mods').innerHTML = '<p class="green blink">Re-evaluating compatibilities & fetching new versions...</p>';
 
     const validationPromises = state.selectedMods.map(async (mod) => {
         const modData = await getValidModData(mod.slug, state.version, state.loader);
-        if (modData) modData.source = mod.source; // Preserve where it came from
+        if (modData) {
+            modData.source = mod.source; // Keep its original source (base, addon, manual)
+            // Try to keep the same version if it exists in the new list, else it falls back to the latest
+            if (modData.availableVersions.some(v => v.id === mod.selectedVersionId)) {
+                modData.selectedVersionId = mod.selectedVersionId;
+            }
+        }
         return modData;
     });
 
@@ -270,20 +301,31 @@ function renderSelectedMods() {
 
     const visibleMods = currentTab === 'All' ? state.selectedMods : state.selectedMods.filter(m => m.categories && m.categories.includes(currentTab));
     
-    list.innerHTML = visibleMods.map(mod => `
+    list.innerHTML = visibleMods.map(mod => {
+        // Generate the version dropdown options
+        const versionOptions = mod.availableVersions.map(v => 
+            `<option value="${v.id}" ${mod.selectedVersionId === v.id ? 'selected' : ''}>${v.number}</option>`
+        ).join('');
+
+        return `
         <div class="card" style="border-color: var(--green-dim)">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
+            <div style="display:flex; justify-content:space-between; align-items:start;">
+                <div style="width: 100%;">
                     <span style="font-weight:bold; color:var(--text);">${mod.title}</span>
-                    <div style="font-size:0.65rem; color:var(--green-dim); margin-top:6px; text-transform:capitalize;">
+                    <div style="font-size:0.65rem; color:var(--green-dim); margin-top:4px; text-transform:capitalize;">
                         ${(mod.categories ||[]).join(' • ')} 
-                        ${mod.source !== 'manual' ? `<span style="color:#888;">[${mod.source}]</span>` : ''}
+                        ${mod.source !== 'manual' ? `<span style="color:#888;">[${mod.source.split('_')[0]}]</span>` : ''}
                     </div>
+                    <!-- Version Picker Dropdown -->
+                    <select class="mod-version-select" onchange="updateModVersion('${mod.id}', this.value)">
+                        ${versionOptions}
+                    </select>
                 </div>
-                <span onclick="toggleSearchMod('${mod.id}')" style="color:var(--green); cursor:pointer; font-weight:bold; padding:0 5px; font-size:1.2rem;">×</span>
+                <span onclick="toggleSearchMod('${mod.id}')" style="color:var(--green); cursor:pointer; font-weight:bold; padding:0 0 0 10px; font-size:1.2rem;">×</span>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // --- IO & EVENTS ---
@@ -309,27 +351,19 @@ function importConfig(e) {
             // Sync UI
             const picker = document.getElementById('version-picker');
             if (picker.querySelector(`option[value="${state.version}"]`)) picker.value = state.version;
-            document.querySelectorAll('.loader-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.loader === state.loader));
-            renderBaseDropdown();
-            renderAddons();
             
+            document.getElementById('base-picker').value = state.selectedBase || "";
+            document.querySelectorAll('.loader-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.loader === state.loader));
+            
+            renderAddons();
             await revalidateMods();
-            performSearch(); // Refresh search view if applicable
-        } catch (err) { alert("Import failed."); }
+            performSearch(); 
+        } catch (err) {}
     };
     reader.readAsText(file);
 }
 
 function setupEventListeners() {
-    // Custom Dropdown logic
-    document.getElementById('base-dropdown-text').addEventListener('click', () => {
-        document.getElementById('base-dropdown').classList.toggle('open');
-    });
-    // Close dropdown if clicked outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('#base-dropdown')) document.getElementById('base-dropdown').classList.remove('open');
-    });
-
     let timeout;
     document.getElementById('mod-search').addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(performSearch, 500); });
     document.getElementById('search-category').addEventListener('change', performSearch);
@@ -347,6 +381,8 @@ function setupEventListeners() {
         }
     });
 
+    document.getElementById('base-picker').addEventListener('change', (e) => selectBase(e.target.value));
+
     document.getElementById('export-btn').onclick = exportConfig;
     document.getElementById('import-input').onchange = importConfig;
 }
@@ -358,7 +394,12 @@ function loadFromLocalStorage() {
         try {
             state = JSON.parse(saved);
             renderSelectedMods();
-            renderBaseDropdown();
+            
+            if (state.selectedBase) {
+                const basePicker = document.getElementById('base-picker');
+                if(basePicker) basePicker.value = state.selectedBase;
+            }
+            
             renderAddons();
             document.querySelectorAll('.loader-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.loader === state.loader));
             if (document.getElementById('mod-search').value) performSearch();
