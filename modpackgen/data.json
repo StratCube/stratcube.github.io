@@ -1,0 +1,20 @@
+{
+  "addons": [
+    {
+      "name": "Performance (Essential)",
+      "mods": ["sodium", "lithium", "starlight", "ferrite-core", "krypton"]
+    },
+    {
+      "name": "Performance (Extra)",
+      "mods": ["sodium-extra", "reeses-sodium-options", "phosphor", "canary"]
+    },
+    {
+      "name": "Social & Utility",
+      "mods": ["simple-voice-chat", "emotecraft", "appleskin", "iris"]
+    },
+    {
+      "name": "Server Admin",
+      "mods": ["spark", "led-it-out", "chunky"]
+    }
+  ]
+}
