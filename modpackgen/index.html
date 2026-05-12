@@ -4,15 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>modpackgen // PackForager</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Libraries for exporting .mrpack -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
   <div id="workspace">
     <!-- Activity Bar -->
     <nav id="activity-bar">
-      <button class="activity-tab active" data-target="panel-info" title="Information">
+      <button class="activity-tab active" data-target="panel-info" title="Information & Filters">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
       </button>
       <button class="activity-tab" data-target="panel-addons" title="Addons">
@@ -25,51 +30,78 @@
 
     <!-- Left Panel -->
     <aside id="left-sidebar">
-      <div id="panel-info" class="sidebar-panel active">
-        <div class="panel-header">PACK INFO</div>
-        <div class="input-group">
-          <label>Modpack Name</label>
-          <input type="text" id="pack-name" placeholder="My Modpack">
+      
+      <!-- TAB 1: Search Filters & Pack Info -->
+      <div id="panel-info" class="sidebar-panel active split-panel">
+        
+        <!-- Top Half: Search Filters -->
+        <div class="panel-half">
+          <div class="panel-header">SEARCH FILTERS</div>
+          <div class="input-group">
+            <label>Source</label>
+            <select id="search-source">
+              <option value="modrinth">Modrinth</option>
+              <option value="curseforge">CurseForge</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Category</label>
+            <select id="search-category">
+              <option value="">Any</option>
+              <option value="adventure">Adventure</option>
+              <option value="equipment">Equipment</option>
+              <option value="magic">Magic</option>
+              <option value="optimization">Optimization</option>
+              <option value="technology">Technology</option>
+              <option value="utility">Utility</option>
+            </select>
+          </div>
         </div>
-        <div class="input-group">
-          <label>Minecraft Version</label>
-          <select id="mc-version"><option>Loading...</option></select>
-        </div>
-        <div class="input-group">
-          <label>Mod Loader</label>
-          <select id="pack-loader">
-            <option value="fabric">Fabric</option>
-            <option value="forge">Forge</option>
-            <option value="quilt">Quilt</option>
-            <option value="neoforge">NeoForge</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Loader Version</label>
-          <input type="text" id="loader-version" placeholder="e.g. 0.15.7">
-        </div>
-        <div class="input-group">
-          <label>Shader Loader</label>
-          <select id="shader-loader">
-            <option value="none">None</option>
-            <option value="iris">Iris</option>
-            <option value="oculus">Oculus</option>
-            <option value="optifine">OptiFine</option>
-          </select>
+
+        <!-- Bottom Half: Pack Info -->
+        <div class="panel-half border-top">
+          <div class="panel-header">PACK INFO</div>
+          <div class="input-group">
+            <label>Modpack Name</label>
+            <input type="text" id="pack-name" placeholder="My Modpack">
+          </div>
+          <div class="input-group">
+            <label>Minecraft Version</label>
+            <select id="mc-version"><option>Loading...</option></select>
+          </div>
+          <div class="input-group">
+            <label>Mod Loader</label>
+            <select id="pack-loader">
+              <option value="fabric">Fabric</option>
+              <option value="forge">Forge</option>
+              <option value="quilt">Quilt</option>
+              <option value="neoforge">NeoForge</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Shader Loader</label>
+            <select id="shader-loader">
+              <option value="none">None</option>
+              <option value="iris">Iris</option>
+              <option value="oculus">Oculus</option>
+              <option value="optifine">OptiFine</option>
+            </select>
+          </div>
         </div>
       </div>
 
+      <!-- TAB 2: Addons -->
       <div id="panel-addons" class="sidebar-panel hidden">
         <div class="panel-header">ADDONS</div>
         <div id="addons-list" class="flex-col gap-2"></div>
       </div>
 
+      <!-- TAB 3: Web LLM Quests -->
       <div id="panel-ai" class="sidebar-panel hidden">
         <div class="panel-header">WEB LLM QUESTS</div>
         <div class="p-2 text-center">
-          <button class="btn-primary w-full" id="btn-dl-ai">
-            Download Quest Ai<br>
-            <span class="text-xs text-muted">Only download if you want quests</span>
+          <button class="btn-primary w-full" id="btn-dl-ai" disabled>
+            Requires 1.20.1 (Fabric/Forge)
           </button>
           <p class="text-xs text-muted mt-2">Custom AI model for generating .snbt quests locally.</p>
         </div>
@@ -79,17 +111,19 @@
     <!-- Center Panel -->
     <main id="center-panel">
       <header id="center-tabs">
-        <button class="center-tab active" data-target="tab-modrinth">Modrinth</button>
+        <button class="center-tab active" data-target="tab-search">Search</button>
         <button class="center-tab" data-target="tab-quests">Quests (.snbt)</button>
       </header>
+      
       <div id="center-content">
-        <div id="tab-modrinth" class="tab-pane active">
+        <div id="tab-search" class="tab-pane active">
           <div class="search-bar">
-            <input type="text" id="mod-search" placeholder="Search Modrinth...">
+            <input type="text" id="mod-search" placeholder="Search mods... (Leave empty for popular)">
             <button id="btn-search" class="btn-primary">Search</button>
           </div>
           <div id="search-results"></div>
         </div>
+        
         <div id="tab-quests" class="tab-pane hidden">
           <div class="placeholder-text">
             <h3>Quest Visualizer (WIP)</h3>
@@ -106,8 +140,14 @@
         <button id="btn-add-custom" title="Add Custom Mod" class="icon-btn">+</button>
         <input type="file" id="custom-mod-input" multiple class="hidden">
       </header>
+      
       <div id="mod-list-container">
         <!-- Categories injected here -->
+      </div>
+
+      <!-- Export Box -->
+      <div class="export-box">
+        <button id="btn-export" class="btn-export">Export as .mrpack</button>
       </div>
     </aside>
   </div>
