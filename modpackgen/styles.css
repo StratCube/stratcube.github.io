@@ -30,11 +30,9 @@ body {
   width: 48px;
   background: var(--activity-bg);
   border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 10px;
-  gap: 12px;
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: 10px; gap: 12px;
+  flex-shrink: 0;
 }
 .activity-tab {
   background: transparent; border: none; color: var(--muted);
@@ -56,6 +54,11 @@ body {
 #left-sidebar { border-right: 1px solid var(--border); }
 #right-sidebar { border-left: 1px solid var(--border); }
 
+/* Left Sidebar Halves */
+.split-panel { display: flex; flex-direction: column; height: 100%; }
+.panel-half { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+.border-top { border-top: 1px solid var(--border); }
+
 /* Center Panel */
 #center-panel { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
@@ -66,27 +69,30 @@ body {
   color: var(--green);
   border-bottom: 1px solid var(--border-light);
   background: rgba(110, 231, 90, 0.05);
+  flex-shrink: 0;
 }
 #center-tabs {
   display: flex; background: var(--panel-bg);
   border-bottom: 1px solid var(--border);
-  height: 35px;
+  height: 35px; flex-shrink: 0;
 }
 .center-tab {
+  flex: 1; /* Equal Width */
   background: transparent; border: none; border-right: 1px solid var(--border-light);
   color: var(--muted); padding: 0 16px; font-family: inherit; font-size: 12px;
-  cursor: pointer; transition: color 0.2s;
+  cursor: pointer; transition: color 0.2s; text-align: center;
 }
+.center-tab:last-child { border-right: none; }
 .center-tab.active { color: var(--green); border-bottom: 1px solid var(--green); background: var(--bg); }
 
 /* Content Areas */
 #center-content { flex: 1; overflow-y: auto; position: relative; }
 .tab-pane { padding: 12px; display: flex; flex-direction: column; height: 100%; gap: 12px; }
-.sidebar-panel { padding: 0; flex: 1; overflow-y: auto; }
+.sidebar-panel { padding: 0; flex: 1; overflow-y: hidden; }
 .sidebar-panel.active { display: flex; flex-direction: column; }
 
 /* UI Elements */
-.input-group { padding: 8px 12px; border-bottom: 1px solid var(--border-light); }
+.input-group { padding: 8px 12px; border-bottom: 1px solid var(--border-light); flex-shrink: 0; }
 .input-group label { display: block; font-size: 10px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
 input[type="text"], select {
   width: 100%; background: var(--bg); border: 1px solid var(--border);
@@ -99,11 +105,65 @@ input[type="text"]:focus, select:focus { border-color: var(--green); }
   color: var(--green); padding: 6px 12px; font-family: inherit; font-size: 12px;
   cursor: pointer; border-radius: 4px; transition: all 0.2s;
 }
-.btn-primary:hover { background: rgba(110, 231, 90, 0.2); }
+.btn-primary:hover:not(:disabled) { background: rgba(110, 231, 90, 0.2); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; color: var(--muted); border-color: var(--border-light); }
 .icon-btn { background: transparent; border: none; color: var(--green); font-size: 16px; cursor: pointer; }
 .icon-btn:hover { text-shadow: 0 0 5px var(--green); }
 
-/* Utility */
+/* Mod Search / Center Tab */
+.search-bar { display: flex; gap: 8px; flex-shrink: 0; }
+#search-results { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 4px; flex: 1; }
+.mod-card {
+  border: 1px solid var(--border-light); padding: 8px; border-radius: 6px;
+  background: rgba(255,255,255,0.02); display: flex; align-items: center; gap: 10px;
+}
+.mod-icon {
+  width: 32px; height: 32px; border-radius: 4px; object-fit: cover;
+  background: var(--bg); border: 1px solid var(--border-light); flex-shrink: 0;
+}
+.mod-info { flex: 1; min-width: 0; }
+.mod-info h4 { font-size: 13px; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mod-info p { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mod-card .btn-primary { padding: 4px 8px; font-size: 11px; flex-shrink: 0; }
+
+/* Right Panel Elements */
+#mod-list-container { padding: 8px; flex: 1; overflow-y: auto; }
+.mod-category { margin-bottom: 12px; }
+.mod-category-title { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; border-bottom: 1px dotted var(--border-light); padding-bottom: 2px; }
+.mod-item { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 11px; }
+.mod-item-name { color: var(--green-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+.mod-item-del { color: #ff4466; cursor: pointer; font-weight: bold; background: none; border: none; }
+
+/* Export Box */
+.export-box {
+  padding: 12px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.btn-export {
+  width: 100%;
+  background: rgba(110, 231, 90, 0.15);
+  border: 1px solid var(--green);
+  color: var(--green);
+  padding: 10px;
+  font-family: inherit; font-size: 13px; font-weight: bold;
+  border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 0 10px rgba(110, 231, 90, 0.05);
+}
+.btn-export:hover {
+  background: rgba(110, 231, 90, 0.25);
+  box-shadow: 0 0 15px rgba(110, 231, 90, 0.2);
+}
+
+.placeholder-text { text-align: center; color: var(--muted); margin-top: 20%; font-size: 14px; }
+
+/* Addon Item */
+.addon-item { border-bottom: 1px solid var(--border-light); padding: 12px; }
+.addon-item h4 { font-size: 12px; color: var(--text); margin-bottom: 4px; }
+.addon-item p { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+
+/* Utils */
 .hidden { display: none !important; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
 .text-xs { font-size: 10px; }
@@ -112,29 +172,5 @@ input[type="text"]:focus, select:focus { border-color: var(--green); }
 .w-full { width: 100%; }
 .p-2 { padding: 8px; }
 .text-center { text-align: center; }
-
-/* Modrinth Search */
-.search-bar { display: flex; gap: 8px; }
-#search-results { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 4px; }
-.mod-card {
-  border: 1px solid var(--border-light); padding: 8px; border-radius: 4px;
-  background: rgba(255,255,255,0.02); display: flex; justify-content: space-between; align-items: center;
-}
-.mod-info h4 { font-size: 13px; color: var(--text); margin-bottom: 2px; }
-.mod-info p { font-size: 11px; color: var(--muted); max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mod-card .btn-primary { padding: 4px 8px; font-size: 11px; }
-
-/* Right Panel Mod Categories */
-#mod-list-container { padding: 8px; flex: 1; overflow-y: auto; }
-.mod-category { margin-bottom: 12px; }
-.mod-category-title { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; border-bottom: 1px dotted var(--border-light); padding-bottom: 2px; }
-.mod-item { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 11px; }
-.mod-item-name { color: var(--green-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-.mod-item-del { color: #ff4466; cursor: pointer; font-weight: bold; background: none; border: none; }
-
-.placeholder-text { text-align: center; color: var(--muted); margin-top: 20%; font-size: 14px; }
-
-/* Addon Item */
-.addon-item { border-bottom: 1px solid var(--border-light); padding: 12px; }
-.addon-item h4 { font-size: 12px; color: var(--text); margin-bottom: 4px; }
-.addon-item p { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+.flex-col { display: flex; flex-direction: column; }
+.gap-2 { gap: 8px; }
