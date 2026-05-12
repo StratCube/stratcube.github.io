@@ -1,0 +1,1621 @@
+[
+  {
+    "mod": "Create",
+    "namespace": "create",
+    "key_items_blocks": [
+      "create:andesite_alloy",
+      "create:brass_ingot",
+      "create:mechanical_arm",
+      "create:precision_mechanism",
+      "create:crushing_wheel",
+      "create:deployment_arm"
+    ],
+    "common_tags": [
+      "forge:ingots/andesite_alloy",
+      "forge:ingots/brass"
+    ],
+    "progression_tiers": [
+      "Andesite Age (Basic Kinematics)",
+      "Brass Age (Precision & Logistics)",
+      "Train/Industrial Age (Large Scale Transport)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Mekanism",
+    "namespace": "mekanism",
+    "key_items_blocks": [
+      "mekanism:osmium_ingot",
+      "mekanism:digital_miner",
+      "mekanism:fusion_reactor",
+      "mekanism:industrial_turbine",
+      "mekanism:atomic_disassembler"
+    ],
+    "common_tags": [
+      "forge:ingots/osmium",
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Basic Machinery (Osmium/Steel)",
+      "Advanced Processing (Chemicals/Gas)",
+      "High-End Energy (Fusion/Fission)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Mekanism Generators",
+    "namespace": "mekanism",
+    "key_items_blocks": [
+      "mekanism:gas_burning_generator",
+      "mekanism:wind_generator",
+      "mekanism:solar_generator"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Power (Wind/Solar)",
+      "Combustion Power (Gas/Bio-fuel)"
+    ],
+    "dependencies": [
+      "Mekanism"
+    ]
+  },
+  {
+    "mod": "Thermal Expansion",
+    "namespace": "thermal",
+    "key_items_blocks": [
+      "thermal:redsteel_ingot",
+      "thermal:induction_furnace",
+      "thermal:igneous_extruder",
+      "thermal:compressor",
+      "thermal:fractionator"
+    ],
+    "common_tags": [
+      "forge:ingots/redsteel",
+      "forge:ingots/invar",
+      "forge:ingots/electrum"
+    ],
+    "progression_tiers": [
+      "Redstone Machinery",
+      "Invar/Electrum Processing",
+      "Redsteel High-Tier Automation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Immersive Engineering",
+    "namespace": "immersiveengineering",
+    "key_items_blocks": [
+      "immersiveengineering:steel_scrap",
+      "immersiveengineering:excavator",
+      "immersiveengineering:crusher",
+      "immersiveengineering:engineer_block",
+      "immersiveengineering:lv_wire_coil"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "LV (Low Voltage)",
+      "MV (Medium Voltage)",
+      "HV (High Voltage)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Industrial Foregoing",
+    "namespace": "industrialforegoing",
+    "key_items_blocks": [
+      "industrialforegoing:plastic",
+      "industrialforegoing:laser_drill",
+      "industrialforegoing:plant_grower",
+      "industrialforegoing:mob_slaughter_factory"
+    ],
+    "common_tags": [
+      "forge:ingots/plastic"
+    ],
+    "progression_tiers": [
+      "Resource Gathering (Mob/Plant)",
+      "Plastic Production",
+      "Advanced Industrial Automation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "PneumaticCraft: Repressurized",
+    "namespace": "pneumaticcraft",
+    "key_items_blocks": [
+      "pneumaticcraft:pressure_chamber",
+      "pneumaticcraft:drone",
+      "pneumaticcraft:air_compressor",
+      "pneumaticcraft:pressure_gauge"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Basic Pressure Systems",
+      "Drone Automation",
+      "Advanced Chemical/Pressure Refinement"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Ender IO",
+    "namespace": "enderio",
+    "key_items_blocks": [
+      "enderio:conduit",
+      "enderio:industrial_catalyst",
+      "enderio:conduit_bundle",
+      "enderio:power_conduit"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Conduit Logistics",
+      "Industrial Machinery",
+      "Advanced Resource Processing"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Ad Astra",
+    "namespace": "adastra",
+    "key_items_blocks": [
+      "adastra:rocket_tier_1",
+      "adastra:rocket_tier_2",
+      "adastra:rocket_tier_3",
+      "adastra:steel_plate",
+      "adastra:space_suit"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "T1 Rocket -> Moon",
+      "T2 Rocket -> Mars",
+      "T3 Rocket -> Venus/Outer Planets"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Applied Energistics 2",
+    "namespace": "ae2",
+    "key_items_blocks": [
+      "ae2:fluix_crystal",
+      "ae2:me_controller",
+      "ae2:me_drive",
+      "ae2:me_pattern_provider",
+      "ae2:quartz_fiber"
+    ],
+    "common_tags": [
+      "forge:ingots/certus_quartz"
+    ],
+    "progression_tiers": [
+      "Basic Storage (ME Drive)",
+      "Network Expansion (Controllers/Cables)",
+      "Auto-Crafting (Patterns/CPU)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Powah!",
+    "namespace": "powah",
+    "key_items_blocks": [
+      "powah:uraninite",
+      "powah:reactor",
+      "powah:energy_cell",
+      "powah:thermogenerator"
+    ],
+    "common_tags": [
+      "forge:ingots/uraninite"
+    ],
+    "progression_tiers": [
+      "Starter/Basic Energy",
+      "Hardened/Blazing Energy",
+      "Niotic/Spirited Energy"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Flux Networks",
+    "namespace": "fluxnetworks",
+    "key_items_blocks": [
+      "fluxnetworks:flux_plug",
+      "fluxnetworks:flux_point",
+      "fluxnetworks:flux_storage"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Wireless Energy Distribution",
+      "Infinite/High-Capacity Storage"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "RFTools Power",
+    "namespace": "rftoolsbase",
+    "key_items_blocks": [
+      "rftoolsbase:machine_block",
+      "rftoolsbase:power_cell"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Energy Storage",
+      "High-Capacity Power Buffering"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Advanced Generators",
+    "namespace": "advancedgenerators",
+    "key_items_blocks": [
+      "advancedgenerators:generator_block",
+      "advancedgenerators:fuel_tank"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Standard Fuel Generation",
+      "Advanced High-Output Generation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Deep Resonance",
+    "namespace": "deepresonance",
+    "key_items_blocks": [
+      "deepresonance:resonance_crystal",
+      "deepresonance:resonance_block",
+      "deepresonance:matter_condenser"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Resonance Collection",
+      "Deep Resonance Refining",
+      "Matter/Energy Manipulation"
+    ],
+    "dependencies": []
+  }
+]
+[
+  {
+    "mod": "Create: New Age",
+    "namespace": "create_new_age",
+    "key_items_blocks": [
+      "create_new_age:electric_motor",
+      "create_new_age:alternator",
+      "create_new_age:tesla_coil",
+      "create_new_age:capacitor"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Kinetic to Electric Conversion",
+      "Energy Storage (Capacitors)",
+      "High-Voltage Power Generation"
+    ],
+    "dependencies": [
+      "Create"
+    ]
+  },
+  {
+    "mod": "Create: Steam ‘n’ Rails",
+    "namespace": "create_steam_n_rails",
+    "key_items_blocks": [
+      "create_steam_n_rails:train_station",
+      "create_steam_n_rails:track_switch",
+      "create_steam_n_rails:railway_signal"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Advanced Track Laying",
+      "Complex Switching/Signaling",
+      "Industrial Logistics Network"
+    ],
+    "dependencies": [
+      "Create"
+    ]
+  },
+  {
+    "mod": "Create: Enchanted Industry",
+    "namespace": "create_enchanted_industry",
+    "key_items_blocks": [
+      "create_enchanted_industry:experience_chamber",
+      "create_enchanted_industry:liquid_experience",
+      "create_enchanted_industry:enchanting_basin"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Experience Liquefaction",
+      "Automated Enchanting",
+      "Industrial-Scale XP Processing"
+    ],
+    "dependencies": [
+      "Create"
+    ]
+  },
+  {
+    "mod": "Create: Central Kitchen",
+    "namespace": "create_central_kitchen",
+    "key_items_blocks": [
+      "create_central_kitchen:industrial_kitchen",
+      "create_central_kitchen:mixing_bowl"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Food Component Automation",
+      "Mass Production Cooking",
+      "Integrated Culinary Logistics"
+    ],
+    "dependencies": [
+      "Create"
+    ]
+  },
+  {
+    "mod": "Refined Storage",
+    "namespace": "refinedstorage",
+    "key_items_blocks": [
+      "refinedstorage:controller",
+      "refinedstorage:disk_drive",
+      "refinedstorage:grid",
+      "refinedstorage:crafter",
+      "refinedstorage:quartz_enriched_iron"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Digital Storage",
+      "Network Expansion/Cabling",
+      "Complex Auto-Crafting"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Integrated Dynamics",
+    "namespace": "integrateddynamics",
+    "key_items_blocks": [
+      "integrateddynamics:logic_cable",
+      "integrateddynamics:variable_card",
+      "integrateddynamics:logic_programmer",
+      "integrateddynamics:world_reader"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Variable Logic",
+      "Advanced Sensor Integration",
+      "Complex Boolean/Math Automation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Integrated Tunnels",
+    "namespace": "integratedtunnels",
+    "key_items_blocks": [
+      "integratedtunnels:item_interface",
+      "integratedtunnels:fluid_interface",
+      "integratedtunnels:item_exporter"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Logical Item Transport",
+      "Conditional Fluid Movement",
+      "Precision Logistics"
+    ],
+    "dependencies": [
+      "Integrated Dynamics"
+    ]
+  },
+  {
+    "mod": "RFTools Utility",
+    "namespace": "rftoolsutility",
+    "key_items_blocks": [
+      "rftoolsutility:screen",
+      "rftoolsutility:builder",
+      "rftoolsutility:hermetic_amplifier"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Information Displays",
+      "Automated Block Placement (Builder)",
+      "Advanced Utility Tooling"
+    ],
+    "dependencies": [
+      "RFTools Power"
+    ]
+  },
+  {
+    "mod": "Modular Routers",
+    "namespace": "modularrouters",
+    "key_items_blocks": [
+      "modularrouters:modular_router",
+      "modularrouters:item_sender_module",
+      "modularrouters:puller_module",
+      "modularrouters:energy_module"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Item Routing",
+      "Advanced Module Integration",
+      "Compact Automation Hubs"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Hostile Neural Networks",
+    "namespace": "hostilenetworks",
+    "key_items_blocks": [
+      "hostilenetworks:simulation_chamber",
+      "hostilenetworks:model_storage",
+      "hostilenetworks:data_model"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Model Data Collection",
+      "Simulated Mob Farming",
+      "High-Efficiency Resource Generation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Productive Bees",
+    "namespace": "productivebees",
+    "key_items_blocks": [
+      "productivebees:bee_home",
+      "productivebees:centrifuge",
+      "productivebees:advanced_bee_home"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Basic Bee Breeding",
+      "Resource-Producing Bees",
+      "Advanced Genetic/Industrial Beekeeping"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Little Logistics",
+    "namespace": "littlelogistics",
+    "key_items_blocks": [
+      "littlelogistics:train_track",
+      "littlelogistics:train_station",
+      "littlelogistics:train_engine"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Mini-Rail Setup",
+      "Automated Cargo Transport",
+      "Complex Logistics Networks"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "LaserIO",
+    "namespace": "laserio",
+    "key_items_blocks": [
+      "laserio:laser_node",
+      "laserio:item_card",
+      "laserio:fluid_card",
+      "laserio:energy_card"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Compact Node Connection",
+      "Multi-Card Logic Setup",
+      "Ultra-Dense Transport Hubs"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Building Gadgets",
+    "namespace": "buildinggadgets",
+    "key_items_blocks": [
+      "buildinggadgets:building_gadget",
+      "buildinggadgets:exchanging_gadget",
+      "buildinggadgets:copy_paste_gadget"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Rapid Block Placement",
+      "Bulk Block Replacement",
+      "Structure Copy/Paste"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Ex Nihilo: Sequentium",
+    "namespace": "exnihilosequentium",
+    "key_items_blocks": [
+      "exnihilosequentium:hammer",
+      "exnihilosequentium:sieve",
+      "exnihilosequentium:crusher"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Sifting (Dust/Gravel)",
+      "Advanced Sifting (Crucial Resources)",
+      "Automated Sequence Processing"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Functional Storage",
+    "namespace": "functionalstorage",
+    "key_items_blocks": [
+      "functionalstorage:drawer",
+      "functionalstorage:storage_controller",
+      "functionalstorage:upgrade_stack"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Drawer Storage",
+      "Controller-Based Management",
+      "High-Density Storage Upgrades"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Tom's Simple Storage",
+    "namespace": "tomssimplestorage",
+    "key_items_blocks": [
+      "tomssimplestorage:storage_terminal",
+      "tomssimplestorage:inventory_connector",
+      "tomssimplestorage:storage_cable"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Inventory Centralization",
+      "Cable Networking",
+      "Integrated Crafting Terminal"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Sophisticated Storage",
+    "namespace": "sophisticatedstorage",
+    "key_items_blocks": [
+      "sophisticatedstorage:chest",
+      "sophisticatedstorage:barrel",
+      "sophisticatedstorage:storage_upgrade"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Upgradable Chests",
+      "Advanced Storage Modifiers",
+      "End-Game Automated Storage"
+    ],
+    "dependencies": []
+  }
+]
+[
+  {
+    "mod": "Ars Nouveau",
+    "namespace": "ars_nouveau",
+    "key_items_blocks": [
+      "ars_nouveau:spellbook",
+      "ars_nouveau:source_jar",
+      "ars_nouveau:glyph_storage",
+      "ars_nouveau:novice_spellbook",
+      "ars_nouveau:apprentice_spellbook",
+      "ars_nouveau:archmage_spellbook"
+    ],
+    "common_tags": [
+      "forge:gems/amethyst"
+    ],
+    "progression_tiers": [
+      "Novice (Basic Spells/Source)",
+      "Apprentice (Automation/Familiars)",
+      "Archmage (Advanced Glyph Mastery/High-Tier Rituals)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Ars Elemental",
+    "namespace": "ars_elemental",
+    "key_items_blocks": [
+      "ars_elemental:elemental_glyph",
+      "ars_elemental:elemental_core"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Elemental Attunement",
+      "Advanced Elemental Spellcasting"
+    ],
+    "dependencies": [
+      "Ars Nouveau"
+    ]
+  },
+  {
+    "mod": "Ars Creo",
+    "namespace": "ars_creo",
+    "key_items_blocks": [
+      "ars_creo:magic_kinetic_converter",
+      "ars_creo:source_powered_cogwheel"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Source-to-Kinetic Conversion",
+      "Kinetic-to-Source Conversion",
+      "Magic-Industrial Integration"
+    ],
+    "dependencies": [
+      "Ars Nouveau",
+      "Create"
+    ]
+  },
+  {
+    "mod": "Iron's Spells 'n Spellbooks",
+    "namespace": "irons_spells_n_spellbooks",
+    "key_items_blocks": [
+      "irons_spells_n_spellbooks:spell_book",
+      "irons_spells_n_spellbooks:scroll",
+      "irons_spells_n_spellbooks:ink",
+      "irons_spells_n_spellbooks:arcane_anvil"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Scroll Learning",
+      "Spellbook Upgrading (Tiers 1-10)",
+      "Mastery of Magic Schools (Fire, Ice, Ender, etc.)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Occultism",
+    "namespace": "occultism",
+    "key_items_blocks": [
+      "occultism:ritual_chisel",
+      "occultism:demonic_catalyst",
+      "occultism:storage_crystal",
+      "occultism:spirit_bound_storage"
+    ],
+    "common_tags": [
+      "forge:ingots/gold"
+    ],
+    "progression_tiers": [
+      "Basic Rituals (Crushing/Sifting)",
+      "Demon Summoning (Automation)",
+      "Dimensional Storage (Infinite Space)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Botania",
+    "namespace": "botania",
+    "key_items_blocks": [
+      "botania:lexica_botania",
+      "botania:mana_spreader",
+      "botania:mana_pool",
+      "botania:pure_daisy",
+      "botania:terrasteel_ingot"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Mana Generation",
+      "Mana Tooling/Automation",
+      "Terrasteel/Gaia Gear End-game"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Blood Magic",
+    "namespace": "bloodmagic",
+    "key_items_blocks": [
+      "bloodmagic:blood_altar",
+      "bloodmagic:sigil_of_blood",
+      "bloodmagic:blood_orb",
+      "bloodmagic:demon_will"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Altar Initiation (Blood Collection)",
+      "Sigil Mastery (Utility/Combat)",
+      "Ritual Circles/Demonic Will"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Forbidden & Arcanus",
+    "namespace": "forbiddenandarcanus",
+    "key_items_blocks": [
+      "forbiddenandarcanus:hephaestus_forge",
+      "forbiddenandarcanus:eternal_stella",
+      "forbiddenandarcanus:aureal_essence",
+      "forbiddenandarcanus:dark_magic_altar"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Aureal Gathering",
+      "Hephaestus Forge Crafting",
+      "Eternal Stella/Arcane Mastery"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Mahou Tsukai",
+    "namespace": "mahoutsukai",
+    "key_items_blocks": [
+      "mahoutsukai:grimoire",
+      "mahoutsukai:mana_crystal",
+      "mahoutsukai:magic_circle"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Mana Accumulation",
+      "Basic Spell Casting",
+      "High-Tier Magic Circles (World Manipulation)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Malum",
+    "namespace": "malum",
+    "key_items_blocks": [
+      "malum:spirit_guide",
+      "malum:spirit_altar",
+      "malum:spirit_essence"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Spirit Gathering",
+      "Alchemical Spirit Crafting",
+      "High-Tier Spiritual Manifestations"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "EvilCraft",
+    "namespace": "evilcraft",
+    "key_items_blocks": [
+      "evilcraft:blood_filled_jar",
+      "evilcraft:dark_energy_condenser",
+      "evilcraft:blood_altar",
+      "evilcraft:corruption_core"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Blood Collection",
+      "Dark Energy Production",
+      "Corruption/Void Manipulation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Spirit",
+    "namespace": "spirit",
+    "key_items_blocks": [
+      "spirit:spirit_altar",
+      "spirit:spirit_crystal"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Spirit Attunement",
+      "Ritual Manifestation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Eidolon: Reprayed",
+    "namespace": "eidolon",
+    "key_items_blocks": [
+      "eidolon:prayer_altar",
+      "eidolon:idol",
+      "eidolon:void_crystal"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Prayer/Devotion",
+      "Ritual Casting",
+      "Divinity/Void Ascension"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Primal Magick",
+    "namespace": "primalmagick",
+    "key_items_blocks": [
+      "primalmagick:primal_altar",
+      "primalmagick:essence_stone",
+      "primalmagick:primal_crystal"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Primal Essence Extraction",
+      "Alchemical Transmutation",
+      "Primal Artifact Creation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Hex Casting",
+    "namespace": "hex",
+    "key_items_blocks": [
+      "hex:casting_staff",
+      "hex:pattern_book",
+      "hex:sand_casting_table"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Pattern Learning",
+      "Complex Hex Sequence Logic",
+      "Advanced Programmatic Magic"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Enigmatic Legacy",
+    "namespace": "enigmaticlegacy",
+    "key_items_blocks": [
+      "enigmaticlegacy:ancient_tome",
+      "enigmaticlegacy:relic",
+      "enigmaticlegacy:curio_slot"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Artifact Discovery",
+      "Relic Upgrading",
+      "End-game Legacy Power-ups"
+    ],
+    "dependencies": []
+  }
+]
+[
+  {
+    "mod": "Twilight Forest",
+    "namespace": "twilightforest",
+    "key_items_blocks": [
+      "twilightforest:magic_map",
+      "twilightforest:naga_scale",
+      "twilightforest:lich_candy",
+      "twilightforest:hydra_blood",
+      "twilightforest:ur_ghast_tear"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Naga & Lich (Early Forest)",
+      "Minoshroom & Hydra (Mid Forest)",
+      "Ur-Ghast & Knight Phantom (Late Forest)",
+      "Final Castle/Twilight Highlands"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "The Undergarden",
+    "namespace": "undergarden",
+    "key_items_blocks": [
+      "undergarden:undergarden_portal",
+      "undergarden:forest_spirit_essence",
+      "undergarden:undergarden_steel_ingot",
+      "undergarden:undergarden_steel_pickaxe"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Surface Exploration (Undergarden)",
+      "Steel Tooling",
+      "Boss Conquest/Essence Collection"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Blue Skies: Everbright",
+    "namespace": "blueskies",
+    "key_items_blocks": [
+      "blueskies:everbright_portal",
+      "blueskies:sun_steel_ingot",
+      "blueskies:everbright_boss_trophy"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Portal Entry",
+      "Sun Steel Gear",
+      "Everbright Bosses/Trophies"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Blue Skies: Everdawn",
+    "namespace": "blueskies",
+    "key_items_blocks": [
+      "blueskies:everdawn_portal",
+      "blueskies:moon_steel_ingot",
+      "blueskies:everdawn_boss_trophy"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Portal Entry",
+      "Moon Steel Gear",
+      "Everdawn Bosses/Trophies"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Deeper and Darker",
+    "namespace": "deeperanddarker",
+    "key_items_blocks": [
+      "deeperanddarker:portal_frame",
+      "deeperanddarker:void_steel_ingot",
+      "deeperanddarker:void_steel_pickaxe"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Ancient City Portal Activation",
+      "Void Dimension Exploration",
+      "Void Steel Equipment"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "The Aether",
+    "namespace": "aether",
+    "key_items_blocks": [
+      "aether:glowstone_portal",
+      "aether:zanite_ingot",
+      "aether:gravitite_ingot",
+      "aether:sunstone_ingot"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Bronze Gear (Basic Aether)",
+      "Silver Gear (Mid Aether)",
+      "Gold Gear (High Aether/Sunstone)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "The Bumblezone",
+    "namespace": "bumblezone",
+    "key_items_blocks": [
+      "bumblezone:honey_block",
+      "bumblezone:bee_coin",
+      "bumblezone:honey_comb"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Hive Entry",
+      "Bee Economy (Coins)",
+      "Royal Jelly/Queen Interaction"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Eden Ring",
+    "namespace": "edenring",
+    "key_items_blocks": [
+      "edenring:portal_frame",
+      "edenring:eden_ring",
+      "edenring:eden_steel_ingot"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Eden Dimension Arrival",
+      "Ring Collection (Ability Unlocks)",
+      "Eden Steel Tier"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Galosphere",
+    "namespace": "galosphere",
+    "key_items_blocks": [
+      "galosphere:galosphere_portal",
+      "galosphere:astro_steel_ingot",
+      "galosphere:star_shard"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Cosmic Ascent",
+      "Astro-Material Gathering",
+      "Celestial Gear"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Alex's Caves",
+    "namespace": "alexscaves",
+    "key_items_blocks": [
+      "alexscaves:magnetic_pickaxe",
+      "alexscaves:primordial_stone",
+      "alexscaves:galena_ingot",
+      "alexscaves:magnetic_core"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Cave Discovery (Magnetic/Primordial/Toxic)",
+      "Specialized Cave Tooling",
+      "Apex Predator Gear"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Dimensional Dungeons",
+    "namespace": "dimensionaldungeons",
+    "key_items_blocks": [
+      "dimensionaldungeons:dungeon_portal",
+      "dimensionaldungeons:challenge_key"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Dungeon Layer 1",
+      "Intermediate Challenge Layers",
+      "Final Dungeon Mastery"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "The Lost Cities",
+    "namespace": "lostcities",
+    "key_items_blocks": [
+      "lostcities:city_block"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Surface Scavenging",
+      "Underground City Exploration",
+      "Urban Outpost Establishment"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Aether: Redux",
+    "namespace": "aetherredux",
+    "key_items_blocks": [
+      "aetherredux:advanced_zanite_ingot",
+      "aetherredux:redux_tool"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Enhanced Aether Gear",
+      "Expanded Dungeon Loot",
+      "Redux-Tier Tooling"
+    ],
+    "dependencies": [
+      "The Aether"
+    ]
+  },
+  {
+    "mod": "Regions Unexplored",
+    "namespace": "regionsunexplored",
+    "key_items_blocks": [
+      "regionsunexplored:wildwood_log",
+      "regionsunexplored:ruby_ore"
+    ],
+    "common_tags": [
+      "forge:logs/wildwood"
+    ],
+    "progression_tiers": [
+      "Biome Exploration",
+      "Rare Wood/Stone Collection",
+      "Regional Resource Mastery"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Twilight’s Flavors & Delight",
+    "namespace": "twilightsflavors",
+    "key_items_blocks": [
+      "twilightsflavors:forest_stew",
+      "twilightsflavors:twilight_bread"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Twilight Ingredient Gathering",
+      "Culinary Integration",
+      "Enhanced Forest Sustenance"
+    ],
+    "dependencies": [
+      "Twilight Forest"
+    ]
+  }
+]
+[
+  {
+    "mod": "L_Ender's Cataclysm",
+    "namespace": "cataclysm",
+    "key_items_blocks": [
+      "cataclysm:ignis_sword",
+      "cataclysm:void_gear",
+      "cataclysm:ender_guardian_core",
+      "cataclysm:monolith_block"
+    ],
+    "common_tags": [
+      "forge:ingots/netherite"
+    ],
+    "progression_tiers": [
+      "Netherite Preparation",
+      "Ignis/Ender Guardian Conquest",
+      "Void-Tier Equipment"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Alex's Mobs",
+    "namespace": "alexsmobs",
+    "key_items_blocks": [
+      "alexsmobs:hammer",
+      "alexsmobs:grizzly_bear_claw",
+      "alexsmobs:cautionary_tale"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Early Game Animal Gathering",
+      "Mid-Game Specialized Tools",
+      "End-Game Rare Mob Hunting"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Bosses of Mass Destruction",
+    "namespace": "bomd",
+    "key_items_blocks": [
+      "bomd:void_crystal",
+      "bomd:gauntlet_shard",
+      "bomd:lich_tome"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Void Blossom Encounter",
+      "Gauntlet Combat",
+      "The Lich/End-game Bosses"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Mowzie's Mobs",
+    "namespace": "mowziesmobs",
+    "key_items_blocks": [
+      "mowziesmobs:foliaed_blade",
+      "mowziesmobs:sun_staff",
+      "mowziesmobs:frostmaw_tusk"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Ferrous Wroughtnaut (Armor Piercing)",
+      "Frostmaw (Cold Resistance)",
+      "Barako (Tribal Combat)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Apotheosis",
+    "namespace": "apotheosis",
+    "key_items_blocks": [
+      "apotheosis:reforging_table",
+      "apotheosis:gem",
+      "apotheosis:salvaging_table",
+      "apotheosis:reforging_stone"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Common Affix Gear",
+      "Gem Socketing/Rarity Escalation",
+      "Legendary Reforging/God-tier Gear"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Simply Swords",
+    "namespace": "simplyswords",
+    "key_items_blocks": [
+      "simplyswords:claymore",
+      "simplyswords:rapier",
+      "simplyswords:katana",
+      "simplyswords:longsword"
+    ],
+    "common_tags": [
+      "forge:ingots/steel"
+    ],
+    "progression_tiers": [
+      "Iron/Steel Weaponry",
+      "Diamond/Netherite Variants",
+      "Unique Material/Exotic Blades"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Better Combat",
+    "namespace": "bettercombat",
+    "key_items_blocks": [],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Attack Timing",
+      "Weapon-Specific Combo Strings",
+      "Advanced Combat Positioning"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Archon",
+    "namespace": "archon",
+    "key_items_blocks": [
+      "archon:spell_tome",
+      "archon:arcane_focus",
+      "archon:essence_crystal"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Spell Learning",
+      "Arcane Essence Accumulation",
+      "Mastery of High-Tier Spells"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Mine Cells",
+    "namespace": "minecells",
+    "key_items_blocks": [
+      "minecells:cell_weapon",
+      "minecells:health_vial",
+      "minecells:cell_key"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Initial Cell Entry",
+      "Intermediate Floor Clearance",
+      "Final Cell Boss/Escape Gear"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Mutant Monsters",
+    "namespace": "mutantmonsters",
+    "key_items_blocks": [
+      "mutantmonsters:mutant_zombie_heart",
+      "mutantmonsters:mutant_skeleton_bone"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Mutant Zombie Encounter",
+      "Mutant Skeleton Conquest",
+      "Mutant Creeper Mastery"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Aquamirae",
+    "namespace": "aquamirae",
+    "key_items_blocks": [
+      "aquamirae:coral_sword",
+      "aquamirae:captain_helmet",
+      "aquamirae:deep_sea_diving_suit"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Deep Sea Exploration",
+      "Captain's Loot Collection",
+      "Ancient Ocean Artifacts"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Nameless Kingdom",
+    "namespace": "namelesskingdom",
+    "key_items_blocks": [
+      "namelesskingdom:kingdom_gear",
+      "namelesskingdom:realm_key"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Realm Discovery",
+      "Kingdom Guardian Battles",
+      "Artifact Ascension"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Cracker's Wither Storm Mod",
+    "namespace": "witherstormmod",
+    "key_items_blocks": [
+      "witherstormmod:formidatable_sword",
+      "witherstormmod:command_block_fragment"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Storm Phase 1-3 (Survival)",
+      "Phase 4 (Combat/Resistance)",
+      "Final Form Defeat"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Majrusz's Progressive Difficulty",
+    "namespace": "progressive_difficulty",
+    "key_items_blocks": [
+      "progressive_difficulty:difficulty_tracker"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Normal Difficulty",
+      "Hard Difficulty (Enhanced Mobs)",
+      "Insane Difficulty (End-game Raids)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "LevelZ",
+    "namespace": "levelz",
+    "key_items_blocks": [],
+    "common_tags": [],
+    "progression_tiers": [
+      "Novice (Level 1-10)",
+      "Adept (Level 11-30)",
+      "Master (Level 31+)"
+    ],
+    "dependencies": []
+  }
+]
+[
+  {
+    "mod": "Farmer's Delight",
+    "namespace": "farmersdelight",
+    "key_items_blocks": [
+      "farmersdelight:cooking_pot",
+      "farmersdelight:knife",
+      "farmersdelight:stove",
+      "farmersdelight:skillet"
+    ],
+    "common_tags": [
+      "forge:crops/tomato",
+      "forge:crops/cabbage"
+    ],
+    "progression_tiers": [
+      "Basic Harvesting (Knife)",
+      "Simple Cooking (Stove/Skillet)",
+      "Advanced Cuisine (Cooking Pot/Rich Meals)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Nether's Delight",
+    "namespace": "nethersdelight",
+    "key_items_blocks": [
+      "nethersdelight:nether_cooking_pot",
+      "nethersdelight:crimson_knife",
+      "nethersdelight:warped_knife"
+    ],
+    "common_tags": [
+      "forge:crops/nether_wart"
+    ],
+    "progression_tiers": [
+      "Nether Resource Gathering",
+      "Nether-Specific Cooking",
+      "High-Saturation Nether Feasts"
+    ],
+    "dependencies": [
+      "Farmer's Delight"
+    ]
+  },
+  {
+    "mod": "End's Delight",
+    "namespace": "endsdelight",
+    "key_items_blocks": [
+      "endsdelight:end_cooking_pot",
+      "endsdelight:end_knife"
+    ],
+    "common_tags": [
+      "forge:crops/chorus_fruit"
+    ],
+    "progression_tiers": [
+      "End Resource Gathering",
+      "Void-based Cooking",
+      "End-game Sustenance"
+    ],
+    "dependencies": [
+      "Farmer's Delight"
+    ]
+  },
+  {
+    "mod": "Cooking for Blockheads",
+    "namespace": "cookingforblockheads",
+    "key_items_blocks": [
+      "cookingforblockheads:fridge",
+      "cookingforblockheads:oven",
+      "cookingforblockheads:sink",
+      "cookingforblockheads:kitchen_counter"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Kitchen Layout",
+      "Integrated Ingredient Storage",
+      "Automated Recipe Access"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Sophisticated Backpacks",
+    "namespace": "sophisticatedbackpacks",
+    "key_items_blocks": [
+      "sophisticatedbackpacks:backpack",
+      "sophisticatedbackpacks:backpack_upgrade",
+      "sophisticatedbackpacks:feeding_upgrade",
+      "sophisticatedbackpacks:sorting_upgrade"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Fabric Backpack",
+      "Material Upgrades (Iron/Gold/Diamond)",
+      "Advanced Functional Upgrades (Auto-Pickup/Feeding)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Waystones",
+    "namespace": "waystones",
+    "key_items_blocks": [
+      "waystones:waystone",
+      "waystones:warp_stone",
+      "waystones:warp_stone_scroll"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Local Waystone Discovery",
+      "Global Warp Network",
+      "Portable Teleportation (Warp Stones)"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Bountiful",
+    "namespace": "bountiful",
+    "key_items_blocks": [
+      "bountiful:bounty_board",
+      "bountiful:bounty_paper"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Low-Tier Task Completion",
+      "Mid-Tier Reward Scaling",
+      "Master Bounty Hunter Status"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Comforts",
+    "namespace": "comforts",
+    "key_items_blocks": [
+      "comforts:sleeping_bag",
+      "comforts:hammock"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Temporary Resting (Sleeping Bag)",
+      "Safe Nightly Sleep (Hammock)",
+      "Mobile Camp Establishment"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Tough as Nails",
+    "namespace": "toughasnails",
+    "key_items_blocks": [
+      "toughasnails:canteen",
+      "toughasnails:water_filter",
+      "toughasnails:flask"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Hydration Management",
+      "Water Purification",
+      "Advanced Temperature Regulation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Serene Seasons",
+    "namespace": "sereneseasons",
+    "key_items_blocks": [
+      "sereneseasons:season_checker"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Seasonal Awareness",
+      "Crop Cycle Planning",
+      "Winter Survival Adaptation"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Spice of Life: Carrot Edition",
+    "namespace": "spiceoflife",
+    "key_items_blocks": [
+      "spiceoflife:carrot_book"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Dietary Diversification",
+      "Incremental Heart Gain",
+      "Maximum Health Expansion"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Diet",
+    "namespace": "diet",
+    "key_items_blocks": [],
+    "common_tags": [],
+    "progression_tiers": [
+      "Nutrient Balancing",
+      "Positive Diet Buffs",
+      "Peak Physical Condition"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Cold Sweat",
+    "namespace": "coldsweat",
+    "key_items_blocks": [
+      "coldsweat:insulation_layer",
+      "coldsweat:heater",
+      "coldsweat:air_conditioner"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Body Temperature Monitoring",
+      "Clothing Insulation",
+      "Environmental Thermal Control"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Naturalist",
+    "namespace": "naturalist",
+    "key_items_blocks": [
+      "naturalist:bear_cub"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Animal Observation",
+      "Ecosystem Interaction",
+      "Rare Species Tracking"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Paraglider",
+    "namespace": "paraglider",
+    "key_items_blocks": [
+      "paraglider:paraglider",
+      "paraglider:stamina_wheel"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Gliding",
+      "Stamina Capacity Expansion",
+      "High-Altitude Exploration"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Enhanced AI",
+    "namespace": "enhancedai",
+    "key_items_blocks": [],
+    "common_tags": [],
+    "progression_tiers": [
+      "Basic Mob Buffs",
+      "Tactical AI Behaviors",
+      "End-game Intelligence Scaling"
+    ],
+    "dependencies": []
+  },
+  {
+    "mod": "Artifacts",
+    "namespace": "artifacts",
+    "key_items_blocks": [
+      "artifacts:diving_mask",
+      "artifacts:bunny_slippers",
+      "artifacts:power_glove",
+      "artifacts:claw"
+    ],
+    "common_tags": [],
+    "progression_tiers": [
+      "Rarity Loot Hunting",
+      "Utility Gear Synergy",
+      "Full Artifact Set Mastery"
+    ],
+    "dependencies": []
+  }
+]
