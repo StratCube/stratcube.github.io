@@ -14,6 +14,11 @@
       "name": "Multiplayer QOL",
       "description": "Voice chat and server utility modules.",
       "mods": ["plasmo-voice", "appleskin", "modmenu"]
+    },
+    {
+      "name": "World Overhaul",
+      "description": "Overhaul your world generation!",
+      "mods": ["tectonic", "stellarity", "biomes-o-plenty"]
     }
   ]
 }
