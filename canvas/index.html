@@ -1,1 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas // AI Online playground</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #020408;
+      --panel-bg: #070d14;
+      --activity-bg: #03060c;
+      --green: #6EE75A;
+      --green-dim: #4db842;
+      --border: rgba(110, 231, 90, 0.3);
+      --border-light: rgba(110, 231, 90, 0.15);
+      --text: #e2e8f0;
+      --muted: rgba(226, 232, 240, 0.5);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #workspace {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Very Left Panel - CANVAS text */
+    #left-bar {
+      width: 48px;
+      background: var(--activity-bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .vertical-text {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 12px;
+      text-shadow: 0 0 10px rgba(110, 231, 90, 0.3);
+    }
+
+    /* Main Center Panel */
+    #center-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--panel-bg);
+      min-width: 0;
+    }
+
+    #center-tabs {
+      display: flex;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      height: 35px;
+      flex-shrink: 0;
+    }
+
+    .center-tab {
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border-light);
+      color: var(--muted);
+      padding: 0 20px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .center-tab.active {
+      color: var(--green);
+      border-bottom: 2px solid var(--green);
+      background: var(--panel-bg);
+    }
+
+    #canvas-content {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #code-editor {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      color: var(--text);
+      border: none;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      resize: none;
+      outline: none;
+      line-height: 1.5;
+    }
+
+    #preview-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #ffffff;
+      display: none;
+    }
+
+    /* Play Button */
+    #btn-play {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(110, 231, 90, 0.15);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 12px 24px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 15px rgba(110, 231, 90, 0.1);
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    }
+
+    #btn-play:hover {
+      background: rgba(110, 231, 90, 0.3);
+      box-shadow: 0 0 20px rgba(110, 231, 90, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Very Right Panel - Chat */
+    #right-sidebar {
+      width: 320px;
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .panel-header {
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      border-bottom: 1px solid var(--border-light);
+      background: rgba(110, 231, 90, 0.05);
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg {
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      max-width: 85%;
+      word-wrap: break-word;
+      line-height: 1.4;
+    }
+
+    .msg.user {
+      background: rgba(110, 231, 90, 0.1);
+      border: 1px solid var(--border-light);
+      align-self: flex-end;
+      color: var(--green);
+    }
+
+    .msg.ai {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-light);
+      align-self: flex-start;
+      color: var(--text);
+    }
+
+    .msg.system {
+      background: transparent;
+      color: var(--muted);
+      align-self: center;
+      font-size: 10px;
+      text-align: center;
+      max-width: 100%;
+    }
+
+    #chat-input-area {
+      padding: 12px;
+      border-top: 1px solid var(--border-light);
+      background: var(--panel-bg);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #chat-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px;
+      font-family: inherit;
+      font-size: 12px;
+      border-radius: 4px;
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    #chat-input:focus { border-color: var(--green); }
+
+    .btn-primary {
+      background: rgba(110, 231, 90, 0.1);
+      border: 1px solid var(--border);
+      color: var(--green);
+      padding: 8px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover:not(:disabled) { background: rgba(110, 231, 90, 0.2); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; border-color: var(--border-light); color: var(--muted); }
+
+    #loading-status {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: center;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+  </style>
+</head>
+<body>
+  <div id="workspace">
+    
+    <!-- Left Activity Bar -->
+    <nav id="left-bar">
+      <div class="vertical-text">CANVAS</div>
+    </nav>
+
+    <!-- Center HTML Screen -->
+    <main id="center-panel">
+      <header id="center-tabs">
+        <button class="center-tab active" id="tab-code">source.html</button>
+        <button class="center-tab" id="tab-preview">Live Preview</button>
+      </header>
+      
+      <div id="canvas-content">
+        <textarea id="code-editor" placeholder="<!-- Your HTML canvas. Ask the AI to build something... -->"></textarea>
+        <iframe id="preview-frame"></iframe>
+      </div>
+      
+      <button id="btn-play">▶ Play</button>
+    </main>
+
+    <!-- Right Chat Panel -->
+    <aside id="right-sidebar">
+      <header class="panel-header">WEBLLM // BUILDER AI</header>
+      
+      <div id="chat-messages">
+        <div class="msg ai">Initializing local AI environment. Please wait while the model loads into your browser...</div>
+      </div>
+      
+      <div id="chat-input-area">
+        <textarea id="chat-input" placeholder="E.g. Create a dark mode calculator app using HTML, CSS and JS..." disabled></textarea>
+        <button id="btn-send" class="btn-primary" disabled>Loading Model...</button>
+        <div id="loading-status">Downloading weights (This may take a while the first time)</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <script type="module">
+    import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+
+    // DOM Elements
+    const chatMessages = document.getElementById("chat-messages");
+    const chatInput = document.getElementById("chat-input");
+    const btnSend = document.getElementById("btn-send");
+    const loadingStatus = document.getElementById("loading-status");
+    const codeEditor = document.getElementById("code-editor");
+    const previewFrame = document.getElementById("preview-frame");
+    const btnPlay = document.getElementById("btn-play");
+    const tabCode = document.getElementById("tab-code");
+    const tabPreview = document.getElementById("tab-preview");
+
+    // UI Logic: Tabs & Play button
+    function switchTab(isCode) {
+      if (isCode) {
+        tabCode.classList.add("active");
+        tabPreview.classList.remove("active");
+        codeEditor.style.display = "block";
+        previewFrame.style.display = "none";
+      } else {
+        tabPreview.classList.add("active");
+        tabCode.classList.remove("active");
+        codeEditor.style.display = "none";
+        previewFrame.style.display = "block";
+      }
+    }
+
+    tabCode.addEventListener("click", () => switchTab(true));
+    tabPreview.addEventListener("click", () => switchTab(false));
+
+    btnPlay.addEventListener("click", () => {
+      // Create a blob from the editor content and render in iframe
+      const code = codeEditor.value;
+      const blob = new Blob([code], { type: 'text/html' });
+      previewFrame.src = URL.createObjectURL(blob);
+      switchTab(false); // Switch to preview
+    });
+
+    // Chat Utils
+    function appendMessage(sender, text) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `msg ${sender}`;
+      msgDiv.textContent = text;
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return msgDiv;
+    }
+
+    // Initialize WebLLM Engine
+    let engine;
+    
+    async function initWebLLM() {
+      try {
+        const initProgressCallback = (report) => {
+          loadingStatus.textContent = report.text;
+        };
+
+        // Custom config to load the specific Hugging Face model requested
+        const customModelConfig = {
+          model_list: [
+            {
+              model: "https://huggingface.co/welcoma/gemma-4-E2B-it-q4f16_1-MLC",
+              model_id: "gemma-4-E2B-it-q4f16_1-MLC",
+              model_lib: webllm.modelLibURLPrefix + webllm.modelVersion + "/gemma-2b-it-q4f16_1-ctx4k_cs1k-webgpu.wasm" // Fallback compatible WASM execution context
+            }
+          ]
+        };
+
+        engine = await webllm.CreateMLCEngine(
+          "gemma-4-E2B-it-q4f16_1-MLC",
+          {
+            initProgressCallback: initProgressCallback,
+            appConfig: customModelConfig
+          }
+        );
+
+        loadingStatus.textContent = "Engine Ready. Local AI active.";
+        btnSend.textContent = "Send to AI";
+        btnSend.disabled = false;
+        chatInput.disabled = false;
+        
+        appendMessage("system", "Model loaded successfully. What would you like to build?");
+        
+      } catch (err) {
+        console.error("WebLLM Init Error:", err);
+        loadingStatus.textContent = "Failed to load model. Check console.";
+        appendMessage("system", "Error initializing WebLLM. Your hardware may not support WebGPU, or the custom URL/WASM mismatch failed.");
+      }
+    }
+
+    // Start loading the model on page load
+    initWebLLM();
+
+    // AI Generation Logic
+    btnSend.addEventListener("click", async () => {
+      const prompt = chatInput.value.trim();
+      if (!prompt) return;
+
+      appendMessage("user", prompt);
+      chatInput.value = "";
+      btnSend.disabled = true;
+      chatInput.disabled = true;
+
+      const aiMessageElement = appendMessage("ai", "Thinking & Generating HTML...");
+
+      try {
+        const messages = [
+          { 
+            role: "system", 
+            content: "You are an expert web developer AI embedded in a tool called Canvas. Your task is to output strictly functional HTML, CSS, and JS wrapped in a single <html> block. Do not use markdown ```html formatting around your code, just output the raw code directly. The user is asking you to build a webpage/app." 
+          },
+          { role: "user", content: prompt }
+        ];
+
+        const reply = await engine.chat.completions.create({
+          messages,
+          temperature: 0.7,
+        });
+
+        let outputCode = reply.choices[0].message.content;
+
+        // Clean up markdown block wrapping if the AI included it by mistake
+        if (outputCode.startsWith("```html")) {
+          outputCode = outputCode.replace(/^```html\n?/, "").replace(/\n?```$/, "");
+        } else if (outputCode.startsWith("```")) {
+          outputCode = outputCode.replace(/^```\n?/, "").replace(/\n?```$/, "");
+        }
+
+        aiMessageElement.textContent = "Code successfully generated! Click 'Play' to test it.";
+        
+        // Populate the editor
+        codeEditor.value = outputCode.trim();
+        switchTab(true);
+
+      } catch (err) {
+        aiMessageElement.textContent = "Error generating code: " + err.message;
+        console.error(err);
+      }
+
+      btnSend.disabled = false;
+      chatInput.disabled = false;
+      chatInput.focus();
+    });
+
+    // Enter to send
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        if (!btnSend.disabled) btnSend.click();
+      }
+    });
+  </script>
+</body>
+</html>
