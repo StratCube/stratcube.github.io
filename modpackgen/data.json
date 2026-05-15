@@ -1,24 +1,24 @@
 {
   "addons": [
     {
-      "name": "Optimization Essentials",
+      "name": "Optimization",
       "description": "Fundamental client-side performance mods.",
       "mods": ["sodium", "lithium", "indium", "ferrite-core", "entityculling"]
     },
     {
-      "name": "Visual & Camera",
+      "name": "Camera",
       "description": "Zoom, dynamic lights, and freecam features.",
       "mods": ["zoomify", "lambdynamiclights", "freecam"]
     },
     {
-      "name": "Multiplayer QOL",
+      "name": "Utility",
       "description": "Voice chat and server utility modules.",
-      "mods": ["plasmo-voice", "appleskin", "modmenu"]
+      "mods": ["appleskin", "modmenu"]
     },
     {
-      "name": "World Overhaul",
+      "name": "OverWorld Overhaul",
       "description": "Overhaul your world generation!",
-      "mods": ["tectonic", "stellarity", "biomes-o-plenty"]
+      "mods": ["tectonic", "biomes-o-plenty", "dungeons-and-taverns"]
     }
   ]
 }
