@@ -90,6 +90,7 @@ body {
 .tab-pane { padding: 12px; display: flex; flex-direction: column; height: 100%; gap: 12px; }
 .sidebar-panel { padding: 0; flex: 1; overflow-y: hidden; }
 .sidebar-panel.active { display: flex; flex-direction: column; }
+#panel-addons #addons-list { flex: 1; overflow-y: auto; padding: 8px; }
 
 /* UI Elements */
 .input-group { padding: 8px 12px; border-bottom: 1px solid var(--border-light); flex-shrink: 0; }
