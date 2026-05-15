@@ -239,7 +239,7 @@
     "common_tags": ["forge:ingots/plastic"],
     "milestone_items": ["industrialforegoing:laser_drill"],
     "dependencies": []
-  }
+  },
   {
     "mod": "Applied Energistics 2",
     "namespace": "ae2",
@@ -621,7 +621,7 @@
     "common_tags": [],
     "milestone_items": ["exnihilosequentium:sieve"],
     "dependencies": []
-  }
+  },
   {
     "mod": "Ars Nouveau",
     "namespace": "ars_nouveau",
@@ -965,7 +965,7 @@
     "common_tags": [],
     "milestone_items": ["hex:casting_staff"],
     "dependencies": []
-  }
+  },
   {
     "mod": "Twilight Forest",
     "namespace": "twilightforest",
@@ -1270,7 +1270,7 @@
     "common_tags": [],
     "milestone_items": ["explorerscompass:explorers_compass"],
     "dependencies": []
-  }
+  },
   {
     "mod": "L_Ender's Cataclysm",
     "namespace": "cataclysm",
@@ -1587,7 +1587,7 @@
     "common_tags": [],
     "milestone_items": ["levelz:skill_point"],
     "dependencies": []
-  }
+  },
   {
     "mod": "Farmer's Delight",
     "namespace": "farmersdelight",
