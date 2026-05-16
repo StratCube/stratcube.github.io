@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Strat//Projects</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono:wght@400;700&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    /* ─── THEME VARIABLES (Synced with main site) ─── */
+    :root {
+      --bg: #020408; 
+      --green: #6EE75A;
+      --green-dim: #4db842;
+      --grid-color: rgba(110, 231, 90, 0.05);
+      --border: rgba(110, 231, 90, 0.3);
+      --text: #e2e8f0;
+      --mono: 'JetBrains Mono', monospace;
+      --display: 'Syne', sans-serif;
+      --card-bg: rgba(0, 0, 0, 0.3);
+      --blur: 10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── BACKGROUND EFFECTS ─── */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 45px 45px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 10%, black 40%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .glow-effect {
+      position: fixed;
+      top: -15%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 500px;
+      background: radial-gradient(ellipse, rgba(110, 231, 90, 0.08) 0%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── LAYOUT ─── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.5rem 0;
+      margin-bottom: 3.5rem;
+      border-bottom: 1px solid var(--grid-color);
+    }
+
+    .cube-logo {
+      width: 55px; height: 55px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(110, 231, 90, 0.2));
+    }
+
+    .site-title {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .nav-buttons {
+      margin-left: auto;
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    /* Back Button Style */
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card-bg);
+      backdrop-filter: blur(var(--blur));
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--green);
+    }
+
+    .nav-btn:hover {
+      border-color: var(--green);
+      background: rgba(0, 0, 0, 0.55);
+      transform: translateY(-3px);
+    }
+
+    .blink {
+      display: inline-block; width: 2px; height: 1.1em;
+      background: var(--green); vertical-align: middle;
+      animation: blink 1.1s step-end infinite; margin-left: 6px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ─── SECTIONS ─── */
+    .section-heading {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: rgba(232,232,232,0.55);
+      margin-bottom: 3rem;
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    /* ─── ARCHIVE CARDS ─── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem 1.4rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(var(--blur));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: center;
+    }
+
+    .card:hover {
+      border-color: var(--green);
+      background: rgba(0, 0, 0, 0.55); 
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 20px rgba(110, 231, 90, 0.15);
+    }
+
+    .card-title {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .card-img {
+      width: 105px; height: 105px;
+      object-fit: contain;
+      transition: transform 0.3s;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .card:hover .card-img { transform: scale(1.05); }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: rgba(232,232,232,0.6);
+      line-height: 1.5;
+    }
+
+    .status-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--green);
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 2rem; margin-top: 5rem;
+      font-size: 0.8rem; color: rgba(232,232,232,0.3);
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+
+    footer a { color: var(--green-dim); }
+    footer a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow-effect"></div>
+
+<div class="page">
+  <nav>
+    <img class="cube-logo" src="cube.png" alt="stratcube logo"/>
+    <span class="site-title">Strat//Projects<span class="blink"></span></span>
+    
+    <div class="nav-buttons">
+      <!-- Redirect to main site -->
+      <a href="https://stratcube2.github.io" class="nav-btn">
+        ← Back to Home
+      </a>
+    </div>
+  </nav>
+
+  <section>
+    <h2 class="section-heading">The Archive//</h2>
+    <p class="section-sub">A complete listing of everything I've worked on. Some are finished, most are not.</p>
+  </section>
+
+  <!-- Main Archive Grid -->
+  <div class="cards" id="archive-grid">
+    <!-- JavaScript will inject all projects here -->
+  </div>
+
+  <footer>
+    <span>projects.stratcube.github.io</span>
+    <span>made by <a href="https://github.com/stratcube2">strat</a> — usually unfinished</span>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Fetch the same data.json from your main site (or a local copy)
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        const archiveContainer = document.getElementById('archive-grid');
+        
+        // Combine both 'featured' and 'projects' into one master list
+        // We use a Map to avoid duplicates if a project is in both lists
+        const allProjects = new Map();
+
+        // Add featured projects first (they have better descriptions/images)
+        data.featured.forEach(item => {
+          allProjects.set(item.title.toLowerCase(), {
+            title: item.title,
+            url: item.url,
+            img: item.imgSrc,
+            desc: item.desc,
+            status: 'Featured'
+          });
+        });
+
+        // Add the rest of the projects
+        data.projects.forEach(item => {
+          const key = item.name.toLowerCase();
+          if (!allProjects.has(key)) {
+            allProjects.set(key, {
+              title: item.name,
+              url: item.url,
+              img: 'pack.png', // Default fallback image
+              desc: item.desc,
+              status: item.status
+            });
+          }
+        });
+
+        // Render the cards
+        allProjects.forEach(project => {
+          const card = document.createElement('a');
+          card.href = project.url;
+          card.target = "_blank";
+          card.className = "card";
+          card.innerHTML = `
+            <span class="card-title">${project.title}</span>
+            <img class="card-img" src="${project.img}" alt="${project.title} logo" onerror="this.src='pack.png'"/>
+            <span class="card-desc">${project.desc}</span>
+            <span class="status-tag">${project.status}</span>
+          `;
+          archiveContainer.appendChild(card);
+        });
+      })
+      .catch(err => {
+        console.error("Error loading JSON:", err);
+        document.getElementById('archive-grid').innerHTML = `<p style="color:var(--crimson)">Failed to load projects. Make sure data.json is in the folder.</p>`;
+      });
+  });
+</script>
+
+</body>
+</html>
