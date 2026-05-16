@@ -27,6 +27,13 @@
       "imgSrc": "github.png",
       "desc": "stratcube on github",
       "status": "Active"
+    },
+    {
+      "name": "packforager",
+      "url": "https://stratcube.github.io/modpackgen/",
+      "imgSrc": "pack.png",
+      "desc": "modpacks ez",
+      "status": "online"
     }
   ]
 }
