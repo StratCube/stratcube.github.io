@@ -24,13 +24,14 @@
       "name": "EpicFight+",
       "description": "Epic combat with expansive addon support.",
       "mods": [
-        "epicfight",
-        "epicfight-extra-weapons",
+        "epic-fight",
+        "epic-fight-sword-soaring",
+        "epicfight-extra",
         "epicfight-extra-spells",
-        "epic-knights",
-        "epicfight-weapons-plus",
-        "epicfight-moveset-expansion",
-        "epicfight-villager"
+        "epic-knights-shields-armor-and-weapons",
+        "efmcompat",
+        "battle-arts",
+        "epicfight-improve"
       ]
     },
     {
@@ -48,12 +49,14 @@
       "description": "Expanded farming, cooking, and food variety.",
       "mods": [
         "farmers-delight",
-        "nethers-delight",
+        "my-nethers-delight",
+        "my-nethers-delight-refabricated",
+        "farmers-delight-refabricated",
         "ends-delight",
-        "ocean-delight",
+        "oceans-delight",
         "brewin-and-chewin",
         "delightful",
-        "harvest-delight"
+        "hearth-and-harvest"
       ]
     },
     {
@@ -64,6 +67,7 @@
         "yung-better-dungeons",
         "yung-better-strongholds",
         "yung-better-mineshafts",
+        "yungs-api",
         "structory",
         "when-dungeons-arise"
       ]
@@ -74,20 +78,17 @@
       "mods": [
         "rpg-origins",
         "origins",
-        "apoli",
-        "levelz",
-        "afar",
-        "rpg-stats"
+        "origins-forge",
+        "levelz"
       ]
     },
     {
       "name": "Armory Expansion",
       "description": "More weapons, armor, and combat gear.",
       "mods": [
-        "unusual-end",
+        "unusual_end",
         "expanded-combat",
         "spartan-weaponry",
-        "better-weapons",
         "aquamirae"
       ]
     },
@@ -98,8 +99,9 @@
         "alexs-mobs",
         "illager-invasion",
         "mutant-monsters",
-        "born-in-chaos",
-        "hostile-neural-networks"
+        "borninchaos",
+        "hostile-neural-network-opposing-force",
+        "opposing-force"
       ]
     },
     {
@@ -107,8 +109,9 @@
       "description": "Spellcasting, magic schools, and arcane items.",
       "mods": [
         "ars-nouveau",
-        "ars-elemental",
-        "ars-creo",
+        "ars-elixirum",
+        "ars-ocultas",
+        "occultism",
         "mahou-tsukai",
         "hexerei"
       ]
