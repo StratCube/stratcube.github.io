@@ -1,0 +1,32 @@
+{
+  "featured": [
+    {
+      "title": "servertabs",
+      "url": "https://modrinth.com/mod/servertabs",
+      "imgSrc": "tmfs.png",
+      "desc": "manage your servers"
+    },
+    {
+      "title": "mrpackswap",
+      "url": "https://stratcube2.github.io/mrpack",
+      "imgSrc": "mrpack.png",
+      "desc": "swap a modpacks version"
+    }
+  ],
+  "projects": [
+    {
+      "name": "mcmodbuilder",
+      "url": "https://github.com/StratCube2/MCmodbuilder-Fabric",
+      "imgSrc": "builder.png",
+      "desc": "mod online compiler",
+      "status": "WIP"
+    },
+    {
+      "name": "github",
+      "url": "https://github.com/stratcube2",
+      "imgSrc": "github.png",
+      "desc": "stratcube on github",
+      "status": "Active"
+    }
+  ]
+}
