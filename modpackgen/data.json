@@ -3,7 +3,7 @@
     {
       "name": "Optimization",
       "description": "Fundamental client-side performance mods.",
-      "mods": ["sodium", "lithium", "indium", "ferrite-core", "entityculling"]
+      "mods": ["sodium", "embeddium", "canary", "lithium", "indium", "ferrite-core", "entityculling"]
     },
     {
       "name": "Camera",
@@ -13,7 +13,7 @@
     {
       "name": "Utility",
       "description": "Voice chat and server utility modules.",
-      "mods": ["appleskin", "modmenu"]
+      "mods": ["appleskin", "modmenu", "jei", "jade", "packet-fixer", "polymorph"]
     },
     {
       "name": "OverWorld Overhaul",
