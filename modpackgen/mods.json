@@ -1829,5 +1829,418 @@
     "common_tags": [],
     "milestone_items": ["comforts:sleeping_bag"],
     "dependencies": []
+  },
+  {
+    "mod": "Epic Fight",
+    "namespace": "epicfight",
+    "mod_role": "Combat Overhaul",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Learning the Blade": {
+        "description": "Switching to the new combat system",
+        "tasks": [
+          { "type": "collect", "item": "epicfight:weapon_skill_book", "priority": 1 },
+          { "type": "use", "item": "epicfight:combat_mode_switch", "priority": 2 }
+        ]
+      },
+      "Martial Arts": {
+        "description": "Mastering weapon skills",
+        "tasks": [
+          { "type": "craft", "item": "epicfight:training_dummy", "priority": 1 },
+          { "type": "collect", "item": "epicfight:skill_point", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["epicfight:weapon_skill_book"],
+    "dependencies": []
+  },
+  {
+    "mod": "Better Combat",
+    "namespace": "bettercombat",
+    "mod_role": "Combat Animation",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Epic Fight"],
+    "progression": {
+      "Fluid Motion": {
+        "description": "Improving weapon swings",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:iron_sword", "priority": 1 },
+          { "type": "use", "item": "bettercombat:attack_animation", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": [],
+    "dependencies": []
+  },
+  {
+    "mod": "Wizards RPG",
+    "namespace": "wizardry",
+    "mod_role": "RPG Magic",
+    "difficulty_weight": 4,
+    "progression": {
+      "Apprentice Wizard": {
+        "description": "First steps into arcane arts",
+        "tasks": [
+          { "type": "craft", "item": "wizardry:wizard_staff", "priority": 1 },
+          { "type": "collect", "item": "wizardry:mana_crystal", "priority": 2 }
+        ]
+      },
+      "Archmage": {
+        "description": "Mastering high-tier spells",
+        "tasks": [
+          { "type": "craft", "item": "wizardry:wizard_robe", "priority": 1 },
+          { "type": "craft", "item": "wizardry:spell_book", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["wizardry:spell_book"],
+    "dependencies": []
+  },
+  {
+    "mod": "Paladins and Priests RPG",
+    "namespace": "paladins",
+    "mod_role": "RPG Holy",
+    "difficulty_weight": 4,
+    "progression": {
+      "The Devout": {
+        "description": "Harnessing holy light",
+        "tasks": [
+          { "type": "craft", "item": "paladins:mace", "priority": 1 },
+          { "type": "craft", "item": "paladins:holy_symbol", "priority": 2 }
+        ]
+      },
+      "Holy Crusader": {
+        "description": "The ultimate shield of faith",
+        "tasks": [
+          { "type": "craft", "item": "paladins:paladin_armor", "priority": 1 },
+          { "type": "craft", "item": "paladins:blessed_weapon", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["paladins:paladin_armor"],
+    "dependencies": []
+  },
+  {
+    "mod": "Archers RPG",
+    "namespace": "archery",
+    "mod_role": "RPG Ranged",
+    "difficulty_weight": 3,
+    "progression": {
+      "The Marksman": {
+        "description": "Precision from afar",
+        "tasks": [
+          { "type": "craft", "item": "archery:longbow", "priority": 1 },
+          { "type": "craft", "item": "archery:quiver", "priority": 2 }
+        ]
+      },
+      "Sniper": {
+        "description": "One shot, one kill",
+        "tasks": [
+          { "type": "craft", "item": "archery:composite_bow", "priority": 1 },
+          { "type": "collect", "item": "archery:special_arrow", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["archery:composite_bow"],
+    "dependencies": []
+  },
+  {
+    "mod": "Rogues and Warriors RPG",
+    "namespace": "roguesandwarriors",
+    "mod_role": "RPG Melee",
+    "difficulty_weight": 3,
+    "progression": {
+      "Street Fighter": {
+        "description": "Basic combat skills",
+        "tasks": [
+          { "type": "craft", "item": "roguesandwarriors:dagger", "priority": 1 },
+          { "type": "craft", "item": "roguesandwarriors:warrior_sword", "priority": 2 }
+        ]
+      },
+      "Assassin & Knight": {
+        "description": "Specialized combat paths",
+        "tasks": [
+          { "type": "craft", "item": "roguesandwarriors:rogue_armor", "priority": 1 },
+          { "type": "craft", "item": "roguesandwarriors:warrior_armor", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["roguesandwarriors:warrior_armor"],
+    "dependencies": []
+  },
+  {
+    "mod": "Death Knights RPG",
+    "namespace": "deathknights",
+    "mod_role": "RPG Undead",
+    "difficulty_weight": 5,
+    "progression": {
+      "Necrotic Awakening": {
+        "description": "Embracing the void",
+        "tasks": [
+          { "type": "craft", "item": "deathknights:death_sword", "priority": 1 },
+          { "type": "collect", "item": "deathknights:soul_essence", "priority": 2 }
+        ]
+      },
+      "Lord of the Dead": {
+        "description": "The peak of necrotic power",
+        "tasks": [
+          { "type": "craft", "item": "deathknights:death_knight_armor", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["deathknights:death_knight_armor"],
+    "dependencies": []
+  },
+  {
+    "mod": "Druids RPG",
+    "namespace": "druids",
+    "mod_role": "RPG Nature",
+    "difficulty_weight": 4,
+    "progression": {
+      "Forest Guardian": {
+        "description": "Connecting with nature",
+        "tasks": [
+          { "type": "craft", "item": "druids:wooden_staff", "priority": 1 },
+          { "type": "collect", "item": "druids:nature_essence", "priority": 2 }
+        ]
+      },
+      "Archdruid": {
+        "description": "Mastery of the wild",
+        "tasks": [
+          { "type": "craft", "item": "druids:druid_armor", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["druids:druid_armor"],
+    "dependencies": []
+  },
+  {
+    "mod": "RPG Series Utility",
+    "namespace": "relics",
+    "mod_role": "RPG Equipment",
+    "difficulty_weight": 3,
+    "progression": {
+      "Ancient Gear": {
+        "description": "Collecting Relics, Arsenal, and Armory gear",
+        "tasks": [
+          { "type": "collect", "item": "relics:ancient_relic", "priority": 1 },
+          { "type": "craft", "item": "arsenal:heavy_weapon", "priority": 2 },
+          { "type": "craft", "item": "armory:plate_armor", "priority": 3 }
+        ]
+      },
+      "The Tavern & Training": {
+        "description": "Skill trees and social hubs",
+        "tasks": [
+          { "type": "use", "item": "skilltree:skill_point", "priority": 1 },
+          { "type": "explore", "item": "villagetaverns:tavern", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["relics:ancient_relic"],
+    "dependencies": []
+  },
+  {
+    "mod": "Sortilege",
+    "namespace": "sortilege",
+    "mod_role": "Magic",
+    "difficulty_weight": 4,
+    "progression": {
+      "The First Spell": {
+        "description": "Beginning your study",
+        "tasks": [
+          { "type": "craft", "item": "sortilege:spell_book", "priority": 1 },
+          { "type": "craft", "item": "sortilege:magic_ink", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["sortilege:spell_book"],
+    "dependencies": []
+  },
+  {
+    "mod": "Bewitchment",
+    "namespace": "bewitchment",
+    "mod_role": "Magic",
+    "difficulty_weight": 5,
+    "progression": {
+      "Hedge Witch": {
+        "description": "Simple brews and charms",
+        "tasks": [
+          { "type": "craft", "item": "bewitchment:cauldron", "priority": 1 },
+          { "type": "craft", "item": "bewitchment:broom", "priority": 2 }
+        ]
+      },
+      "Coven Master": {
+        "description": "Dark pacts and powerful curses",
+        "tasks": [
+          { "type": "use", "item": "bewitchment:altar", "priority": 1 },
+          { "type": "collect", "item": "bewitchment:spirit_essence", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["bewitchment:broom"],
+    "dependencies": []
+  },
+  {
+    "mod": "Born in Chaos",
+    "namespace": "borninchaos",
+    "mod_role": "Combat/Horror",
+    "difficulty_weight": 5,
+    "progression": {
+      "Night Terrors": {
+        "description": "Surviving the chaos",
+        "tasks": [
+          { "type": "kill", "item": "borninchaos:nightmare_entity", "priority": 1 },
+          { "type": "collect", "item": "borninchaos:chaos_shard", "priority": 2 }
+        ]
+      },
+      "Chaos Gear": {
+        "description": "Crafting from the abyss",
+        "tasks": [
+          { "type": "craft", "item": "borninchaos:chaos_weapon", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["borninchaos:chaos_shard"],
+    "dependencies": []
+  },
+  {
+    "mod": "Epic Fight Addons",
+    "namespace": "efaddons",
+    "mod_role": "Combat Expansion",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Epic Fight"],
+    "progression": {
+      "Divine Armaments": {
+        "description": "Soaring Swords and Miracles",
+        "tasks": [
+          { "type": "craft", "item": "efsoaringsword:soaring_sword", "priority": 1 },
+          { "type": "craft", "item": "efmiracles:miracle_weapon", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["efsoaringsword:soaring_sword"],
+    "dependencies": ["Epic Fight"]
+  },
+  {
+    "mod": "Spartan Weaponry",
+    "namespace": "spartanweaponry",
+    "mod_role": "Weaponry",
+    "difficulty_weight": 3,
+    "progression": {
+      "Arsenal Expansion": {
+        "description": "More ways to kill",
+        "tasks": [
+          { "type": "craft", "item": "spartanweaponry:halberd", "priority": 1 },
+          { "type": "craft", "item": "spartanweaponry:greatsword", "priority": 2 },
+          { "type": "craft", "item": "spartanweaponry:warhammer", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/steel"],
+    "milestone_items": ["spartanweaponry:greatsword"],
+    "dependencies": []
+  },
+  {
+    "mod": "Immersive Armor",
+    "namespace": "immersivearmor",
+    "mod_role": "Armor",
+    "difficulty_weight": 3,
+    "progression": {
+      "Heavy Plating": {
+        "description": "More protective gear",
+        "tasks": [
+          { "type": "craft", "item": "immersivearmor:steel_chestplate", "priority": 1 },
+          { "type": "craft", "item": "immersivearmor:knight_helmet", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["immersivearmor:steel_chestplate"],
+    "dependencies": []
+  },
+  {
+    "mod": "Eldritch End",
+    "namespace": "eldritchend",
+    "mod_role": "Dimension Expansion",
+    "difficulty_weight": 6,
+    "progression": {
+      "Void Horrors": {
+        "description": "The End's dark secrets",
+        "tasks": [
+          { "type": "explore", "item": "eldritchend:eldritch_biome", "priority": 1 },
+          { "type": "collect", "item": "eldritchend:void_crystal", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["eldritchend:void_crystal"],
+    "dependencies": []
+  },
+  {
+    "mod": "Stellarity",
+    "namespace": "stellarity",
+    "mod_role": "Dimension Overhaul",
+    "difficulty_weight": 5,
+    "progression": {
+      "A New End": {
+        "description": "Exploring the revamped End",
+        "tasks": [
+          { "type": "explore", "item": "stellarity:end_city", "priority": 1 },
+          { "type": "collect", "item": "stellarity:stellar_ingot", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["stellarity:stellar_ingot"],
+    "dependencies": []
+  },
+  {
+    "mod": "Nullscape",
+    "namespace": "nullscape",
+    "mod_role": "Dimension Overhaul",
+    "difficulty_weight": 4,
+    "progression": {
+      "The Empty Void": {
+        "description": "Navigating the desolate landscape",
+        "tasks": [
+          { "type": "explore", "item": "nullscape:void_terrain", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": [],
+    "dependencies": []
+  },
+  {
+    "mod": "Incendium",
+    "namespace": "incendium",
+    "mod_role": "Dimension Overhaul",
+    "difficulty_weight": 5,
+    "progression": {
+      "Hell's Fury": {
+        "description": "Surviving the new Nether",
+        "tasks": [
+          { "type": "explore", "item": "incendium:nether_fortress", "priority": 1 },
+          { "type": "collect", "item": "incendium:nether_relic", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["incendium:nether_relic"],
+    "dependencies": []
   }
 ]
