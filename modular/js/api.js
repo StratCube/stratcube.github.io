@@ -53,7 +53,6 @@ export async function searchCurseForge(query, category) {
   return (await res.json()).data;
 }
 
-// FIX: Dependency IDs are now completely normalized to Modrinth Project IDs.
 export async function resolveDependencies() {
   let addedCount = 0;
   let queue = state.mods.filter(m => m.source === 'modrinth').map(m => m.id); 
@@ -77,13 +76,8 @@ export async function resolveDependencies() {
         if(dep.dependency_type === 'required' && dep.project_id && !processed.has(dep.project_id)) {
           processed.add(dep.project_id);
           
-          const projRes = await fetch(`https://api.modrinth.com/v2/project/${dep.project_id}`);
-          if(!projRes.ok) continue;
-          const proj = await projRes.json();
-          
-          const depVerRes = await fetch(`https://api.modrinth.com/v2/project/${proj.id}/version?${params}`);
-          if(!depVerRes.ok) continue;
-          const depVersions = await depVerRes.json();
+          const proj = await fetchModrinthProjectData(dep.project_id);
+          const depVersions = await fetchModrinthVersionData(proj.id);
           
           if(depVersions.length > 0) {
             const file = depVersions[0].files.find(f => f.primary) || depVersions[0].files[0];
@@ -111,9 +105,16 @@ export async function resolveDependencies() {
   return addedCount;
 }
 
-export async function fetchModrinthVersionData(slug) {
+export async function fetchModrinthVersionData(slugOrId) {
   const params = new URLSearchParams({ loaders: JSON.stringify([state.loader]), game_versions: JSON.stringify([state.mcVersion]) });
-  const res = await fetch(`https://api.modrinth.com/v2/project/${slug}/version?${params}`);
-  if (!res.ok) throw new Error("Network error");
+  const res = await fetch(`https://api.modrinth.com/v2/project/${slugOrId}/version?${params}`);
+  if (!res.ok) throw new Error("Network error fetching version data");
+  return await res.json();
+}
+
+// --- NEW HELPER FUNCTION ---
+export async function fetchModrinthProjectData(slugOrId) {
+  const res = await fetch(`https://api.modrinth.com/v2/project/${slugOrId}`);
+  if (!res.ok) throw new Error("Network error fetching project data");
   return await res.json();
 }
