@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- PackForager Tool -->
   <url>
-    <loc>https://stratcube.github.io/modpackgen/</loc>
-    <lastmod>2026-05-16</lastmod>
+    <loc>https://stratcube.github.io/modpack/</loc>
+    <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
