@@ -1,6 +1,6 @@
 import { state, loadState, saveState, onStateChange, addCustomFile, loadQuestState } from './state.js';
 import { fetchGameVersions, resolveDependencies } from './api.js';
-import { renderModList, executeSearch } from './ui.js';
+import { renderModList, executeSearch, renderAddons } from './ui.js';
 import { debounce } from './utils.js';
 import { initQuests, triggerQuestRenders } from './quests.js';
 import { exportMrPack, exportQuestsZip } from './export.js';
@@ -10,8 +10,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadState();
   loadQuestState();
   
-  // Register state listener for UI updates
-  onStateChange(renderModList);
+  // Register state listener for UI updates (this will now re-render the mod list on addon install)
+  onStateChange(() => {
+    renderModList();
+    triggerSearch(); // Re-run search to update "Add" buttons
+  });
   
   // Bind UI interactions
   bindNavigation();
@@ -20,7 +23,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   // Fetch required data and initialize sub-systems
   await populateGameVersions();
-  await initQuests(); // Loads mods.json and binds quest events
+  await initQuests();
+  await renderAddons(); // <-- ADDED THIS LINE to load and display addons
   
   // Initial renders
   renderModList();
@@ -91,7 +95,9 @@ function bindFormInputs() {
     
     const addedCount = await resolveDependencies();
     btn.textContent = addedCount > 0 ? `Added ${addedCount} mods` : "All good!";
-    saveState();
+    
+    // Only save state if mods were actually added
+    if (addedCount > 0) saveState();
     
     setTimeout(() => { btn.textContent = "Resolve Dependencies"; btn.disabled = false; }, 3000);
   });
@@ -101,7 +107,7 @@ function bindFormInputs() {
   document.getElementById('custom-mod-input').addEventListener('change', (e) => {
     for(let file of e.target.files) {
       addCustomFile({
-        id: 'custom-' + Date.now() + Math.random(), // Fallback ID for custom files
+        id: 'custom-' + Date.now() + Math.random(), 
         slug: file.name, 
         title: file.name, 
         category: 'Custom', 
