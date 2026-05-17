@@ -18,6 +18,8 @@ export async function exportQuestsZip() {
       y: `__RAW__${q.y}d`,
       shape: q.shape && q.shape !== 'default' ? q.shape : undefined,
       dependencies: q.dependencies && q.dependencies.length ? q.dependencies : undefined,
+      // --- FIX: Add always_invisible to root quests to ensure dependencies load correctly ---
+      always_invisible: (!q.dependencies || q.dependencies.length === 0) ? false : undefined,
       tasks: q.tasks.map(t => {
         if(t.taskType === 'kill') return { id: t.id, type: 'kill', entity: t.item, value: `__RAW__${t.count||1}L` };
         if(t.taskType === 'checkmark') return { id: t.id, type: 'checkmark', title: t.item };
@@ -127,7 +129,7 @@ export async function exportMrPack() {
     zip.file("modrinth.index.json", JSON.stringify(indexJson, null, 2));
 
     // INJECT QUESTS INTO MRPACK OVERRIDES
-    if (questState && questState.chapters && questState.chapters.length > 0) {
+    if (questState && questState.chapters && questState.chapters.some(c => c.quests.length > 0)) {
       const questsDir = zip.folder("overrides/config/ftbquests/quests");
       
       questsDir.file('data.snbt', toSNBT({ version: 3, default_quest_shape: '', default_quest_disableable: false }));
@@ -143,6 +145,8 @@ export async function exportMrPack() {
           y: `__RAW__${q.y}d`,
           shape: q.shape && q.shape !== 'default' ? q.shape : undefined,
           dependencies: q.dependencies && q.dependencies.length ? q.dependencies : undefined,
+          // --- FIX: Add always_invisible to root quests to ensure dependencies load correctly ---
+          always_invisible: (!q.dependencies || q.dependencies.length === 0) ? false : undefined,
           tasks: q.tasks.map(t => {
             if(t.taskType === 'kill') return { id: t.id, type: 'kill', entity: t.item, value: `__RAW__${t.count||1}L` };
             if(t.taskType === 'checkmark') return { id: t.id, type: 'checkmark', title: t.item };
@@ -179,4 +183,4 @@ export async function exportMrPack() {
   } finally {
     resetButtons();
   }
-  }
+}
