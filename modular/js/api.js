@@ -1,10 +1,22 @@
 import { state } from './state.js';
 
+// In-memory cache to prevent redundant API calls
+const cache = new Map();
+
+async function cachedFetch(url, signal) {
+  if (cache.has(url)) return cache.get(url);
+  
+  const res = await fetch(url, { signal });
+  if (!res.ok) throw new Error(`API Error: ${res.status}`);
+  const data = await res.json();
+  
+  cache.set(url, data);
+  return data;
+}
+
 export async function fetchGameVersions() {
   try {
-    const res = await fetch('https://api.modrinth.com/v2/tag/game_version');
-    if (!res.ok) throw new Error("API Error");
-    const data = await res.json();
+    const data = await cachedFetch('https://api.modrinth.com/v2/tag/game_version');
     return data.filter(v => v.version_type === 'release').map(v => v.version);
   } catch (err) {
     console.error("Failed to fetch game versions", err);
@@ -12,7 +24,7 @@ export async function fetchGameVersions() {
   }
 }
 
-export async function searchModrinth(query, category) {
+export async function searchModrinth(query, category, signal) {
   const facetsArr = [["project_type:mod"], [`versions:${state.mcVersion}`], [`categories:${state.loader}`]];
   if (category) facetsArr.push([`categories:${category}`]);
   
@@ -22,12 +34,13 @@ export async function searchModrinth(query, category) {
     limit: 15
   });
   
-  const res = await fetch(`https://api.modrinth.com/v2/search?${params}`);
+  // Searches are generally not cached because queries change constantly
+  const res = await fetch(`https://api.modrinth.com/v2/search?${params}`, { signal });
   if (!res.ok) throw new Error("Modrinth API Error");
   return (await res.json()).hits;
 }
 
-export async function searchCurseForge(query, category) {
+export async function searchCurseForge(query, category, signal) {
   let apiKey = localStorage.getItem('cf_api_key');
   if(!apiKey) {
     apiKey = prompt("CurseForge API requires an API key.\nEnter your key:");
@@ -43,6 +56,7 @@ export async function searchCurseForge(query, category) {
   });
 
   const res = await fetch(`https://api.curseforge.com/v1/mods/search?${params}`, {
+    signal,
     headers: { 'x-api-key': apiKey, 'Accept': 'application/json' }
   });
   
@@ -65,11 +79,8 @@ export async function resolveDependencies() {
 
   while(queue.length > 0) {
     const currentId = queue.shift();
-    
     try {
-      const verRes = await fetch(`https://api.modrinth.com/v2/project/${currentId}/version?${params}`);
-      if(!verRes.ok) continue;
-      const versions = await verRes.json();
+      const versions = await fetchModrinthVersionData(currentId);
       if(versions.length === 0 || !versions[0].dependencies) continue;
 
       for(let dep of versions[0].dependencies) {
@@ -107,14 +118,11 @@ export async function resolveDependencies() {
 
 export async function fetchModrinthVersionData(slugOrId) {
   const params = new URLSearchParams({ loaders: JSON.stringify([state.loader]), game_versions: JSON.stringify([state.mcVersion]) });
-  const res = await fetch(`https://api.modrinth.com/v2/project/${slugOrId}/version?${params}`);
-  if (!res.ok) throw new Error("Network error fetching version data");
-  return await res.json();
+  const url = `https://api.modrinth.com/v2/project/${slugOrId}/version?${params}`;
+  return await cachedFetch(url);
 }
 
-// --- NEW HELPER FUNCTION ---
 export async function fetchModrinthProjectData(slugOrId) {
-  const res = await fetch(`https://api.modrinth.com/v2/project/${slugOrId}`);
-  if (!res.ok) throw new Error("Network error fetching project data");
-  return await res.json();
+  const url = `https://api.modrinth.com/v2/project/${slugOrId}`;
+  return await cachedFetch(url);
 }
