@@ -13,8 +13,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
+  <!-- Global Toast Container -->
+  <div id="toast-container"></div>
+  <!-- Global Progress Overlay -->
+  <div id="progress-overlay" class="hidden">
+    <div class="progress-content">
+      <div class="spinner"></div>
+      <div id="progress-text">Processing...</div>
+      <div class="progress-bar-bg">
+        <div id="progress-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
   <div id="workspace">
-    <!-- Activity Bar -->
     <nav id="activity-bar">
       <button class="activity-tab active" data-target="panel-info" title="Information & Filters">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
@@ -22,7 +34,6 @@
       <button class="activity-tab" data-target="panel-addons" title="Addons">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
       </button>
-      <!-- REPLACED DOLLAR SIGN WITH BOOK ICON -->
       <button class="activity-tab" data-target="panel-quests" title="Quest Mods">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
@@ -31,9 +42,7 @@
       </button>
     </nav>
 
-    <!-- Left Panel -->
     <aside id="left-sidebar">
-      <!-- TAB 1: Search Filters & Pack Info -->
       <div id="panel-info" class="sidebar-panel active split-panel">
         <div class="panel-half">
           <div class="panel-header">SEARCH FILTERS</div>
@@ -58,6 +67,8 @@
           </div>
         </div>
 
+        <div class="panel-half border-top">
+          <!-- LEFT EXPORT BUTTON REMOVED AS REQUESTED -->
           <div class="panel-header">PACK INFO</div>
           <div class="input-group">
             <label>Modpack Name</label>
@@ -87,13 +98,11 @@
         </div>
       </div>
 
-      <!-- TAB 2: Addons -->
       <div id="panel-addons" class="sidebar-panel hidden">
         <div class="panel-header">ADDONS</div>
         <div id="addons-list" class="flex-col gap-2"></div>
       </div>
 
-      <!-- TAB 3: Quest Mods -->
       <div id="panel-quests" class="sidebar-panel hidden">
         <div class="panel-header">QUEST MODS</div>
         <div class="input-group">
@@ -103,7 +112,6 @@
       </div>
     </aside>
 
-    <!-- Center Panel -->
     <main id="center-panel">
       <header id="center-tabs">
         <button class="center-tab active" data-target="tab-search">Search</button>
@@ -111,7 +119,6 @@
       </header>
       
       <div id="center-content">
-        <!-- Search Pane -->
         <div id="tab-search" class="tab-pane active">
           <div class="search-bar">
             <input type="text" id="mod-search" placeholder="Search mods... (Leave empty for popular)">
@@ -120,7 +127,6 @@
           <div id="search-results"></div>
         </div>
         
-        <!-- Quest Editor Pane -->
         <div id="tab-quests" class="tab-pane hidden" style="padding:0; overflow:hidden; display:flex; flex-direction:column;">
           <div id="quest-topbar" style="display:flex; align-items:center; gap:8px; padding:8px; background:var(--panel-bg); border-bottom:1px solid var(--border); flex-shrink:0; overflow-x:auto;">
             <div id="quest-chapters-list" style="display:flex; gap:4px; flex:1;"></div>
@@ -139,7 +145,6 @@
             </div>
             
             <div id="quest-canvas-inner" style="transform-origin: 0 0; position:relative; width:4000px; height:4000px;">
-              <!-- Embedded Defs for Arrows -->
               <svg id="quest-edges" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:visible;">
                 <defs>
                   <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -158,9 +163,7 @@
       </div>
     </main>
 
-    <!-- Right Panel -->
     <aside id="right-sidebar">
-      <!-- Standard Mods View -->
       <div id="right-mods-view" class="split-panel">
         <header class="panel-header flex-between">
           <span>MOD LIST</span>
@@ -175,7 +178,6 @@
         </div>
       </div>
       
-      <!-- Quest Editor Property View -->
       <div id="right-quest-view" class="split-panel hidden">
         <header class="panel-header flex-between">
           <span>QUEST EDITOR</span>
@@ -185,7 +187,6 @@
           </div>
         </header>
         <div id="quest-editor-container" style="flex:1; overflow-y:auto; padding:8px; display:flex; flex-direction:column;">
-           <!-- Fields injected here -->
         </div>
       </div>
     </aside>
