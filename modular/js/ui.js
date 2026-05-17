@@ -2,12 +2,31 @@ import { state, saveState, removeCustomFile } from './state.js';
 import { escapeHtml } from './utils.js';
 import { searchModrinth, searchCurseForge, fetchModrinthVersionData, fetchModrinthProjectData } from './api.js';
 
+// Controller to cancel pending searches
+let currentSearchController = null;
+
 export async function executeSearch(query, source, category, resultsDiv) {
+  // 1. Cancel any existing search
+  if (currentSearchController) {
+    currentSearchController.abort();
+  }
+
+  // 2. Create a new controller for this specific request
+  currentSearchController = new AbortController();
+  const { signal } = currentSearchController;
+
   resultsDiv.innerHTML = '<span class="text-muted">Searching...</span>';
+  
   try {
-    let hits = source === 'modrinth' ? await searchModrinth(query, category) : await searchCurseForge(query, category);
+    let hits = source === 'modrinth' 
+      ? await searchModrinth(query, category, signal) 
+      : await searchCurseForge(query, category, signal);
+      
     renderSearchResults(hits, resultsDiv, source);
   } catch (err) {
+    // 3. If the error is an "AbortError", do nothing (it's intended)
+    if (err.name === 'AbortError') return;
+    
     resultsDiv.innerHTML = `<span class="text-muted" style="color:#ff4466">Search Error: ${escapeHtml(err.message)}</span>`;
   }
 }
@@ -136,7 +155,6 @@ function createCategoryDOM(categoryName, mods) {
   return div;
 }
 
-// --- NEW ADDON RENDERING FUNCTION ---
 export async function renderAddons() {
   const container = document.getElementById('addons-list');
   try {
