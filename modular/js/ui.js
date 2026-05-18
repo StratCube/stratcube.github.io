@@ -2,31 +2,21 @@ import { state, saveState, removeCustomFile } from './state.js';
 import { escapeHtml } from './utils.js';
 import { searchModrinth, searchCurseForge, fetchModrinthVersionData, fetchModrinthProjectData } from './api.js';
 
-// Controller to cancel pending searches
 let currentSearchController = null;
 
 export async function executeSearch(query, source, category, resultsDiv) {
-  // 1. Cancel any existing search
-  if (currentSearchController) {
-    currentSearchController.abort();
-  }
-
-  // 2. Create a new controller for this specific request
+  if (currentSearchController) currentSearchController.abort();
   currentSearchController = new AbortController();
   const { signal } = currentSearchController;
 
   resultsDiv.innerHTML = '<span class="text-muted">Searching...</span>';
-  
   try {
     let hits = source === 'modrinth' 
       ? await searchModrinth(query, category, signal) 
       : await searchCurseForge(query, category, signal);
-      
     renderSearchResults(hits, resultsDiv, source);
   } catch (err) {
-    // 3. If the error is an "AbortError", do nothing (it's intended)
     if (err.name === 'AbortError') return;
-    
     resultsDiv.innerHTML = `<span class="text-muted" style="color:#ff4466">Search Error: ${escapeHtml(err.message)}</span>`;
   }
 }
@@ -37,12 +27,9 @@ export function renderSearchResults(hits, container, source) {
     container.innerHTML = '<span class="text-muted">No mods found for this configuration.</span>';
     return;
   }
-
   const fragment = document.createDocumentFragment();
-
   hits.forEach(hit => {
     let id, title, desc, icon, slug, defaultCat;
-    
     if (source === 'modrinth') {
       id = hit.project_id; slug = hit.slug; title = hit.title; desc = hit.description;
       icon = hit.icon_url || 'https://docs.modrinth.com/img/logo.svg';
@@ -52,11 +39,9 @@ export function renderSearchResults(hits, container, source) {
       icon = hit.logo ? hit.logo.thumbnailUrl : 'https://docs.modrinth.com/img/logo.svg';
       defaultCat = 'Utility';
     }
-
     const isAdded = state.mods.some(m => m.id === id);
     const div = document.createElement('div');
     div.className = 'mod-card';
-    
     div.innerHTML = `
       <img src="${escapeHtml(icon)}" class="mod-icon" alt="icon">
       <div class="mod-info">
@@ -65,14 +50,12 @@ export function renderSearchResults(hits, container, source) {
       </div>
       <button class="btn-primary" ${isAdded ? 'disabled' : ''}>${isAdded ? 'Added' : 'Add'}</button>
     `;
-
     if(!isAdded) {
       const btn = div.querySelector('button');
       btn.addEventListener('click', async () => {
         btn.textContent = "Adding...";
         btn.disabled = true;
         let mrpackData = null;
-
         if(source === 'modrinth') {
           try {
             const versions = await fetchModrinthVersionData(slug);
@@ -86,15 +69,8 @@ export function renderSearchResults(hits, container, source) {
               };
             }
           } catch(e) { console.error(e); }
-        } else {
-            mrpackData = { isCurseForge: true };
-        }
-
-        state.mods.push({
-          id, slug, title,
-          category: defaultCat.charAt(0).toUpperCase() + defaultCat.slice(1),
-          custom: false, source, mrpackData
-        });
+        } else { mrpackData = { isCurseForge: true }; }
+        state.mods.push({ id, slug, title, category: defaultCat.charAt(0).toUpperCase() + defaultCat.slice(1), custom: false, source, mrpackData });
         saveState();
       });
     }
@@ -106,12 +82,10 @@ export function renderSearchResults(hits, container, source) {
 export function renderModList() {
   const container = document.getElementById('mod-list-container');
   container.innerHTML = '';
-
   if(state.mods.length === 0) {
     container.innerHTML = '<p class="text-muted text-xs text-center mt-2">No mods added.</p>';
     return;
   }
-
   const groups = {};
   state.mods.forEach(mod => {
     let c = mod.category || 'Unknown';
@@ -119,10 +93,8 @@ export function renderModList() {
     if(!groups[c]) groups[c] = [];
     groups[c].push(mod);
   });
-
   let shaderGroup = groups['Shader'] || [];
   delete groups['Shader'];
-
   const fragment = document.createDocumentFragment();
   for(let [cat, mods] of Object.entries(groups).sort()) fragment.appendChild(createCategoryDOM(cat, mods));
   if(shaderGroup.length > 0) fragment.appendChild(createCategoryDOM('Shader', shaderGroup));
@@ -132,12 +104,10 @@ export function renderModList() {
 function createCategoryDOM(categoryName, mods) {
   const div = document.createElement('div');
   div.className = 'mod-category';
-  
   const title = document.createElement('div');
   title.className = 'mod-category-title';
   title.textContent = categoryName;
   div.appendChild(title);
-
   mods.forEach(mod => {
     const item = document.createElement('div');
     item.className = 'mod-item';
@@ -158,13 +128,13 @@ function createCategoryDOM(categoryName, mods) {
 export async function renderAddons() {
   const container = document.getElementById('addons-list');
   try {
-    const res = await fetch('data.json');
-    if (!res.ok) throw new Error("data.json not found");
+    // FIX: Use explicit relative path to ensure it looks in the current folder, not domain root
+    const res = await fetch('./data.json');
+    if (!res.ok) throw new Error(`Could not find data.json at ${res.url}`);
     const data = await res.json();
     
     container.innerHTML = '';
     const fragment = document.createDocumentFragment();
-
     data.addons.forEach(addon => {
       const div = document.createElement('div');
       div.className = 'addon-item';
@@ -173,13 +143,11 @@ export async function renderAddons() {
         <p>${escapeHtml(addon.description)}</p>
         <button class="btn-primary w-full">Install Addon</button>
       `;
-
       div.querySelector('button').addEventListener('click', async (e) => {
         if(!state.mcVersion || !state.loader) return alert("Set MC version and loader!");
         const btn = e.target;
         btn.textContent = "Installing...";
         btn.disabled = true;
-
         let added = 0;
         for(let slug of addon.mods) {
           if(state.mods.some(m => m.slug === slug)) continue; 
@@ -188,7 +156,6 @@ export async function renderAddons() {
             if(versions && versions.length > 0) {
               const proj = await fetchModrinthProjectData(slug);
               const file = versions[0].files.find(f => f.primary) || versions[0].files[0];
-              
               let cat = proj.categories && proj.categories.length > 0 ? proj.categories[0] : 'Utility';
               state.mods.push({
                 id: proj.id, slug: proj.slug, title: proj.title,
@@ -202,13 +169,9 @@ export async function renderAddons() {
               });
               added++;
             }
-          } catch(err) {
-            console.warn(`Could not install ${slug}:`, err);
-          }
+          } catch(err) { console.warn(`Could not install ${slug}:`, err); }
         }
-        
         if (added > 0) saveState();
-        
         btn.textContent = added > 0 ? `Added ${added} mods` : "Already Added / N/A";
         setTimeout(() => { btn.textContent = "Install Addon"; btn.disabled = false; }, 2000);
       });
