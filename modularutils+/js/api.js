@@ -4,11 +4,21 @@ const cache = new Map();
 
 async function cachedFetch(url, signal) {
   if (cache.has(url)) return cache.get(url);
+  
   const res = await fetch(url, { signal });
   if (!res.ok) throw new Error(`API Error: ${res.status}`);
   const data = await res.json();
+  
   cache.set(url, data);
   return data;
+}
+
+// Determines the loaders array dynamically. Includes fabric if Sinytra is enabled on Forge/NeoForge.
+export function getLoaders() {
+  if (state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
+    return [state.loader, "fabric"];
+  }
+  return [state.loader];
 }
 
 export async function fetchGameVersions() {
@@ -22,13 +32,12 @@ export async function fetchGameVersions() {
 }
 
 export async function searchModrinth(query, category, signal) {
-  // Logic: If Sinytra is enabled and we are on Forge/NeoForge, we search for BOTH Forge and Fabric
-  let loaderFacet = state.loader;
-  if (state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
-    loaderFacet = `${state.loader},fabric`;
-  }
+  // Use OR logic for Modrinth Facets if Sinytra is enabled
+  const loaderFacet = state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge') 
+    ? [`categories:${state.loader}`, `categories:fabric`] 
+    : [`categories:${state.loader}`];
 
-  const facetsArr = [["project_type:mod"], [`versions:${state.mcVersion}`], [`categories:${loaderFacet}`]];
+  const facetsArr = [["project_type:mod"], [`versions:${state.mcVersion}`], loaderFacet];
   if (category) facetsArr.push([`categories:${category}`]);
   
   const params = new URLSearchParams({
@@ -50,7 +59,13 @@ export async function searchCurseForge(query, category, signal) {
     else throw new Error("No API Key");
   }
 
-  const cfLoader = { forge: 1, fabric: 4, quilt: 5, neoforge: 6 }[state.loader] || 4;
+  let cfLoader = { forge: 1, fabric: 4, quilt: 5, neoforge: 6 }[state.loader] || 4;
+  
+  // CurseForge API doesn't support an array of loaders, so we request "Any" (0) if Sinytra is enabled
+  if (state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
+    cfLoader = 0; 
+  }
+
   const params = new URLSearchParams({
     gameId: 432, classId: 6, searchFilter: query,
     gameVersion: state.mcVersion, modLoaderType: cfLoader,
@@ -75,41 +90,25 @@ export async function resolveDependencies() {
   let processed = new Set(state.mods.map(m => m.id));
 
   const params = new URLSearchParams({
-    loaders: JSON.stringify([state.loader]),
-    game_versions: JSON.stringify([state.mcVersion])
-  });
-
-  // If Sinytra is on, also try to resolve Fabric versions of dependencies
-  const altParams = new URLSearchParams({
-    loaders: JSON.stringify(['fabric']),
+    loaders: JSON.stringify(getLoaders()), // <-- Fetch fabric deps natively if Sinytra is on
     game_versions: JSON.stringify([state.mcVersion])
   });
 
   while(queue.length > 0) {
     const currentId = queue.shift();
     try {
-      let versions = await fetchModrinthVersionData(currentId, params);
-      
-      // If no versions found and Sinytra is enabled, try Fabric versions
-      if ((!versions || versions.length === 0) && state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
-        versions = await fetchModrinthVersionData(currentId, altParams);
-      }
-
-      if(!versions || versions.length === 0 || !versions[0].dependencies) continue;
+      const url = `https://api.modrinth.com/v2/project/${currentId}/version?${params}`;
+      const versions = await cachedFetch(url);
+      if(versions.length === 0 || !versions[0].dependencies) continue;
 
       for(let dep of versions[0].dependencies) {
         if(dep.dependency_type === 'required' && dep.project_id && !processed.has(dep.project_id)) {
           processed.add(dep.project_id);
           
           const proj = await fetchModrinthProjectData(dep.project_id);
+          const depVersions = await fetchModrinthVersionData(proj.id);
           
-          // Same logic for dependency's version: check native loader first, then Fabric if Sinytra on
-          let depVersions = await fetchModrinthVersionData(proj.id, params);
-          if ((!depVersions || depVersions.length === 0) && state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
-            depVersions = await fetchModrinthVersionData(proj.id, altParams);
-          }
-          
-          if(depVersions && depVersions.length > 0) {
+          if(depVersions.length > 0) {
             const file = depVersions[0].files.find(f => f.primary) || depVersions[0].files[0];
             let cat = proj.categories && proj.categories.length > 0 ? proj.categories[0] : 'Utility';
             if(proj.categories && proj.categories.includes('shader')) cat = 'Shader';
@@ -135,10 +134,11 @@ export async function resolveDependencies() {
   return addedCount;
 }
 
-export async function fetchModrinthVersionData(slugOrId, params = null) {
-  if (!params) {
-    params = new URLSearchParams({ loaders: JSON.stringify([state.loader]), game_versions: JSON.stringify([state.mcVersion]) });
-  }
+export async function fetchModrinthVersionData(slugOrId) {
+  const params = new URLSearchParams({ 
+    loaders: JSON.stringify(getLoaders()), 
+    game_versions: JSON.stringify([state.mcVersion]) 
+  });
   const url = `https://api.modrinth.com/v2/project/${slugOrId}/version?${params}`;
   return await cachedFetch(url);
 }
