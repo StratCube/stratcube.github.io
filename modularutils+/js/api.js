@@ -1,15 +1,12 @@
 import { state } from './state.js';
 
-// In-memory cache to prevent redundant API calls
 const cache = new Map();
 
 async function cachedFetch(url, signal) {
   if (cache.has(url)) return cache.get(url);
-  
   const res = await fetch(url, { signal });
   if (!res.ok) throw new Error(`API Error: ${res.status}`);
   const data = await res.json();
-  
   cache.set(url, data);
   return data;
 }
@@ -25,7 +22,13 @@ export async function fetchGameVersions() {
 }
 
 export async function searchModrinth(query, category, signal) {
-  const facetsArr = [["project_type:mod"], [`versions:${state.mcVersion}`], [`categories:${state.loader}`]];
+  // Logic: If Sinytra is enabled and we are on Forge/NeoForge, we search for BOTH Forge and Fabric
+  let loaderFacet = state.loader;
+  if (state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
+    loaderFacet = `${state.loader},fabric`;
+  }
+
+  const facetsArr = [["project_type:mod"], [`versions:${state.mcVersion}`], [`categories:${loaderFacet}`]];
   if (category) facetsArr.push([`categories:${category}`]);
   
   const params = new URLSearchParams({
@@ -34,7 +37,6 @@ export async function searchModrinth(query, category, signal) {
     limit: 15
   });
   
-  // Searches are generally not cached because queries change constantly
   const res = await fetch(`https://api.modrinth.com/v2/search?${params}`, { signal });
   if (!res.ok) throw new Error("Modrinth API Error");
   return (await res.json()).hits;
@@ -77,20 +79,37 @@ export async function resolveDependencies() {
     game_versions: JSON.stringify([state.mcVersion])
   });
 
+  // If Sinytra is on, also try to resolve Fabric versions of dependencies
+  const altParams = new URLSearchParams({
+    loaders: JSON.stringify(['fabric']),
+    game_versions: JSON.stringify([state.mcVersion])
+  });
+
   while(queue.length > 0) {
     const currentId = queue.shift();
     try {
-      const versions = await fetchModrinthVersionData(currentId);
-      if(versions.length === 0 || !versions[0].dependencies) continue;
+      let versions = await fetchModrinthVersionData(currentId, params);
+      
+      // If no versions found and Sinytra is enabled, try Fabric versions
+      if ((!versions || versions.length === 0) && state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
+        versions = await fetchModrinthVersionData(currentId, altParams);
+      }
+
+      if(!versions || versions.length === 0 || !versions[0].dependencies) continue;
 
       for(let dep of versions[0].dependencies) {
         if(dep.dependency_type === 'required' && dep.project_id && !processed.has(dep.project_id)) {
           processed.add(dep.project_id);
           
           const proj = await fetchModrinthProjectData(dep.project_id);
-          const depVersions = await fetchModrinthVersionData(proj.id);
           
-          if(depVersions.length > 0) {
+          // Same logic for dependency's version: check native loader first, then Fabric if Sinytra on
+          let depVersions = await fetchModrinthVersionData(proj.id, params);
+          if ((!depVersions || depVersions.length === 0) && state.sinytraEnabled && (state.loader === 'forge' || state.loader === 'neoforge')) {
+            depVersions = await fetchModrinthVersionData(proj.id, altParams);
+          }
+          
+          if(depVersions && depVersions.length > 0) {
             const file = depVersions[0].files.find(f => f.primary) || depVersions[0].files[0];
             let cat = proj.categories && proj.categories.length > 0 ? proj.categories[0] : 'Utility';
             if(proj.categories && proj.categories.includes('shader')) cat = 'Shader';
@@ -116,8 +135,10 @@ export async function resolveDependencies() {
   return addedCount;
 }
 
-export async function fetchModrinthVersionData(slugOrId) {
-  const params = new URLSearchParams({ loaders: JSON.stringify([state.loader]), game_versions: JSON.stringify([state.mcVersion]) });
+export async function fetchModrinthVersionData(slugOrId, params = null) {
+  if (!params) {
+    params = new URLSearchParams({ loaders: JSON.stringify([state.loader]), game_versions: JSON.stringify([state.mcVersion]) });
+  }
   const url = `https://api.modrinth.com/v2/project/${slugOrId}/version?${params}`;
   return await cachedFetch(url);
 }
