@@ -86,10 +86,16 @@
               <option value="neoforge">NeoForge</option>
             </select>
           </div>
-          <div class="input-group" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
-            <input type="checkbox" id="sinytra-toggle" style="width:auto;">
-            <label for="sinytra-toggle" style="margin:0; cursor:pointer;">Enable Sinytra Connector</label>
+
+          <!-- NEW SINYTRA TOGGLE -->
+          <div class="input-group" id="sinytra-group" style="display:none; background: rgba(110, 231, 90, 0.03);">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--green); text-transform:none; font-size:11px;">
+              <input type="checkbox" id="sinytra-toggle" style="width:auto; margin:0;">
+              Enable Sinytra Connector
+            </label>
+            <span style="font-size:9px; color:var(--muted); display:block; margin-top:4px; text-transform:none;">Allows Fabric mods & installs required APIs.</span>
           </div>
+
           <div class="input-group">
             <label>Loader Version (Optional)</label>
             <input type="text" id="loader-version" placeholder="Auto-detect (e.g. 0.15.7)">
