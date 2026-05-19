@@ -1,0 +1,1833 @@
+[{
+    "mod": "Minecraft",
+    "namespace": "minecraft",
+    "mod_role": "Vanilla Base",
+    "difficulty_weight": 1,
+    "soft_dependencies": [],
+    "progression": {
+      "Stone Age": {
+        "description": "Getting the basics",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:oak_log", "priority": 1 },
+          { "type": "craft", "item": "minecraft:crafting_table", "priority": 2 },
+          { "type": "craft", "item": "minecraft:wooden_pickaxe", "priority": 3 },
+          { "type": "craft", "item": "minecraft:cobblestone", "priority": 4 },
+          { "type": "craft", "item": "minecraft:stone_pickaxe", "priority": 5 }
+        ]
+      },
+      "Iron Age": {
+        "description": "Upgrading tools",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:raw_iron", "priority": 1 },
+          { "type": "craft", "item": "minecraft:furnace", "priority": 2 },
+          { "type": "craft", "item": "minecraft:iron_pickaxe", "priority": 3 },
+          { "type": "craft", "item": "minecraft:bucket", "priority": 4 },
+          { "type": "craft", "item": "minecraft:shield", "priority": 5 }
+        ]
+      },
+      "Diamond Age": {
+        "description": "Entering the late game",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:diamond", "priority": 1 },
+          { "type": "craft", "item": "minecraft:diamond_pickaxe", "priority": 2 },
+          { "type": "craft", "item": "minecraft:obsidian", "priority": 3 },
+          { "type": "explore", "item": "minecraft:nether_portal", "priority": 4 }
+        ]
+      },
+      "The Nether": {
+        "description": "Hellish exploration",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:blaze_rod", "priority": 1 },
+          { "type": "collect", "item": "minecraft:ghast_tear", "priority": 2 },
+          { "type": "collect", "item": "minecraft:ancient_debris", "priority": 3 },
+          { "type": "craft", "item": "minecraft:netherite_ingot", "priority": 4 },
+          { "type": "craft", "item": "minecraft:netherite_pickaxe", "priority": 5 }
+        ]
+      },
+      "The End": {
+        "description": "The final frontier",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:ender_pearl", "priority": 1 },
+          { "type": "collect", "item": "minecraft:blaze_powder", "priority": 2 },
+          { "type": "craft", "item": "minecraft:eye_of_ender", "priority": 3 },
+          { "type": "explore", "item": "minecraft:stronghold", "priority": 4 },
+          { "type": "kill", "item": "minecraft:ender_dragon", "priority": 5 },
+          { "type": "collect", "item": "minecraft:elytra", "priority": 6 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["minecraft:netherite_pickaxe", "minecraft:elytra"],
+    "dependencies": []
+  },
+  {
+    "mod": "Create",
+    "namespace": "create",
+    "mod_role": "Kinetic Automation",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Andesite Age": {
+        "description": "Basic Kinematics",
+        "tasks": [
+          { "type": "craft", "item": "create:andesite_alloy", "priority": 1 },
+          { "type": "craft", "item": "create:shaft", "priority": 2 },
+          { "type": "craft", "item": "create:cogwheel", "priority": 3 },
+          { "type": "craft", "item": "create:water_wheel", "priority": 4 },
+          { "type": "craft", "item": "create:mechanical_press", "priority": 5 },
+          { "type": "craft", "item": "create:crushing_wheel", "priority": 6 },
+          { "type": "craft", "item": "create:deployer", "priority": 7 }
+        ]
+      },
+      "Brass Age": {
+        "description": "Precision & Logistics",
+        "tasks": [
+          { "type": "craft", "item": "create:brass_ingot", "priority": 1 },
+          { "type": "craft", "item": "create:precision_mechanism", "priority": 2 },
+          { "type": "craft", "item": "create:mechanical_arm", "priority": 3 },
+          { "type": "craft", "item": "create:brass_tunnel", "priority": 4 },
+          { "type": "craft", "item": "create:smart_chute", "priority": 5 }
+        ]
+      },
+      "Industrial Age": {
+        "description": "Large Scale Transport",
+        "tasks": [
+          { "type": "craft", "item": "create:train_station", "priority": 1 },
+          { "type": "craft", "item": "create:railway_signal", "priority": 2 },
+          { "type": "craft", "item": "create:steam_engine", "priority": 3 },
+          { "type": "craft", "item": "create:blaze_burner", "priority": 4 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/andesite_alloy", "forge:ingots/brass"],
+    "milestone_items": ["create:precision_mechanism", "create:steam_engine"],
+    "dependencies": []
+  },
+  {
+    "mod": "Mekanism",
+    "namespace": "mekanism",
+    "mod_role": "Advanced Industrialization",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Basic Machinery": {
+        "description": "Osmium & Steel",
+        "tasks": [
+          { "type": "collect", "item": "mekanism:osmium_ore", "priority": 1 },
+          { "type": "craft", "item": "mekanism:metallurgic_infuser", "priority": 2 },
+          { "type": "craft", "item": "mekanism:steel_ingot", "priority": 3 },
+          { "type": "craft", "item": "mekanism:enrichment_chamber", "priority": 4 },
+          { "type": "craft", "item": "mekanism:energized_capacitor", "priority": 5 }
+        ]
+      },
+      "Advanced Processing": {
+        "description": "Chemicals & Gas",
+        "tasks": [
+          { "type": "craft", "item": "mekanism:chemical_tomahawk", "priority": 1 },
+          { "type": "craft", "item": "mekanism:digital_miner", "priority": 2 },
+          { "type": "craft", "item": "mekanism:gas_burning_generator", "priority": 3 },
+          { "type": "craft", "item": "mekanism:electrolytic_separator", "priority": 4 }
+        ]
+      },
+      "High-End Energy": {
+        "description": "Fusion & Fission",
+        "tasks": [
+          { "type": "craft", "item": "mekanism:fission_reactor", "priority": 1 },
+          { "type": "craft", "item": "mekanism:fusion_reactor", "priority": 2 },
+          { "type": "craft", "item": "mekanism:industrial_turbine", "priority": 3 },
+          { "type": "craft", "item": "mekanism:atomic_disassembler", "priority": 4 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/osmium", "forge:ingots/steel"],
+    "milestone_items": ["mekanism:digital_miner", "mekanism:fusion_reactor"],
+    "dependencies": []
+  },
+  {
+    "mod": "Thermal Expansion",
+    "namespace": "thermal",
+    "mod_role": "Industrial Processing",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Redstone Machinery": {
+        "description": "Basic Thermal Tools",
+        "tasks": [
+          { "type": "craft", "item": "thermal:induction_furnace", "priority": 1 },
+          { "type": "craft", "item": "thermal:igneous_extruder", "priority": 2 },
+          { "type": "craft", "item": "thermal:compressor", "priority": 3 }
+        ]
+      },
+      "Alloy Processing": {
+        "description": "Invar & Electrum",
+        "tasks": [
+          { "type": "craft", "item": "thermal:invar_ingot", "priority": 1 },
+          { "type": "craft", "item": "thermal:electrum_ingot", "priority": 2 },
+          { "type": "craft", "item": "thermal:fractionator", "priority": 3 }
+        ]
+      },
+      "Redsteel Automation": {
+        "description": "High-Tier Thermal",
+        "tasks": [
+          { "type": "craft", "item": "thermal:redsteel_ingot", "priority": 1 },
+          { "type": "craft", "item": "thermal:flux_capacitor", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/redsteel", "forge:ingots/invar"],
+    "milestone_items": ["thermal:redsteel_ingot"],
+    "dependencies": []
+  },
+  {
+    "mod": "Immersive Engineering",
+    "namespace": "immersiveengineering",
+    "mod_role": "Heavy Industry",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Low Voltage (LV)": {
+        "description": "Getting Power",
+        "tasks": [
+          { "type": "craft", "item": "immersiveengineering:steel_scrap", "priority": 1 },
+          { "type": "craft", "item": "immersiveengineering:lv_wire_coil", "priority": 2 },
+          { "type": "craft", "item": "immersiveengineering:crusher", "priority": 3 },
+          { "type": "craft", "item": "immersiveengineering:engineer_block", "priority": 4 }
+        ]
+      },
+      "Medium Voltage (MV)": {
+        "description": "Industrial Expansion",
+        "tasks": [
+          { "type": "craft", "item": "immersiveengineering:mv_wire_coil", "priority": 1 },
+          { "type": "craft", "item": "immersiveengineering:excavator", "priority": 2 },
+          { "type": "craft", "item": "immersiveengineering:industrial_heater", "priority": 3 }
+        ]
+      },
+      "High Voltage (HV)": {
+        "description": "The Peak of Engineering",
+        "tasks": [
+          { "type": "craft", "item": "immersiveengineering:hv_wire_coil", "priority": 1 },
+          { "type": "craft", "item": "immersiveengineering:arc_furnace", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/steel"],
+    "milestone_items": ["immersiveengineering:excavator"],
+    "dependencies": []
+  },
+  {
+    "mod": "Industrial Foregoing",
+    "namespace": "industrialforegoing",
+    "mod_role": "Automated Gathering",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Mekanism"],
+    "progression": {
+      "Resource Gathering": {
+        "description": "Mob & Plant Automation",
+        "tasks": [
+          { "type": "craft", "item": "industrialforegoing:plant_grower", "priority": 1 },
+          { "type": "craft", "item": "industrialforegoing:mob_slaughter_factory", "priority": 2 }
+        ]
+      },
+      "Plastic Production": {
+        "description": "Synthetic Materials",
+        "tasks": [
+          { "type": "craft", "item": "industrialforegoing:plastic", "priority": 1 },
+          { "type": "craft", "item": "industrialforegoing:laser_drill", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/plastic"],
+    "milestone_items": ["industrialforegoing:laser_drill"],
+    "dependencies": []
+  },
+  {
+    "mod": "Applied Energistics 2",
+    "namespace": "ae2",
+    "mod_role": "Digital Storage",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Mekanism", "Thermal Expansion"],
+    "progression": {
+      "The Beginning": {
+        "description": "Creating the Network",
+        "tasks": [
+          { "type": "craft", "item": "ae2:fluix_crystal", "priority": 1 },
+          { "type": "craft", "item": "ae2:quartz_fiber", "priority": 2 },
+          { "type": "craft", "item": "ae2:energy_acceptor", "priority": 3 },
+          { "type": "craft", "item": "ae2:me_controller", "priority": 4 }
+        ]
+      },
+      "Digital Storage": {
+        "description": "Storing your items",
+        "tasks": [
+          { "type": "craft", "item": "ae2:me_drive", "priority": 1 },
+          { "type": "craft", "item": "ae2:storage_cell", "priority": 2 },
+          { "type": "craft", "item": "ae2:me_terminal", "priority": 3 },
+          { "type": "craft", "item": "ae2:me_cable", "priority": 4 }
+        ]
+      },
+      "Auto-Crafting": {
+        "description": "Automated Manufacturing",
+        "tasks": [
+          { "type": "craft", "item": "ae2:me_pattern_provider", "priority": 1 },
+          { "type": "craft", "item": "ae2:crafting_cpu", "priority": 2 },
+          { "type": "craft", "item": "ae2:molecular_assembler", "priority": 3 },
+          { "type": "craft", "item": "ae2:pattern_terminal", "priority": 4 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/certus_quartz"],
+    "milestone_items": ["ae2:me_controller", "ae2:crafting_cpu"],
+    "dependencies": []
+  },
+  {
+    "mod": "Refined Storage",
+    "namespace": "refinedstorage",
+    "mod_role": "Digital Storage",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Mekanism"],
+    "progression": {
+      "Network Setup": {
+        "description": "The RS Core",
+        "tasks": [
+          { "type": "craft", "item": "refinedstorage:quartz_enriched_iron", "priority": 1 },
+          { "type": "craft", "item": "refinedstorage:controller", "priority": 2 },
+          { "type": "craft", "item": "refinedstorage:grid", "priority": 3 },
+          { "type": "craft", "item": "refinedstorage:cable", "priority": 4 }
+        ]
+      },
+      "Disk Storage": {
+        "description": "Storing Data",
+        "tasks": [
+          { "type": "craft", "item": "refinedstorage:disk_drive", "priority": 1 },
+          { "type": "craft", "item": "refinedstorage:storage_disk", "priority": 2 }
+        ]
+      },
+      "Auto-Crafting": {
+        "description": "RS Automation",
+        "tasks": [
+          { "type": "craft", "item": "refinedstorage:crafter", "priority": 1 },
+          { "type": "craft", "item": "refinedstorage:pattern", "priority": 2 },
+          { "type": "craft", "item": "refinedstorage:crafter_upgrade", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["refinedstorage:controller"],
+    "dependencies": []
+  },
+  {
+    "mod": "Sophisticated Storage",
+    "namespace": "sophisticatedstorage",
+    "mod_role": "Physical Storage",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Basic Containers": {
+        "description": "Upgrading Chests",
+        "tasks": [
+          { "type": "craft", "item": "sophisticatedstorage:chest", "priority": 1 },
+          { "type": "craft", "item": "sophisticatedstorage:barrel", "priority": 2 }
+        ]
+      },
+      "Tier Upgrades": {
+        "description": "Better Materials",
+        "tasks": [
+          { "type": "craft", "item": "sophisticatedstorage:iron_tier_upgrade", "priority": 1 },
+          { "type": "craft", "item": "sophisticatedstorage:gold_tier_upgrade", "priority": 2 },
+          { "type": "craft", "item": "sophisticatedstorage:diamond_tier_upgrade", "priority": 3 }
+        ]
+      },
+      "Functional Upgrades": {
+        "description": "Smart Storage",
+        "tasks": [
+          { "type": "craft", "item": "sophisticatedstorage:storage_upgrade", "priority": 1 },
+          { "type": "craft", "item": "sophisticatedstorage:auto_smelt_upgrade", "priority": 2 },
+          { "type": "craft", "item": "sophisticatedstorage:compaction_upgrade", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["sophisticatedstorage:diamond_tier_upgrade"],
+    "dependencies": []
+  },
+  {
+    "mod": "Sophisticated Backpacks",
+    "namespace": "sophisticatedbackpacks",
+    "mod_role": "Portable Storage",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The First Bag": {
+        "description": "Portable Storage",
+        "tasks": [
+          { "type": "craft", "item": "sophisticatedbackpacks:backpack", "priority": 1 }
+        ]
+      },
+      "Material Upgrades": {
+        "description": "Expanding Capacity",
+        "tasks": [
+          { "type": "craft", "item": "sophisticatedbackpacks:iron_tier_upgrade", "priority": 1 },
+          { "type": "craft", "item": "sophisticatedbackpacks:diamond_tier_upgrade", "priority": 2 }
+        ]
+      },
+      "Backpack Utilities": {
+        "description": "Automation on the go",
+        "tasks": [
+          { "type": "craft", "item": "sophisticatedbackpacks:feeding_upgrade", "priority": 1 },
+          { "type": "craft", "item": "sophisticatedbackpacks:sorting_upgrade", "priority": 2 },
+          { "type": "craft", "item": "sophisticatedbackpacks:pickup_upgrade", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["sophisticatedbackpacks:diamond_tier_upgrade"],
+    "dependencies": []
+  },
+  {
+    "mod": "Functional Storage",
+    "namespace": "functionalstorage",
+    "mod_role": "Physical Storage",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Drawer Basics": {
+        "description": "Visual Organization",
+        "tasks": [
+          { "type": "craft", "item": "functionalstorage:drawer", "priority": 1 },
+          { "type": "craft", "item": "functionalstorage:storage_controller", "priority": 2 }
+        ]
+      },
+      "Storage Density": {
+        "description": "Maximizing Space",
+        "tasks": [
+          { "type": "craft", "item": "functionalstorage:upgrade_stack", "priority": 1 },
+          { "type": "craft", "item": "functionalstorage:upgrade_void", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["functionalstorage:storage_controller"],
+    "dependencies": []
+  },
+  {
+    "mod": "Tom's Simple Storage",
+    "namespace": "tomssimplestorage",
+    "mod_role": "Physical Storage",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Storage Hub": {
+        "description": "Connecting Chests",
+        "tasks": [
+          { "type": "craft", "item": "tomssimplestorage:storage_terminal", "priority": 1 },
+          { "type": "craft", "item": "tomssimplestorage:inventory_connector", "priority": 2 },
+          { "type": "craft", "item": "tomssimplestorage:storage_cable", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["tomssimplestorage:storage_terminal"],
+    "dependencies": []
+  },
+  {
+    "mod": "Integrated Dynamics",
+    "namespace": "integrateddynamics",
+    "mod_role": "Logical Automation",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Logic Basics": {
+        "description": "Programming the world",
+        "tasks": [
+          { "type": "craft", "item": "integrateddynamics:logic_programmer", "priority": 1 },
+          { "type": "craft", "item": "integrateddynamics:variable_card", "priority": 2 },
+          { "type": "craft", "item": "integrateddynamics:logic_cable", "priority": 3 }
+        ]
+      },
+      "Sensors": {
+        "description": "Reading Information",
+        "tasks": [
+          { "type": "craft", "item": "integrateddynamics:world_reader", "priority": 1 },
+          { "type": "craft", "item": "integrateddynamics:entity_reader", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["integrateddynamics:logic_programmer"],
+    "dependencies": []
+  },
+  {
+    "mod": "Integrated Tunnels",
+    "namespace": "integratedtunnels",
+    "mod_role": "Logical Automation",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Integrated Dynamics"],
+    "progression": {
+      "Precision Transport": {
+        "description": "Conditional Logistics",
+        "tasks": [
+          { "type": "craft", "item": "integratedtunnels:item_interface", "priority": 1 },
+          { "type": "craft", "item": "integratedtunnels:item_exporter", "priority": 2 },
+          { "type": "craft", "item": "integratedtunnels:fluid_interface", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["integratedtunnels:item_exporter"],
+    "dependencies": ["Integrated Dynamics"]
+  },
+  {
+    "mod": "Powah!",
+    "namespace": "powah",
+    "mod_role": "Energy Production",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Starter Energy": {
+        "description": "Passive Power",
+        "tasks": [
+          { "type": "craft", "item": "powah:thermogenerator", "priority": 1 },
+          { "type": "craft", "item": "powah:energy_cell", "priority": 2 }
+        ]
+      },
+      "Advanced Power": {
+        "description": "High Voltage",
+        "tasks": [
+          { "type": "craft", "item": "powah:reactor", "priority": 1 },
+          { "type": "collect", "item": "powah:uraninite", "priority": 2 },
+          { "type": "craft", "item": "powah:energy_cell_hardened", "priority": 3 }
+        ]
+      },
+      "End-Game Energy": {
+        "description": "Spirited Power",
+        "tasks": [
+          { "type": "craft", "item": "powah:energy_cell_spirited", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/uraninite"],
+    "milestone_items": ["powah:reactor"],
+    "dependencies": []
+  },
+  {
+    "mod": "Flux Networks",
+    "namespace": "fluxnetworks",
+    "mod_role": "Energy Distribution",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Powah!"],
+    "progression": {
+      "Wireless Power": {
+        "description": "Cutting the Cables",
+        "tasks": [
+          { "type": "craft", "item": "fluxnetworks:flux_plug", "priority": 1 },
+          { "type": "craft", "item": "fluxnetworks:flux_point", "priority": 2 },
+          { "type": "craft", "item": "fluxnetworks:flux_storage", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["fluxnetworks:flux_storage"],
+    "dependencies": []
+  },
+  {
+    "mod": "Modular Routers",
+    "namespace": "modularrouters",
+    "mod_role": "Logistics",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Router": {
+        "description": "Compact Moving",
+        "tasks": [
+          { "type": "craft", "item": "modularrouters:modular_router", "priority": 1 },
+          { "type": "craft", "item": "modularrouters:item_sender_module", "priority": 2 },
+          { "type": "craft", "item": "modularrouters:puller_module", "priority": 3 }
+        ]
+      },
+      "Router Power": {
+        "description": "Automating the Hub",
+        "tasks": [
+          { "type": "craft", "item": "modularrouters:energy_module", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["modularrouters:modular_router"],
+    "dependencies": []
+  },
+  {
+    "mod": "LaserIO",
+    "namespace": "laserio",
+    "mod_role": "Logistics",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Node Connection": {
+        "description": "Dense Transport",
+        "tasks": [
+          { "type": "craft", "item": "laserio:laser_node", "priority": 1 },
+          { "type": "craft", "item": "laserio:item_card", "priority": 2 },
+          { "type": "craft", "item": "laserio:fluid_card", "priority": 3 },
+          { "type": "craft", "item": "laserio:energy_card", "priority": 4 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["laserio:laser_node"],
+    "dependencies": []
+  },
+  {
+    "mod": "Building Gadgets",
+    "namespace": "buildinggadgets",
+    "mod_role": "Utility",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Rapid Construction": {
+        "description": "Building faster",
+        "tasks": [
+          { "type": "craft", "item": "buildinggadgets:building_gadget", "priority": 1 },
+          { "type": "craft", "item": "buildinggadgets:exchanging_gadget", "priority": 2 },
+          { "type": "craft", "item": "buildinggadgets:copy_paste_gadget", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["buildinggadgets:copy_paste_gadget"],
+    "dependencies": []
+  },
+  {
+    "mod": "Ex Nihilo: Sequentium",
+    "namespace": "exnihilosequentium",
+    "mod_role": "Resource Generation",
+    "difficulty_weight": 1,
+    "soft_dependencies": [],
+    "progression": {
+      "Sifting Basics": {
+        "description": "Creating from Dust",
+        "tasks": [
+          { "type": "craft", "item": "exnihilosequentium:hammer", "priority": 1 },
+          { "type": "craft", "item": "exnihilosequentium:sieve", "priority": 2 },
+          { "type": "collect", "item": "minecraft:gravel", "priority": 3 }
+        ]
+      },
+      "Advanced Sifting": {
+        "description": "Crucial Resources",
+        "tasks": [
+          { "type": "craft", "item": "exnihilosequentium:crusher", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["exnihilosequentium:sieve"],
+    "dependencies": []
+  },
+  {
+    "mod": "Ars Nouveau",
+    "namespace": "ars_nouveau",
+    "mod_role": "Programmatic Magic",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Novice Mage": {
+        "description": "Learning the basics of Source",
+        "tasks": [
+          { "type": "craft", "item": "ars_nouveau:novice_spellbook", "priority": 1 },
+          { "type": "craft", "item": "ars_nouveau:source_jar", "priority": 2 },
+          { "type": "craft", "item": "ars_nouveau:glyph_storage", "priority": 3 },
+          { "type": "collect", "item": "minecraft:amethyst_shard", "priority": 4 }
+        ]
+      },
+      "Apprentice Automation": {
+        "description": "Familiars and Source generation",
+        "tasks": [
+          { "type": "craft", "item": "ars_nouveau:apprentice_spellbook", "priority": 1 },
+          { "type": "craft", "item": "ars_nouveau:source_generator", "priority": 2 },
+          { "type": "craft", "item": "ars_nouveau:familiar_stone", "priority": 3 }
+        ]
+      },
+      "Archmage Mastery": {
+        "description": "High-tier rituals and glyphs",
+        "tasks": [
+          { "type": "craft", "item": "ars_nouveau:archmage_spellbook", "priority": 1 },
+          { "type": "craft", "item": "ars_nouveau:ritual_stone", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:gems/amethyst"],
+    "milestone_items": ["ars_nouveau:archmage_spellbook"],
+    "dependencies": []
+  },
+  {
+    "mod": "Botania",
+    "namespace": "botania",
+    "mod_role": "Nature Magic",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Lexica": {
+        "description": "Gathering Mana",
+        "tasks": [
+          { "type": "craft", "item": "botania:lexica_botania", "priority": 1 },
+          { "type": "craft", "item": "botania:mana_pool", "priority": 2 },
+          { "type": "craft", "item": "botania:mana_spreader", "priority": 3 },
+          { "type": "craft", "item": "botania:pure_daisy", "priority": 4 }
+        ]
+      },
+      "Mana Tooling": {
+        "description": "Automating the Garden",
+        "tasks": [
+          { "type": "craft", "item": "botania:mana_tablet", "priority": 1 },
+          { "type": "craft", "item": "botania:borealis_bloom", "priority": 2 },
+          { "type": "craft", "item": "botania:terrasteel_ingot", "priority": 3 }
+        ]
+      },
+      "The Gaia Gear": {
+        "description": "End-game Botania",
+        "tasks": [
+          { "type": "craft", "item": "botania:gaia_gear", "priority": 1 },
+          { "type": "kill", "item": "botania:gaia_guardian", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["botania:terrasteel_ingot", "botania:gaia_gear"],
+    "dependencies": []
+  },
+  {
+    "mod": "Astral Sorcery",
+    "namespace": "astralsorcery",
+    "mod_role": "Celestial Magic",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Star Gazing": {
+        "description": "Gathering Starlight",
+        "tasks": [
+          { "type": "craft", "item": "astralsorcery:astral_book", "priority": 1 },
+          { "type": "craft", "item": "astralsorcery:starlight_gathering_basin", "priority": 2 },
+          { "type": "collect", "item": "astralsorcery:stardust", "priority": 3 }
+        ]
+      },
+      "Celestial Rituals": {
+        "description": "Harnessing the Constellations",
+        "tasks": [
+          { "type": "craft", "item": "astralsorcery:ritual_stone", "priority": 1 },
+          { "type": "craft", "item": "astralsorcery:carved_stone", "priority": 2 },
+          { "type": "craft", "item": "astralsorcery:starry_sky", "priority": 3 }
+        ]
+      },
+      "Ascension": {
+        "description": "Becoming a Star",
+        "tasks": [
+          { "type": "craft", "item": "astralsorcery:astral_armor", "priority": 1 },
+          { "type": "craft", "item": "astralsorcery:draconium_ingot", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["astralsorcery:draconium_ingot"],
+    "dependencies": []
+  },
+  {
+    "mod": "Occultism",
+    "namespace": "occultism",
+    "mod_role": "Demonic Magic",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Ritual Chisel": {
+        "description": "Basic Occultism",
+        "tasks": [
+          { "type": "craft", "item": "occultism:ritual_chisel", "priority": 1 },
+          { "type": "craft", "item": "occultism:dictionary_of_spirits", "priority": 2 }
+        ]
+      },
+      "Summoning": {
+        "description": "Binding the Spirits",
+        "tasks": [
+          { "type": "craft", "item": "occultism:demonic_catalyst", "priority": 1 },
+          { "type": "craft", "item": "occultism:summoning_ritual", "priority": 2 }
+        ]
+      },
+      "Dimensional Storage": {
+        "description": "Infinite Space",
+        "tasks": [
+          { "type": "craft", "item": "occultism:storage_crystal", "priority": 1 },
+          { "type": "craft", "item": "occultism:spirit_bound_storage", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/gold"],
+    "milestone_items": ["occultism:storage_crystal"],
+    "dependencies": []
+  },
+  {
+    "mod": "Blood Magic",
+    "namespace": "bloodmagic",
+    "mod_role": "Sacrificial Magic",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Blood Initiation": {
+        "description": "The Altar",
+        "tasks": [
+          { "type": "craft", "item": "bloodmagic:blood_altar", "priority": 1 },
+          { "type": "craft", "item": "bloodmagic:blood_orb", "priority": 2 },
+          { "type": "collect", "item": "bloodmagic:blood", "priority": 3 }
+        ]
+      },
+      "The Sigils": {
+        "description": "Blood Utilities",
+        "tasks": [
+          { "type": "craft", "item": "bloodmagic:sigil_of_blood", "priority": 1 },
+          { "type": "craft", "item": "bloodmagic:sigil_of_the_void", "priority": 2 }
+        ]
+      },
+      "The Rituals": {
+        "description": "World Manipulation",
+        "tasks": [
+          { "type": "craft", "item": "bloodmagic:ritual_circle", "priority": 1 },
+          { "type": "collect", "item": "bloodmagic:demon_will", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["bloodmagic:demon_will"],
+    "dependencies": []
+  },
+  {
+    "mod": "Iron's Spells 'n Spellbooks",
+    "namespace": "irons_spells_n_spellbooks",
+    "mod_role": "Combat Magic",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The First Scroll": {
+        "description": "Learning to cast",
+        "tasks": [
+          { "type": "collect", "item": "irons_spells_n_spellbooks:scroll", "priority": 1 },
+          { "type": "craft", "item": "irons_spells_n_spellbooks:spell_book", "priority": 2 },
+          { "type": "craft", "item": "irons_spells_n_spellbooks:ink", "priority": 3 }
+        ]
+      },
+      "The Arcane Anvil": {
+        "description": "Upgrading your Gear",
+        "tasks": [
+          { "type": "craft", "item": "irons_spells_n_spellbooks:arcane_anvil", "priority": 1 },
+          { "type": "craft", "item": "irons_spells_n_spellbooks:wizard_armor", "priority": 2 }
+        ]
+      },
+      "Master of the Schools": {
+        "description": "Maxing out magic",
+        "tasks": [
+          { "type": "collect", "item": "irons_spells_n_spellbooks:ancient_scroll", "priority": 1 },
+          { "type": "craft", "item": "irons_spells_n_spellbooks:archmage_robe", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["irons_spells_n_spellbooks:arcane_anvil"],
+    "dependencies": []
+  },
+  {
+    "mod": "Spectrum",
+    "namespace": "spectrum",
+    "mod_role": "Discovery Magic",
+    "difficulty_weight": 7,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The First Color": {
+        "description": "Waking up the world",
+        "tasks": [
+          { "type": "collect", "item": "spectrum:spectrum_book", "priority": 1 },
+          { "type": "craft", "item": "spectrum:prism", "priority": 2 }
+        ]
+      },
+      "Chromatic Resonance": {
+        "description": "Mixing Colors",
+        "tasks": [
+          { "type": "craft", "item": "spectrum:color_flask", "priority": 1 },
+          { "type": "explore", "item": "spectrum:hidden_shrine", "priority": 2 }
+        ]
+      },
+      "Reality Warping": {
+        "description": "End-game Spectrum",
+        "tasks": [
+          { "type": "craft", "item": "spectrum:end_game_artifact", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["spectrum:prism"],
+    "dependencies": []
+  },
+  {
+    "mod": "Roots",
+    "namespace": "roots",
+    "mod_role": "Nature Magic",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Ritual Circle": {
+        "description": "Establishing a Grove",
+        "tasks": [
+          { "type": "craft", "item": "roots:ritual_circle", "priority": 1 },
+          { "type": "craft", "item": "roots:root_pouch", "priority": 2 }
+        ]
+      },
+      "Natural Alchemy": {
+        "description": "Mixing Herbals",
+        "tasks": [
+          { "type": "craft", "item": "roots:herb_garden", "priority": 1 },
+          { "type": "collect", "item": "roots:medicinal_herb", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["roots:ritual_circle"],
+    "dependencies": []
+  },
+  {
+    "mod": "Forbidden & Arcanus",
+    "namespace": "forbiddenandarcanus",
+    "mod_role": "Dark Magic",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Aureal Gathering": {
+        "description": "The Light of the World",
+        "tasks": [
+          { "type": "collect", "item": "forbiddenandarcanus:aureal_essence", "priority": 1 },
+          { "type": "craft", "item": "forbiddenandarcanus:dark_magic_altar", "priority": 2 }
+        ]
+      },
+      "The Hephaestus Forge": {
+        "description": "Crafting the Eternal",
+        "tasks": [
+          { "type": "craft", "item": "forbiddenandarcanus:hephaestus_forge", "priority": 1 },
+          { "type": "craft", "item": "forbiddenandarcanus:eternal_stella", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["forbiddenandarcanus:eternal_stella"],
+    "dependencies": []
+  },
+  {
+    "mod": "Mahou Tsukai",
+    "namespace": "mahoutsukai",
+    "mod_role": "Mana Magic",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Grimoire": {
+        "description": "Starting the Journey",
+        "tasks": [
+          { "type": "craft", "item": "mahoutsukai:grimoire", "priority": 1 },
+          { "type": "collect", "item": "mahoutsukai:mana_crystal", "priority": 2 }
+        ]
+      },
+      "Magic Circles": {
+        "description": "Complex Spells",
+        "tasks": [
+          { "type": "craft", "item": "mahoutsukai:magic_circle", "priority": 1 },
+          { "type": "craft", "item": "mahoutsukai:mana_battery", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["mahoutsukai:grimoire"],
+    "dependencies": []
+  },
+  {
+    "mod": "Hex Casting",
+    "namespace": "hex",
+    "mod_role": "Programmatic Magic",
+    "difficulty_weight": 7,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Pattern Learning": {
+        "description": "Drawing the Void",
+        "tasks": [
+          { "type": "craft", "item": "hex:casting_staff", "priority": 1 },
+          { "type": "craft", "item": "hex:pattern_book", "priority": 2 },
+          { "type": "craft", "item": "hex:sand_casting_table", "priority": 3 }
+        ]
+      },
+      "Advanced Hexes": {
+        "description": "Complex Logic",
+        "tasks": [
+          { "type": "collect", "item": "hex:void_crystal", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["hex:casting_staff"],
+    "dependencies": []
+  },
+  {
+    "mod": "Twilight Forest",
+    "namespace": "twilightforest",
+    "mod_role": "Dimension Exploration",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Entrance": {
+        "description": "Entering the magical forest",
+        "tasks": [
+          { "type": "craft", "item": "twilightforest:magic_map", "priority": 1 },
+          { "type": "explore", "item": "twilightforest:forest_portal", "priority": 2 }
+        ]
+      },
+      "Early Forest": {
+        "description": "The Naga and the Lich",
+        "tasks": [
+          { "type": "kill", "item": "twilightforest:naga", "priority": 1 },
+          { "type": "collect", "item": "twilightforest:naga_scale", "priority": 2 },
+          { "type": "kill", "item": "twilightforest:lich", "priority": 3 },
+          { "type": "collect", "item": "twilightforest:lich_candy", "priority": 4 }
+        ]
+      },
+      "Mid Forest": {
+        "description": "The Hydra and Minoshroom",
+        "tasks": [
+          { "type": "kill", "item": "twilightforest:hydra", "priority": 1 },
+          { "type": "collect", "item": "twilightforest:hydra_blood", "priority": 2 },
+          { "type": "kill", "item": "twilightforest:minoshroom", "priority": 3 }
+        ]
+      },
+      "Late Forest": {
+        "description": "The Final Castle",
+        "tasks": [
+          { "type": "kill", "item": "twilightforest:ur_ghast", "priority": 1 },
+          { "type": "collect", "item": "twilightforest:ur_ghast_tear", "priority": 2 },
+          { "type": "explore", "item": "twilightforest:final_castle", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/steel"],
+    "milestone_items": ["twilightforest:hydra_blood"],
+    "dependencies": []
+  },
+  {
+    "mod": "The Aether",
+    "namespace": "aether",
+    "mod_role": "Dimension Exploration",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Sky Portal": {
+        "description": "Ascending to the heavens",
+        "tasks": [
+          { "type": "craft", "item": "aether:glowstone_portal", "priority": 1 },
+          { "type": "explore", "item": "aether:aether_portal", "priority": 2 }
+        ]
+      },
+      "Bronze Age": {
+        "description": "Basic Aether Tools",
+        "tasks": [
+          { "type": "craft", "item": "aether:bronze_pickaxe", "priority": 1 },
+          { "type": "explore", "item": "aether:bronze_dungeon", "priority": 2 }
+        ]
+      },
+      "Silver & Gold": {
+        "description": "High Aether Gear",
+        "tasks": [
+          { "type": "craft", "item": "aether:zanite_ingot", "priority": 1 },
+          { "type": "craft", "item": "aether:gravitite_ingot", "priority": 2 },
+          { "type": "craft", "item": "aether:sunstone_ingot", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["aether:sunstone_ingot"],
+    "dependencies": []
+  },
+  {
+    "mod": "Ice and Fire: Dragons",
+    "namespace": "iceandfire",
+    "mod_role": "Combat/Exploration",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Dragon Hunting": {
+        "description": "Surviving the beasts",
+        "tasks": [
+          { "type": "collect", "item": "iceandfire:dragon_bone", "priority": 1 },
+          { "type": "collect", "item": "iceandfire:dragon_scale", "priority": 2 },
+          { "type": "craft", "item": "iceandfire:dragonsteel_pickaxe", "priority": 3 }
+        ]
+      },
+      "Dragon Taming": {
+        "description": "Hatching your own",
+        "tasks": [
+          { "type": "collect", "item": "iceandfire:dragon_egg", "priority": 1 },
+          { "type": "use", "item": "iceandfire:dragon_food", "priority": 2 },
+          { "type": "craft", "item": "iceandfire:dragon_armor", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["iceandfire:dragon_egg"],
+    "dependencies": []
+  },
+  {
+    "mod": "BetterEnd",
+    "namespace": "betterend",
+    "mod_role": "Dimension Overhaul",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "End Evolution": {
+        "description": "Exploring the new End",
+        "tasks": [
+          { "type": "explore", "item": "betterend:end_biome", "priority": 1 },
+          { "type": "collect", "item": "betterend:end_crystal", "priority": 2 }
+        ]
+      },
+      "Celestial Tooling": {
+        "description": "End-game gear",
+        "tasks": [
+          { "type": "craft", "item": "betterend:end_steel_ingot", "priority": 1 },
+          { "type": "craft", "item": "betterend:end_steel_pickaxe", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["betterend:end_steel_pickaxe"],
+    "dependencies": []
+  },
+  {
+    "mod": "BetterNether",
+    "namespace": "betternether",
+    "mod_role": "Dimension Overhaul",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Nether Depths": {
+        "description": "Exploring the new Nether",
+        "tasks": [
+          { "type": "explore", "item": "betternether:nether_biome", "priority": 1 },
+          { "type": "collect", "item": "betternether:nether_crystal", "priority": 2 }
+        ]
+      },
+      "Netherite+": {
+        "description": "Advanced Nether gear",
+        "tasks": [
+          { "type": "craft", "item": "betternether:nether_steel_ingot", "priority": 1 },
+          { "type": "craft", "item": "betternether:nether_steel_pickaxe", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["betternether:nether_steel_pickaxe"],
+    "dependencies": []
+  },
+  {
+    "mod": "Deeper and Darker",
+    "namespace": "deeperanddarker",
+    "mod_role": "Dimension Exploration",
+    "difficulty_weight": 7,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Void Portal": {
+        "description": "Entering the Otherside",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:echo_shard", "priority": 1 },
+          { "type": "explore", "item": "deeperanddarker:portal_frame", "priority": 2 }
+        ]
+      },
+      "Void Mastery": {
+        "description": "Harnessing the darkness",
+        "tasks": [
+          { "type": "collect", "item": "deeperanddarker:void_steel_ingot", "priority": 1 },
+          { "type": "craft", "item": "deeperanddarker:void_steel_pickaxe", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["deeperanddarker:void_steel_pickaxe"],
+    "dependencies": []
+  },
+  {
+    "mod": "Alex's Caves",
+    "namespace": "alexscaves",
+    "mod_role": "Exploration/Combat",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Cave Discovery": {
+        "description": "Finding the hidden realms",
+        "tasks": [
+          { "type": "explore", "item": "alexscaves:magnetic_cave", "priority": 1 },
+          { "type": "explore", "item": "alexscaves:primordial_cave", "priority": 2 },
+          { "type": "explore", "item": "alexscaves:toxic_cave", "priority": 3 }
+        ]
+      },
+      "Cave Tooling": {
+        "description": "Specialized Gear",
+        "tasks": [
+          { "type": "craft", "item": "alexscaves:magnetic_pickaxe", "priority": 1 },
+          { "type": "collect", "item": "alexscaves:galena_ingot", "priority": 2 },
+          { "type": "craft", "item": "alexscaves:magnetic_core", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["alexscaves:magnetic_pickaxe"],
+    "dependencies": []
+  },
+  {
+    "mod": "The Undergarden",
+    "namespace": "undergarden",
+    "mod_role": "Dimension Exploration",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Descent": {
+        "description": "Entering the Undergarden",
+        "tasks": [
+          { "type": "craft", "item": "undergarden:undergarden_portal", "priority": 1 },
+          { "type": "explore", "item": "undergarden:undergarden_biome", "priority": 2 }
+        ]
+      },
+      "Under-Steel": {
+        "description": "Forging in the depths",
+        "tasks": [
+          { "type": "collect", "item": "undergarden:undergarden_steel_ingot", "priority": 1 },
+          { "type": "craft", "item": "undergarden:undergarden_steel_pickaxe", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/steel"],
+    "milestone_items": ["undergarden:undergarden_steel_pickaxe"],
+    "dependencies": []
+  },
+  {
+    "mod": "Blue Skies",
+    "namespace": "blueskies",
+    "mod_role": "Dimension Exploration",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Dual Dimensions": {
+        "description": "Everbright and Everdawn",
+        "tasks": [
+          { "type": "explore", "item": "blueskies:everbright_portal", "priority": 1 },
+          { "type": "explore", "item": "blueskies:everdawn_portal", "priority": 2 }
+        ]
+      },
+      "Steel of the Skies": {
+        "description": "Sun and Moon Steel",
+        "tasks": [
+          { "type": "collect", "item": "blueskies:sun_steel_ingot", "priority": 1 },
+          { "type": "collect", "item": "blueskies:moon_steel_ingot", "priority": 2 },
+          { "type": "craft", "item": "blueskies:everbright_boss_trophy", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["blueskies:sun_steel_ingot"],
+    "dependencies": []
+  },
+  {
+    "mod": "Nature's Compass",
+    "namespace": "naturescompass",
+    "mod_role": "Utility",
+    "difficulty_weight": 1,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Navigator": {
+        "description": "Finding the world",
+        "tasks": [
+          { "type": "craft", "item": "naturescompass:nature_compass", "priority": 1 },
+          { "type": "explore", "item": "minecraft:cherry_grove", "priority": 2 },
+          { "type": "explore", "item": "minecraft:mangrove_swamp", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["naturescompass:nature_compass"],
+    "dependencies": []
+  },
+  {
+    "mod": "Explorer's Compass",
+    "namespace": "explorerscompass",
+    "mod_role": "Utility",
+    "difficulty_weight": 1,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Scout": {
+        "description": "Finding structures",
+        "tasks": [
+          { "type": "craft", "item": "explorerscompass:explorers_compass", "priority": 1 },
+          { "type": "explore", "item": "minecraft:ancient_city", "priority": 2 },
+          { "type": "explore", "item": "minecraft:bastion_remnant", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["explorerscompass:explorers_compass"],
+    "dependencies": []
+  },
+  {
+    "mod": "L_Ender's Cataclysm",
+    "namespace": "cataclysm",
+    "mod_role": "Boss Combat",
+    "difficulty_weight": 8,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Netherite Readiness": {
+        "description": "Preparing for the apocalypse",
+        "tasks": [
+          { "type": "craft", "item": "minecraft:netherite_chestplate", "priority": 1 },
+          { "type": "craft", "item": "minecraft:netherite_sword", "priority": 2 }
+        ]
+      },
+      "The Ignis Conquest": {
+        "description": "Defeating the Nether's strongest",
+        "tasks": [
+          { "type": "explore", "item": "cataclysm:ignis_citadel", "priority": 1 },
+          { "type": "kill", "item": "cataclysm:ignis", "priority": 2 },
+          { "type": "craft", "item": "cataclysm:ignis_sword", "priority": 3 }
+        ]
+      },
+      "Void Guardian": {
+        "description": "The Ender Guardian",
+        "tasks": [
+          { "type": "kill", "item": "cataclysm:ender_guardian", "priority": 1 },
+          { "type": "collect", "item": "cataclysm:ender_guardian_core", "priority": 2 },
+          { "type": "craft", "item": "cataclysm:void_gear", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/netherite"],
+    "milestone_items": ["cataclysm:void_gear"],
+    "dependencies": []
+  },
+  {
+    "mod": "Alex's Mobs",
+    "namespace": "alexsmobs",
+    "mod_role": "Mob Collection",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Animal Observation": {
+        "description": "Gathering basic materials",
+        "tasks": [
+          { "type": "collect", "item": "alexsmobs:grizzly_bear_claw", "priority": 1 },
+          { "type": "collect", "item": "alexsmobs:elephant_tusk", "priority": 2 }
+        ]
+      },
+      "Specialized Tooling": {
+        "description": "Crafting with mob drops",
+        "tasks": [
+          { "type": "craft", "item": "alexsmobs:hammer", "priority": 1 },
+          { "type": "craft", "item": "alexsmobs:cautionary_tale", "priority": 2 }
+        ]
+      },
+      "Apex Predators": {
+        "description": "Hunting the rarest beasts",
+        "tasks": [
+          { "type": "kill", "item": "alexsmobs:cave_centipede", "priority": 1 },
+          { "type": "kill", "item": "alexsmobs:mimic", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["alexsmobs:hammer"],
+    "dependencies": []
+  },
+  {
+    "mod": "Bosses of Mass Destruction",
+    "namespace": "bomd",
+    "mod_role": "Boss Combat",
+    "difficulty_weight": 7,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Void Blossom": {
+        "description": "First encounter",
+        "tasks": [
+          { "type": "kill", "item": "bomd:void_blossom", "priority": 1 },
+          { "type": "collect", "item": "bomd:void_crystal", "priority": 2 }
+        ]
+      },
+      "The Lich": {
+        "description": "The Undead Master",
+        "tasks": [
+          { "type": "kill", "item": "bomd:the_lich", "priority": 1 },
+          { "type": "collect", "item": "bomd:lich_tome", "priority": 2 }
+        ]
+      },
+      "Gauntlet Trial": {
+        "description": "The Ultimate Test",
+        "tasks": [
+          { "type": "kill", "item": "bomd:gauntlet_boss", "priority": 1 },
+          { "type": "collect", "item": "bomd:gauntlet_shard", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["bomd:void_crystal"],
+    "dependencies": []
+  },
+  {
+    "mod": "Mowzie's Mobs",
+    "namespace": "mowziesmobs",
+    "mod_role": "Boss Combat",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Wroughtnaut": {
+        "description": "Breaking the armor",
+        "tasks": [
+          { "type": "kill", "item": "mowziesmobs:ferrous_wroughtnaut", "priority": 1 },
+          { "type": "craft", "item": "mowziesmobs:foliaed_blade", "priority": 2 }
+        ]
+      },
+      "The Frostmaw": {
+        "description": "Surviving the cold",
+        "tasks": [
+          { "type": "kill", "item": "mowziesmobs:frostmaw", "priority": 1 },
+          { "type": "collect", "item": "mowziesmobs:frostmaw_tusk", "priority": 2 }
+        ]
+      },
+      "The Barako": {
+        "description": "Tribal Combat",
+        "tasks": [
+          { "type": "kill", "item": "mowziesmobs:barako_king", "priority": 1 },
+          { "type": "craft", "item": "mowziesmobs:sun_staff", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["mowziesmobs:sun_staff"],
+    "dependencies": []
+  },
+  {
+    "mod": "Apotheosis",
+    "namespace": "apotheosis",
+    "mod_role": "RPG Gear",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Gear Reforging": {
+        "description": "Adding Affixes",
+        "tasks": [
+          { "type": "craft", "item": "apotheosis:reforging_table", "priority": 1 },
+          { "type": "use", "item": "apotheosis:reforging_stone", "priority": 2 }
+        ]
+      },
+      "The Gem System": {
+        "description": "Socketing Power",
+        "tasks": [
+          { "type": "craft", "item": "apotheosis:salvaging_table", "priority": 1 },
+          { "type": "collect", "item": "apotheosis:gem", "priority": 2 }
+        ]
+      },
+      "Legendary Status": {
+        "description": "God-tier equipment",
+        "tasks": [
+          { "type": "collect", "item": "apotheosis:legendary_gear", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["apotheosis:reforging_table"],
+    "dependencies": []
+  },
+  {
+    "mod": "Simply Swords",
+    "namespace": "simplyswords",
+    "mod_role": "Weaponry",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Steel Blades": {
+        "description": "Basic Swords",
+        "tasks": [
+          { "type": "craft", "item": "simplyswords:claymore", "priority": 1 },
+          { "type": "craft", "item": "simplyswords:longsword", "priority": 2 }
+        ]
+      },
+      "Exotic Weaponry": {
+        "description": "Unique materials",
+        "tasks": [
+          { "type": "craft", "item": "simplyswords:katana", "priority": 1 },
+          { "type": "craft", "item": "simplyswords:rapier", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:ingots/steel"],
+    "milestone_items": ["simplyswords:katana"],
+    "dependencies": []
+  },
+  {
+    "mod": "Mine Cells",
+    "namespace": "minecells",
+    "mod_role": "Dimension/Combat",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The First Cell": {
+        "description": "Entering the dungeon",
+        "tasks": [
+          { "type": "explore", "item": "minecells:cell_entrance", "priority": 1 },
+          { "type": "collect", "item": "minecells:cell_key", "priority": 2 }
+        ]
+      },
+      "Cell progression": {
+        "description": "Clearing floors",
+        "tasks": [
+          { "type": "collect", "item": "minecells:health_vial", "priority": 1 },
+          { "type": "craft", "item": "minecells:cell_weapon", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["minecells:cell_key"],
+    "dependencies": []
+  },
+  {
+    "mod": "Mutant Monsters",
+    "namespace": "mutantmonsters",
+    "mod_role": "Boss Combat",
+    "difficulty_weight": 5,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Mutant Hunt": {
+        "description": "Facing distorted versions of mobs",
+        "tasks": [
+          { "type": "kill", "item": "mutantmonsters:mutant_zombie", "priority": 1 },
+          { "type": "collect", "item": "mutantmonsters:mutant_zombie_heart", "priority": 2 },
+          { "type": "kill", "item": "mutantmonsters:mutant_skeleton", "priority": 3 },
+          { "type": "collect", "item": "mutantmonsters:mutant_skeleton_bone", "priority": 4 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["mutantmonsters:mutant_zombie_heart"],
+    "dependencies": []
+  },
+  {
+    "mod": "Aquamirae",
+    "namespace": "aquamirae",
+    "mod_role": "Ocean Exploration",
+    "difficulty_weight": 6,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Deep Sea Diving": {
+        "description": "Venturing into the abyss",
+        "tasks": [
+          { "type": "craft", "item": "aquamirae:deep_sea_diving_suit", "priority": 1 },
+          { "type": "explore", "item": "aquamirae:deep_ocean", "priority": 2 }
+        ]
+      },
+      "The Captain's Loot": {
+        "description": "Defeating the ocean lords",
+        "tasks": [
+          { "type": "kill", "item": "aquamirae:captain", "priority": 1 },
+          { "type": "collect", "item": "aquamirae:captain_helmet", "priority": 2 },
+          { "type": "craft", "item": "aquamirae:coral_sword", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["aquamirae:captain_helmet"],
+    "dependencies": []
+  },
+  {
+    "mod": "Cracker's Wither Storm Mod",
+    "namespace": "witherstormmod",
+    "mod_role": "Mega-Boss Combat",
+    "difficulty_weight": 10,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Storm Approaches": {
+        "description": "Early survival",
+        "tasks": [
+          { "type": "explore", "item": "witherstormmod:storm_phase_1", "priority": 1 },
+          { "type": "collect", "item": "witherstormmod:command_block_fragment", "priority": 2 }
+        ]
+      },
+      "The Final Stand": {
+        "description": "Destroying the Storm",
+        "tasks": [
+          { "type": "kill", "item": "witherstormmod:wither_storm", "priority": 1 },
+          { "type": "craft", "item": "witherstormmod:formidatable_sword", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["witherstormmod:formidatable_sword"],
+    "dependencies": []
+  },
+  {
+    "mod": "LevelZ",
+    "namespace": "levelz",
+    "mod_role": "RPG Progression",
+    "difficulty_weight": 1,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Novice": {
+        "description": "Learning the ropes",
+        "tasks": [
+          { "type": "collect", "item": "minecraft:experience_bottle", "priority": 1 },
+          { "type": "use", "item": "levelz:skill_point", "priority": 2 }
+        ]
+      },
+      "The Master": {
+        "description": "Peak performance",
+        "tasks": [
+          { "type": "collect", "item": "levelz:master_rank", "priority": 1 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["levelz:skill_point"],
+    "dependencies": []
+  },
+  {
+    "mod": "Farmer's Delight",
+    "namespace": "farmersdelight",
+    "mod_role": "Food & Agriculture",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Basic Harvesting": {
+        "description": "Getting a grip on farming",
+        "tasks": [
+          { "type": "craft", "item": "farmersdelight:knife", "priority": 1 },
+          { "type": "collect", "item": "farmersdelight:tomato", "priority": 2 },
+          { "type": "collect", "item": "farmersdelight:cabbage", "priority": 3 }
+        ]
+      },
+      "The Kitchen": {
+        "description": "Cooking simple meals",
+        "tasks": [
+          { "type": "craft", "item": "farmersdelight:stove", "priority": 1 },
+          { "type": "craft", "item": "farmersdelight:skillet", "priority": 2 },
+          { "type": "craft", "item": "farmersdelight:cooking_pot", "priority": 3 }
+        ]
+      },
+      "Gourmet Cuisine": {
+        "description": "High-saturation feasts",
+        "tasks": [
+          { "type": "craft", "item": "farmersdelight:stew", "priority": 1 },
+          { "type": "craft", "item": "farmersdelight:roast_chicken", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:crops/tomato", "forge:crops/cabbage"],
+    "milestone_items": ["farmersdelight:cooking_pot"],
+    "dependencies": []
+  },
+  {
+    "mod": "Nether's Delight",
+    "namespace": "nethersdelight",
+    "mod_role": "Food & Agriculture",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Farmer's Delight"],
+    "progression": {
+      "Nether Foraging": {
+        "description": "Finding food in hell",
+        "tasks": [
+          { "type": "craft", "item": "nethersdelight:crimson_knife", "priority": 1 },
+          { "type": "collect", "item": "minecraft:nether_wart", "priority": 2 }
+        ]
+      },
+      "Infernal Cooking": {
+        "description": "Cooking with fire",
+        "tasks": [
+          { "type": "craft", "item": "nethersdelight:nether_cooking_pot", "priority": 1 },
+          { "type": "craft", "item": "nethersdelight:nether_feast", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:crops/nether_wart"],
+    "milestone_items": ["nethersdelight:nether_cooking_pot"],
+    "dependencies": ["Farmer's Delight"]
+  },
+  {
+    "mod": "End's Delight",
+    "namespace": "endsdelight",
+    "mod_role": "Food & Agriculture",
+    "difficulty_weight": 4,
+    "soft_dependencies": ["Farmer's Delight"],
+    "progression": {
+      "Void Foraging": {
+        "description": "Eating the void",
+        "tasks": [
+          { "type": "craft", "item": "endsdelight:end_knife", "priority": 1 },
+          { "type": "collect", "item": "minecraft:chorus_fruit", "priority": 2 }
+        ]
+      },
+      "Void Cooking": {
+        "description": "The End's kitchen",
+        "tasks": [
+          { "type": "craft", "item": "endsdelight:end_cooking_pot", "priority": 1 },
+          { "type": "craft", "item": "endsdelight:end_feast", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": ["forge:crops/chorus_fruit"],
+    "milestone_items": ["endsdelight:end_cooking_pot"],
+    "dependencies": ["Farmer's Delight"]
+  },
+  {
+    "mod": "Waystones",
+    "namespace": "waystones",
+    "mod_role": "Travel Utility",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Local Travel": {
+        "description": "Setting up a base link",
+        "tasks": [
+          { "type": "craft", "item": "waystones:waystone", "priority": 1 },
+          { "type": "use", "item": "waystones:waystone", "priority": 2 }
+        ]
+      },
+      "Global Network": {
+        "description": "Warping across the world",
+        "tasks": [
+          { "type": "craft", "item": "waystones:warp_stone", "priority": 1 },
+          { "type": "craft", "item": "waystones:warp_stone_scroll", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["waystones:warp_stone"],
+    "dependencies": []
+  },
+  {
+    "mod": "Tough as Nails",
+    "namespace": "toughasnails",
+    "mod_role": "Survival",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Hydration": {
+        "description": "Don't die of thirst",
+        "tasks": [
+          { "type": "craft", "item": "toughasnails:canteen", "priority": 1 },
+          { "type": "craft", "item": "toughasnails:water_filter", "priority": 2 }
+        ]
+      },
+      "Temperature Control": {
+        "description": "Surviving the elements",
+        "tasks": [
+          { "type": "craft", "item": "toughasnails:flask", "priority": 1 },
+          { "type": "use", "item": "minecraft:campfire", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["toughasnails:water_filter"],
+    "dependencies": []
+  },
+  {
+    "mod": "Cold Sweat",
+    "namespace": "coldsweat",
+    "mod_role": "Survival",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Thermoregulation": {
+        "description": "Managing body heat",
+        "tasks": [
+          { "type": "craft", "item": "coldsweat:insulation_layer", "priority": 1 },
+          { "type": "collect", "item": "minecraft:leather_chestplate", "priority": 2 }
+        ]
+      },
+      "Climate Control": {
+        "description": "HVAC for your base",
+        "tasks": [
+          { "type": "craft", "item": "coldsweat:heater", "priority": 1 },
+          { "type": "craft", "item": "coldsweat:air_conditioner", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["coldsweat:air_conditioner"],
+    "dependencies": []
+  },
+  {
+    "mod": "Artifacts",
+    "namespace": "artifacts",
+    "mod_role": "Loot/Utility",
+    "difficulty_weight": 3,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Treasure Hunting": {
+        "description": "Finding rare gear",
+        "tasks": [
+          { "type": "collect", "item": "artifacts:diving_mask", "priority": 1 },
+          { "type": "collect", "item": "artifacts:bunny_slippers", "priority": 2 },
+          { "type": "collect", "item": "artifacts:power_glove", "priority": 3 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["artifacts:power_glove"],
+    "dependencies": []
+  },
+  {
+    "mod": "Paraglider",
+    "namespace": "paraglider",
+    "mod_role": "Mobility",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Taking Flight": {
+        "description": "Gliding from heights",
+        "tasks": [
+          { "type": "craft", "item": "paraglider:paraglider", "priority": 1 },
+          { "type": "craft", "item": "paraglider:stamina_wheel", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["paraglider:paraglider"],
+    "dependencies": []
+  },
+  {
+    "mod": "Bountiful",
+    "namespace": "bountiful",
+    "mod_role": "Economy",
+    "difficulty_weight": 2,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "The Bounty Board": {
+        "description": "Doing chores for rewards",
+        "tasks": [
+          { "type": "craft", "item": "bountiful:bounty_board", "priority": 1 },
+          { "type": "use", "item": "bountiful:bounty_paper", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["bountiful:bounty_board"],
+    "dependencies": []
+  },
+  {
+    "mod": "Comforts",
+    "namespace": "comforts",
+    "mod_role": "Utility",
+    "difficulty_weight": 1,
+    "soft_dependencies": ["Minecraft"],
+    "progression": {
+      "Mobile Sleeping": {
+        "description": "Resting without resetting spawn",
+        "tasks": [
+          { "type": "craft", "item": "comforts:sleeping_bag", "priority": 1 },
+          { "type": "craft", "item": "comforts:hammock", "priority": 2 }
+        ]
+      }
+    },
+    "common_tags": [],
+    "milestone_items": ["comforts:sleeping_bag"],
+    "dependencies": []
+  }
+]
