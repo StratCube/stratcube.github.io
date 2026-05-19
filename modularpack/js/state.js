@@ -5,8 +5,12 @@ export const state = {
   mcVersion: "",
   loader: "fabric",
   loaderVersion: "",
-  sinytraEnabled: false, // <-- ADDED
-  mods: []
+  sinytraEnabled: false,
+  mods: [],
+  // NEW: State configuration for pack tools
+  packTools: {
+    ysns: { disabled: [], dimensions: [] }
+  }
 };
 
 export let customFiles = [];
@@ -38,6 +42,8 @@ export function loadState() {
   if (saved) {
     const parsed = JSON.parse(saved);
     Object.assign(state, parsed, { mods: parsed.mods || [] });
+    // Safety check to migrate older saves
+    if (!state.packTools) state.packTools = { ysns: { disabled: [], dimensions: [] } };
   }
 }
 
