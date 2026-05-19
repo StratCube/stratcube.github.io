@@ -4,6 +4,7 @@ import { renderModList, executeSearch, renderAddons } from './ui.js';
 import { debounce } from './utils.js';
 import { initQuests, triggerQuestRenders } from './quests.js';
 import { exportMrPack, exportQuestsZip } from './export.js';
+import { initPackTools } from './packTools.js'; // NEW IMPORT
 
 document.addEventListener("DOMContentLoaded", async () => {
   loadState();
@@ -19,10 +20,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   bindExportButtons();
   
   await populateGameVersions();
-  updateSinytraVisibility(); // Setup Initial Sinytra Visibility
+  updateSinytraVisibility(); 
 
   await initQuests();
-  await renderAddons(); 
+  await renderAddons();
+  initPackTools(); // NEW INIT
   
   renderModList();
   triggerSearch();
@@ -78,7 +80,6 @@ function bindFormInputs() {
   document.getElementById('search-source').addEventListener('change', triggerSearch);
   document.getElementById('search-category').addEventListener('change', triggerSearch);
 
-  // Auto-Dependency Button
   document.getElementById('btn-auto-dep').addEventListener('click', async (e) => {
     const btn = e.target;
     btn.textContent = "Resolving...";
@@ -91,7 +92,6 @@ function bindFormInputs() {
     setTimeout(() => { btn.textContent = "Resolve Dependencies"; btn.disabled = false; }, 3000);
   });
 
-  // Custom Mod Upload
   document.getElementById('btn-add-custom').addEventListener('click', () => document.getElementById('custom-mod-input').click());
   document.getElementById('custom-mod-input').addEventListener('change', (e) => {
     for(let file of e.target.files) {
@@ -106,13 +106,11 @@ function bindFormInputs() {
     e.target.value = '';
   });
 
-  // Sinytra Toggle Logic
   const sinytraToggle = document.getElementById('sinytra-toggle');
   sinytraToggle.addEventListener('change', async (e) => {
     state.sinytraEnabled = e.target.checked;
     
     if (state.sinytraEnabled) {
-      // Temporarily disable the UI to fetch the 3 core mods
       sinytraToggle.disabled = true;
       await installSinytraMods();
       sinytraToggle.disabled = false;
@@ -121,7 +119,7 @@ function bindFormInputs() {
     }
     
     saveState();
-    triggerSearch(); // Reload searches to reflect the newly allowed/disabled fabric mods
+    triggerSearch(); 
   });
 }
 
