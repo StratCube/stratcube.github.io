@@ -18,7 +18,6 @@ export async function exportQuestsZip() {
       y: `__RAW__${q.y}d`,
       shape: q.shape && q.shape !== 'default' ? q.shape : undefined,
       dependencies: q.dependencies && q.dependencies.length ? q.dependencies : undefined,
-      // --- FIX: Add always_invisible to root quests to ensure dependencies load correctly ---
       always_invisible: (!q.dependencies || q.dependencies.length === 0) ? false : undefined,
       tasks: q.tasks.map(t => {
         if(t.taskType === 'kill') return { id: t.id, type: 'kill', entity: t.item, value: `__RAW__${t.count||1}L` };
@@ -121,12 +120,65 @@ export async function exportMrPack() {
       else if (mod.source === 'modrinth' && mod.mrpackData) {
         indexJson.files.push(mod.mrpackData);
       }
-      else if (mod.source === 'curseforge') {
-        console.warn("CurseForge mods cannot be bundled perfectly into mrpack via browser yet.");
-      }
     });
 
     zip.file("modrinth.index.json", JSON.stringify(indexJson, null, 2));
+
+    // PACK TOOLS: You Shall Not Spawn (YSNS)
+    if (state.packTools && state.packTools.ysns) {
+      const ysns = state.packTools.ysns;
+      
+      if (ysns.disabled.length > 0) {
+        const disabledTpl = `{
+  // ----------------------------------------------------------------------------------------------------------------
+  //                                     You Shall Not Spawn by ElocinDev.
+  //                                          disabled_entities.json5
+  // ----------------------------------------------------------------------------------------------------------------
+  //  
+  // Here you can disable entities from spawning globally, with no exceptions.
+  // Format: "modid:entity_name"
+  // Example: "minecraft:zombie"
+  //  
+  // Note: As a more advanced method, you can use regex by starting the entry with !
+  // Format: "!{Regular expression}"
+  // Example: "!minecraft:.*" will disable all entities from minecraft. (NOT RECOMMENDED, JUST AN EXAMPLE)
+  //  
+  "disabled": ${JSON.stringify(ysns.disabled, null, 4)},
+  // Don't touch this!
+  "CONFIG_VERSION": 1
+}`;
+        zip.file("overrides/config/ysns/disabled_entities.json5", disabledTpl);
+      }
+
+      if (ysns.dimensions.length > 0) {
+        const dimTpl = `{
+  // ----------------------------------------------------------------------------------------------------------------
+  //                                     You Shall Not Spawn by ElocinDev.
+  //                                       per_dimension_entities.json5
+  // ----------------------------------------------------------------------------------------------------------------
+  //  
+  //  entity: The entity's id you want to adjust. (For example: minecraft:zombie, regex can be used.)
+  //  dimension: The dimension id you want to adjust. (For example: minecraft:overworld, regex can be used.)
+  //  spawn_chance: The chance of the entity spawning. (For example: 0.1 is 10%, 0.5 is 50%, 0.0 will disable the spawn.)
+  //  
+  //  The example below adds a modifier for the zombie, with 1.0 spawn chance (100%).
+  //  By default, this does nothing, but you for example set the spawn chance to 0.5, making zombies spawn half the time they usually do.
+  //  
+  //  YSNS CAN'T INCREASE SPAWN RATES! ANYTHING ABOVE 1.0 WILL NOT INCREASE SPAWNRATE!
+  //  
+  // Note: As a more advanced method, you can use regex by starting the entry with !
+  // With regex, you can do things such as disabling multiple entities in a single entry, or cover multiple (or all) dimensions
+  // Format: "!{Regular expression}"
+  // Example: "!minecraft:.*" will disable all entities from minecraft. (NOT RECOMMENDED, JUST AN EXAMPLE)
+  //  
+  // Regex works on both entity and dimension entries.
+  "dimensions": ${JSON.stringify(ysns.dimensions, null, 4)},
+  // Don't touch this!
+  "CONFIG_VERSION": 1
+}`;
+        zip.file("overrides/config/ysns/per_dimension_entities.json5", dimTpl);
+      }
+    }
 
     // INJECT QUESTS INTO MRPACK OVERRIDES
     if (questState && questState.chapters && questState.chapters.some(c => c.quests.length > 0)) {
@@ -145,7 +197,6 @@ export async function exportMrPack() {
           y: `__RAW__${q.y}d`,
           shape: q.shape && q.shape !== 'default' ? q.shape : undefined,
           dependencies: q.dependencies && q.dependencies.length ? q.dependencies : undefined,
-          // --- FIX: Add always_invisible to root quests to ensure dependencies load correctly ---
           always_invisible: (!q.dependencies || q.dependencies.length === 0) ? false : undefined,
           tasks: q.tasks.map(t => {
             if(t.taskType === 'kill') return { id: t.id, type: 'kill', entity: t.item, value: `__RAW__${t.count||1}L` };
