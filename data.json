@@ -11,6 +11,12 @@
       "url": "https://stratcube2.github.io/mrpack",
       "imgSrc": "mrpack.png",
       "desc": "swap a modpacks version"
+    },
+    {
+      "title": "carbonspaces",
+      "url": "https://carbonspaces.netlify.app/",
+      "imgSrc": "carbonspaces, ephemeral workspaces",
+      "desc": "ephemeral workspaces."
     }
   ],
   "projects": [
