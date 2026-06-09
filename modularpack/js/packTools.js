@@ -2,8 +2,31 @@ import { state, saveState } from './state.js';
 import { escapeHtml } from './utils.js';
 
 export function initPackTools() {
+  bindAccordions();
   bindYSNS();
   renderYSNS();
+}
+
+function bindAccordions() {
+  document.querySelectorAll('.tool-accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const targetId = header.dataset.target;
+      if (!targetId) return;
+      
+      const body = document.getElementById(targetId);
+      const isActive = header.classList.contains('active');
+      
+      if (isActive) {
+        // Close it
+        header.classList.remove('active');
+        body.classList.add('hidden');
+      } else {
+        // Open it
+        header.classList.add('active');
+        body.classList.remove('hidden');
+      }
+    });
+  });
 }
 
 function bindYSNS() {
