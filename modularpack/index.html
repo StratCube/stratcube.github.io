@@ -38,7 +38,6 @@
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
         </svg>
       </button>
-      <!-- NEW: Pack Tools Wrench Icon -->
       <button class="activity-tab" data-target="panel-pack-tools" title="Pack Tools">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
@@ -123,30 +122,44 @@
         <div id="quest-mods-list" class="flex-col gap-2 p-2" style="flex:1; overflow-y:auto;"></div>
       </div>
 
-      <!-- NEW: Pack Tools Panel -->
+      <!-- Pack Tools Panel -->
       <div id="panel-pack-tools" class="sidebar-panel hidden split-panel">
         <div class="panel-header">PACK TOOLS</div>
         <div class="panel-half" style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
-          <!-- YSNS Configurations -->
-          <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-light); padding: 8px; border-radius: 4px;">
-            <h4 style="font-size: 11px; margin-bottom: 4px; color: var(--green);">YSNS: Global Disabled</h4>
-            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-              <input type="text" id="ysns-global-input" placeholder="modid:entity (or !regex)" style="flex: 1;">
-              <button id="btn-ysns-add-global" class="btn-primary" style="padding: 2px 6px;">+</button>
-            </div>
-            <div id="ysns-global-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
-          </div>
+          
+          <!-- YSNS ACCORDION -->
+          <div class="tool-accordion">
+            <button class="tool-accordion-header" data-target="body-ysns">
+              <span>You Shall Not Spawn</span>
+              <span class="tool-arrow">▼</span>
+            </button>
+            <div id="body-ysns" class="tool-accordion-body hidden">
+              
+              <!-- Global Settings -->
+              <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-light); padding: 8px; border-radius: 4px; margin-bottom: 8px;">
+                <h4 style="font-size: 11px; margin-bottom: 4px; color: var(--green);">Global Disabled</h4>
+                <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                  <input type="text" id="ysns-global-input" placeholder="modid:entity (or !regex)" style="flex: 1;">
+                  <button id="btn-ysns-add-global" class="btn-primary" style="padding: 2px 6px;">+</button>
+                </div>
+                <div id="ysns-global-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
+              </div>
 
-          <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-light); padding: 8px; border-radius: 4px;">
-            <h4 style="font-size: 11px; margin-bottom: 4px; color: var(--green);">YSNS: Per-Dimension</h4>
-            <input type="text" id="ysns-dim-entity" placeholder="Entity (minecraft:zombie)" style="margin-bottom: 4px;">
-            <input type="text" id="ysns-dim-id" placeholder="Dimension (minecraft:overworld)" style="margin-bottom: 4px;">
-            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-              <input type="number" id="ysns-dim-chance" placeholder="Chance (0.0 - 1.0)" step="0.1" min="0" max="1" style="flex: 1;">
-              <button id="btn-ysns-add-dim" class="btn-primary" style="padding: 2px 6px;">+</button>
+              <!-- Per-Dim Settings -->
+              <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-light); padding: 8px; border-radius: 4px;">
+                <h4 style="font-size: 11px; margin-bottom: 4px; color: var(--green);">Per-Dimension</h4>
+                <input type="text" id="ysns-dim-entity" placeholder="Entity (minecraft:zombie)" style="margin-bottom: 4px;">
+                <input type="text" id="ysns-dim-id" placeholder="Dimension (minecraft:overworld)" style="margin-bottom: 4px;">
+                <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                  <input type="number" id="ysns-dim-chance" placeholder="Chance (0.0 - 1.0)" step="0.1" min="0" max="1" style="flex: 1;">
+                  <button id="btn-ysns-add-dim" class="btn-primary" style="padding: 2px 6px;">+</button>
+                </div>
+                <div id="ysns-dim-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
+              </div>
+
             </div>
-            <div id="ysns-dim-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
           </div>
+          <!-- More accordions can go here later -->
         </div>
       </div>
     </aside>
