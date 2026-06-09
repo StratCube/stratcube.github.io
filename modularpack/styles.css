@@ -22,22 +22,19 @@ body {
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 12px;
-  /* FIX: Use dvh (Dynamic Viewport Height) instead of vh to account for browser bars */
   height: 100dvh; 
   overflow: hidden;
-  position: fixed; /* Prevents rubber-banding/bounce on mobile/tablets */
+  position: fixed; 
   width: 100%;
 }
 
-/* VS Code Style Layout */
 #workspace { 
   display: flex; 
-  height: 100dvh; /* FIX: Dynamic height */
+  height: 100dvh; 
   width: 100vw; 
   overflow: hidden;
 }
 
-/* Activity Bar */
 #activity-bar {
   width: 48px;
   background: var(--activity-bg);
@@ -57,7 +54,6 @@ body {
 .activity-tab:hover { color: var(--text); background: rgba(255,255,255,0.05); }
 .activity-tab.active { color: var(--green); border-left: 2px solid var(--green); border-radius: 0 6px 6px 0; }
 
-/* Sidebars */
 #left-sidebar, #right-sidebar {
   width: 260px;
   background: var(--panel-bg);
@@ -68,7 +64,6 @@ body {
 #left-sidebar { border-right: 1px solid var(--border); }
 #right-sidebar { border-left: 1px solid var(--border); }
 
-/* Left Sidebar Halves */
 .split-panel { 
   display: flex; 
   flex-direction: column; 
@@ -80,11 +75,10 @@ body {
   overflow-y: auto; 
   display: flex; 
   flex-direction: column; 
-  min-height: 0; /* Critical for flex-child scrolling */
+  min-height: 0; 
 }
 .border-top { border-top: 1px solid var(--border); }
 
-/* Center Panel */
 #center-panel { 
   flex: 1; 
   display: flex; 
@@ -93,7 +87,6 @@ body {
   height: 100%;
 }
 
-/* Headers & Tabs */
 .panel-header {
   padding: 8px 12px;
   font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
@@ -116,7 +109,6 @@ body {
 .center-tab:last-child { border-right: none; }
 .center-tab.active { color: var(--green); border-bottom: 1px solid var(--green); background: var(--bg); }
 
-/* Content Areas */
 #center-content { 
   flex: 1; 
   overflow-y: auto; 
@@ -128,7 +120,6 @@ body {
 .sidebar-panel.active { display: flex; flex-direction: column; }
 #panel-addons #addons-list { flex: 1; overflow-y: auto; padding: 8px; }
 
-/* UI Elements */
 .input-group { padding: 8px 12px; border-bottom: 1px solid var(--border-light); flex-shrink: 0; }
 .input-group label { display: block; font-size: 10px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
 input[type="text"], input[type="number"], select {
@@ -147,7 +138,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { border-colo
 .icon-btn { background: transparent; border: none; color: var(--green); font-size: 16px; cursor: pointer; }
 .icon-btn:hover { text-shadow: 0 0 5px var(--green); }
 
-/* Mod Search / Center Tab */
 .search-bar { display: flex; gap: 8px; flex-shrink: 0; }
 #search-results { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 4px; flex: 1; }
 .mod-card {
@@ -163,7 +153,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { border-colo
 .mod-info p { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mod-card .btn-primary { padding: 4px 8px; font-size: 11px; flex-shrink: 0; }
 
-/* Right Panel Elements */
 #mod-list-container { padding: 8px; flex: 1; overflow-y: auto; }
 .mod-category { margin-bottom: 12px; }
 .mod-category-title { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; border-bottom: 1px dotted var(--border-light); padding-bottom: 2px; }
@@ -171,7 +160,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { border-colo
 .mod-item-name { color: var(--green-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
 .mod-item-del { color: #ff4466; cursor: pointer; font-weight: bold; background: none; border: none; }
 
-/* Export Box */
 .export-box {
   padding: 12px;
   background: var(--bg);
@@ -195,12 +183,10 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { border-colo
 
 .placeholder-text { text-align: center; color: var(--muted); margin-top: 20%; font-size: 14px; }
 
-/* Addon Item */
 .addon-item { border-bottom: 1px solid var(--border-light); padding: 12px; }
 .addon-item h4 { font-size: 12px; color: var(--text); margin-bottom: 4px; }
 .addon-item p { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
 
-/* Quests Specific Styles */
 .status-chip {
   background: #1a1a1a;
   border: 1px solid var(--border-light);
@@ -213,7 +199,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { border-colo
 .quest-mod-btn:hover { background: rgba(255,255,255,0.05) !important; }
 .quest-mod-stages button:hover { border-color: var(--green) !important; }
 
-/* Utils */
 .hidden { display: none !important; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
 .text-xs { font-size: 10px; }
@@ -224,3 +209,44 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus { border-colo
 .text-center { text-align: center; }
 .flex-col { display: flex; flex-direction: column; }
 .gap-2 { gap: 8px; }
+
+/* --- NEW: Pack Tools Accordion --- */
+.tool-accordion {
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.02);
+  overflow: hidden;
+}
+.tool-accordion-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.3);
+  border: none;
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.tool-accordion-header:hover {
+  background: rgba(110, 231, 90, 0.1);
+}
+.tool-accordion-header.active {
+  color: var(--green);
+  border-bottom: 1px solid var(--border-light);
+}
+.tool-accordion-body {
+  padding: 10px;
+  background: var(--bg);
+}
+.tool-arrow {
+  font-size: 9px;
+  transition: transform 0.2s;
+}
+.tool-accordion-header.active .tool-arrow {
+  transform: rotate(180deg);
+}
